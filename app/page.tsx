@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { Comfortaa } from 'next/font/google';
 import { ChevronRight } from 'react-feather';
 import parmesan from '../public/parmesan.png';
@@ -18,9 +19,11 @@ export default function RootPage() {
           Ketomarket
         </h1>
         <div>
-          <button className="mr-2 p-2">Log in</button>
+          <button className="mr-2 p-2">
+            <Link href="/signin">Log in</Link>
+          </button>
           <button className="rounded-full bg-secondary px-4 py-2 font-medium text-white">
-            Sign up
+            <Link href="/register">Sign up</Link>
           </button>
         </div>
       </header>
@@ -36,12 +39,12 @@ export default function RootPage() {
             </p>
           </hgroup>
           <button className="m-auto mb-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
-            Sign up
+            <Link href="/register">Sign up</Link>
           </button>
           <p>
             Have an account already?{' '}
             <button className="text-tertiary underline hover:text-accent hover:no-underline">
-              Login
+              <Link href="/signin">Log in</Link>
             </button>
           </p>
         </section>
