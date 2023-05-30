@@ -56,13 +56,15 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
         <p className="mt-4 text-lg">{content.subheader}</p>
       </hgroup>
       <form onSubmit={handleSubmit} className="mt-6">
-        <Input
-          labelText="Name"
-          id="name"
-          type="text"
-          value={formState.name}
-          onChange={e => setFormState(s => ({ ...s, name: e.target.value }))}
-        />
+        {mode === 'register' ? (
+          <Input
+            labelText="Name"
+            id="name"
+            type="text"
+            value={formState.name}
+            onChange={e => setFormState(s => ({ ...s, name: e.target.value }))}
+          />
+        ) : null}
         <Input
           labelText="Email"
           id="email"
