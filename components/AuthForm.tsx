@@ -25,7 +25,7 @@ const signinContent = {
   buttonText: 'Log in',
 };
 
-const initial = { email: '', password: '', firstName: '', lastName: '' };
+const initial = { name: '', email: '', password: '' };
 
 export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
   const [formState, setFormState] = useState({ ...initial });
@@ -56,9 +56,29 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
         <p className="mt-4 text-lg">{content.subheader}</p>
       </hgroup>
       <form onSubmit={handleSubmit} className="mt-6">
-        <Input labelText="Name" id="name" type="text" />
-        <Input labelText="Email" id="email" type="email" />
-        <Input labelText="Password" id="password" type="password" />
+        <Input
+          labelText="Name"
+          id="name"
+          type="text"
+          value={formState.name}
+          onChange={e => setFormState(s => ({ ...s, name: e.target.value }))}
+        />
+        <Input
+          labelText="Email"
+          id="email"
+          type="email"
+          value={formState.email}
+          onChange={e => setFormState(s => ({ ...s, email: e.target.value }))}
+        />
+        <Input
+          labelText="Password"
+          id="password"
+          type="password"
+          value={formState.password}
+          onChange={e =>
+            setFormState(s => ({ ...s, password: e.target.value }))
+          }
+        />
         <button className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
           {content.buttonText}
         </button>

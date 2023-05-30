@@ -28,7 +28,7 @@ export default function RootPage() {
         </div>
       </header>
       <main className="h-full bg-white">
-        <section className="bg-off-white p-4">
+        <section className="bg-off-white px-4 py-6">
           <hgroup className="mb-6">
             <h2 className="mb-6 text-3xl font-bold">
               Order keto groceries for delivery
