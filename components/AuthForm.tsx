@@ -58,6 +58,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
       <form onSubmit={handleSubmit} className="mt-6">
         {mode === 'register' ? (
           <Input
+            required={true}
             labelText="Name"
             id="name"
             type="text"
@@ -66,6 +67,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           />
         ) : null}
         <Input
+          required={true}
           labelText="Email"
           id="email"
           type="email"
@@ -73,6 +75,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           onChange={e => setFormState(s => ({ ...s, email: e.target.value }))}
         />
         <Input
+          required={true}
           labelText="Password"
           id="password"
           type="password"
