@@ -79,7 +79,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             setFormState(s => ({ ...s, password: e.target.value }))
           }
         />
-        <button className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
+        <button className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent">
           {content.buttonText}
         </button>
       </form>

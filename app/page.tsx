@@ -22,9 +22,11 @@ export default function RootPage() {
           <button className="mr-2 p-2">
             <Link href="/signin">Log in</Link>
           </button>
-          <button className="rounded-full bg-secondary px-4 py-2 font-medium text-white">
-            <Link href="/register">Sign up</Link>
-          </button>
+          <Link href="/register">
+            <button className="rounded-full bg-secondary px-4 py-2 font-medium text-white">
+              Sign up
+            </button>
+          </Link>
         </div>
       </header>
       <main className="h-full bg-white">
@@ -38,9 +40,11 @@ export default function RootPage() {
               produce.
             </p>
           </hgroup>
-          <button className="m-auto mb-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
-            <Link href="/register">Sign up</Link>
-          </button>
+          <Link href="/register">
+            <button className="m-auto mb-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
+              Sign up
+            </button>
+          </Link>
           <p>
             Have an account already?{' '}
             <button className="text-tertiary underline hover:text-accent hover:no-underline">
