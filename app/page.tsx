@@ -6,6 +6,8 @@ import parmesan from '../public/parmesan.png';
 import eggs from '../public/eggs.png';
 import broccoli from '../public/broccoli.png';
 import pecans from '../public/pecans.png';
+import { signIn, signOut } from 'next-auth/react';
+import { LoginButton, RegisterButton } from '@/components/Buttons';
 
 const comfortaa = Comfortaa({ subsets: ['latin'] });
 
@@ -19,14 +21,14 @@ export default function RootPage() {
           Ketomarket
         </h1>
         <div>
-          <button className="mr-2 p-2">
-            <Link href="/signin">Log in</Link>
-          </button>
-          <Link href="/register">
+          <LoginButton />
+          <RegisterButton />
+
+          {/* <Link href="/register">
             <button className="rounded-full bg-secondary px-4 py-2 font-medium text-white">
               Sign up
             </button>
-          </Link>
+          </Link> */}
         </div>
       </header>
       <main className="h-full bg-white">

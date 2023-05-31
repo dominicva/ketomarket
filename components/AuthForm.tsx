@@ -1,10 +1,11 @@
 'use client';
 
+import { signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { X } from 'react-feather';
-import { register, signin } from '@/lib/api';
+// import { register, signin } from '@/lib/api';
 import Input from './Input';
 
 const registerContent = {
@@ -35,9 +36,10 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
     e.preventDefault();
 
     if (mode === 'register') {
-      await register(formState);
+      // await register(formState);
     } else {
-      await signin(formState);
+      signIn();
+      // await signin(formState);
     }
 
     setFormState({ ...initial });
