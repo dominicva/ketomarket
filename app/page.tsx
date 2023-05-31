@@ -31,7 +31,10 @@ export default async function RootPage() {
         </h1>
         <div>
           {session?.user ? (
-            <LogoutButton />
+            <>
+              <LogoutButton />
+              <ProfileButton />
+            </>
           ) : (
             <>
               <LoginButton />

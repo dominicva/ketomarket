@@ -3,9 +3,8 @@
 import { signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
-// import { register, signin } from '@/lib/api';
 import Input from './Input';
 
 const registerContent = {
@@ -29,21 +28,37 @@ const signinContent = {
 const initial = { name: '', email: '', password: '' };
 
 export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
+  const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState({ ...initial });
   const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
 
     if (mode === 'register') {
-      // await register(formState);
-    } else {
-      signIn();
-      // await signin(formState);
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      });
+      setLoading(false);
+      if (!res.ok) {
+        alert((await res.json()).message);
+        return;
+      }
+
+      signIn(undefined, { callbackUrl: '/' });
     }
 
     setFormState({ ...initial });
-    router.replace('/home');
+    setLoading(false);
+    router.replace('/');
+  }
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setFormState({ ...formState, [name]: value });
   }
 
   const content = mode === 'register' ? registerContent : signinContent;
@@ -65,7 +80,8 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             id="name"
             type="text"
             value={formState.name}
-            onChange={e => setFormState(s => ({ ...s, name: e.target.value }))}
+            onChange={handleChange}
+            autocomplete="name"
           />
         ) : null}
         <Input
@@ -74,7 +90,8 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           id="email"
           type="email"
           value={formState.email}
-          onChange={e => setFormState(s => ({ ...s, email: e.target.value }))}
+          onChange={handleChange}
+          autocomplete="username"
         />
         <Input
           required={true}
@@ -82,12 +99,16 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           id="password"
           type="password"
           value={formState.password}
-          onChange={e =>
-            setFormState(s => ({ ...s, password: e.target.value }))
+          onChange={handleChange}
+          autocomplete={
+            mode === 'register' ? 'new-password' : 'current-password'
           }
         />
-        <button className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent">
-          {content.buttonText}
+        <button
+          className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : content.buttonText}
         </button>
       </form>
       <p>
