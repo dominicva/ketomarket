@@ -1,4 +1,5 @@
 import { prisma } from '../lib/db';
+import { hash } from 'bcrypt';
 
 async function main() {
   const alice = await prisma.user.upsert({
@@ -7,7 +8,7 @@ async function main() {
     create: {
       email: 'alice@mail.com',
       name: 'Alice',
-      password: 'password123',
+      password: await hash('password123', 12),
     },
   });
 
@@ -17,7 +18,7 @@ async function main() {
     create: {
       email: 'bob@mail.com',
       name: 'Bob',
-      password: 'password456',
+      password: await hash('password456', 12),
     },
   });
 

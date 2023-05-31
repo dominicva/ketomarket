@@ -27,11 +27,3 @@ export async function fetcher({
     return data.data;
   }
 }
-
-export function register(user: any) {
-  return fetcher({ url: 'api/register', method: 'post', body: user });
-}
-
-export function signin(user: any) {
-  return fetcher({ url: 'api/signin', method: 'post', body: user });
-}

@@ -1,17 +1,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Comfortaa } from 'next/font/google';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { ChevronRight } from 'react-feather';
 import parmesan from '../public/parmesan.png';
 import eggs from '../public/eggs.png';
 import broccoli from '../public/broccoli.png';
 import pecans from '../public/pecans.png';
-import { signIn, signOut } from 'next-auth/react';
-import { LoginButton, RegisterButton } from '@/components/Buttons';
+import { User } from '@/components/User';
+import {
+  LoginButton,
+  RegisterButton,
+  LogoutButton,
+  ProfileButton,
+} from '@/components/Buttons';
 
 const comfortaa = Comfortaa({ subsets: ['latin'] });
 
-export default function RootPage() {
+export default async function RootPage() {
+  const session = await getServerSession(authOptions);
+
   return (
     <>
       <header className="flex items-center justify-between p-4">
@@ -21,18 +30,20 @@ export default function RootPage() {
           Ketomarket
         </h1>
         <div>
-          <LoginButton />
-          <RegisterButton />
-
-          {/* <Link href="/register">
-            <button className="rounded-full bg-secondary px-4 py-2 font-medium text-white">
-              Sign up
-            </button>
-          </Link> */}
+          {session?.user ? (
+            <LogoutButton />
+          ) : (
+            <>
+              <LoginButton />
+              <RegisterButton />
+            </>
+          )}
         </div>
       </header>
       <main className="h-full bg-white">
         <section className="bg-off-white px-4 py-6">
+          <h1>Server session</h1>
+          <pre>{JSON.stringify(session, null, 2)}</pre>
           <hgroup className="mb-6">
             <h2 className="mb-6 text-3xl font-bold">
               Order keto groceries for delivery
@@ -42,6 +53,7 @@ export default function RootPage() {
               produce.
             </p>
           </hgroup>
+          <User />
           <Link href="/register">
             <button className="m-auto mb-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
               Sign up
