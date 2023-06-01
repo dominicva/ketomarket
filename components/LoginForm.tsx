@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn, signOut } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
@@ -18,7 +18,6 @@ export default function LoginForm() {
 
     const result = await signIn('credentials', {
       callbackUrl: '/',
-      //   redirect: false,
       email: formState.email,
       password: formState.password,
     });

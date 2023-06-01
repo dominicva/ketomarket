@@ -1,8 +1,7 @@
 'use client';
 
-import { signIn, signOut } from 'next-auth/react';
+import { signIn, getSession } from 'next-auth/react';
 import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
 import Input from './Input';
@@ -12,38 +11,46 @@ const initial = { name: '', email: '', password: '' };
 export default function SignupForm() {
   const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState({ ...initial });
-  //   const router = useRouter();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
-    // if (mode === 'register') {
-    //   const res = await fetch('/api/register', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(formState),
-    //   });
-    //   setLoading(false);
-    //   if (!res.ok) {
-    //     alert((await res.json()).message);
-    //     return;
-    //   }
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formState),
+    });
+    setLoading(false);
+    if (!res.ok) {
+      alert((await res.json()).message);
+      return;
+    }
 
-    //   signIn(undefined, { callbackUrl: '/' });
-    // }
+    await signIn('credentials', {
+      callbackUrl: '/profile',
+      email: formState.email,
+      password: formState.password,
+    });
 
     setFormState({ ...initial });
     setLoading(false);
-    // router.replace('/');
+  }
+
+  async function handleGoogleSignin() {
+    await signIn('google', {
+      callbackUrl: '/profile',
+      prompt: 'select_account',
+    });
+
+    const session = await getSession();
+    console.log(session);
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormState({ ...formState, [name]: value });
   }
-
-  //   const content = mode === 'register' ? registerContent : signinContent;
 
   return (
     <div className="pt-2 text-off-black">
@@ -90,6 +97,13 @@ export default function SignupForm() {
           {loading ? 'Loading...' : 'Sign up'}
         </button>
       </form>
+      <button
+        className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+        onClick={handleGoogleSignin}
+      >
+        {loading ? 'Loading...' : 'Sign up with Google'}
+      </button>
+
       <p>
         Already have an account?{' '}
         <Link
