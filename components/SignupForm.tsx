@@ -91,14 +91,14 @@ export default function SignupForm() {
           autocomplete="new-password"
         />
         <button
-          className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+          className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white shadow transition-all duration-200 focus-within:outline-accent hover:translate-y-0.5 hover:shadow-md"
           disabled={loading}
         >
           {loading ? 'Loading...' : 'Sign up'}
         </button>
       </form>
       <button
-        className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+        className="m-auto my-6 block w-11/12 rounded-full border-none bg-white p-4 font-semibold text-off-black shadow-md outline-none transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg"
         onClick={handleGoogleSignin}
       >
         {loading ? 'Loading...' : 'Sign up with Google'}

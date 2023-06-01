@@ -44,8 +44,6 @@ export default async function Profile() {
     });
   }
 
-  console.log(user?.image);
-
   return (
     <main style={{ maxWidth: 1200, marginInline: 'auto', padding: 20 }}>
       <div

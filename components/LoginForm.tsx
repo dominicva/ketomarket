@@ -78,8 +78,9 @@ export default function LoginForm() {
           {loading ? 'Loading...' : 'Log in'}
         </button>
       </form>
+      <hr className="border-t-solid border-t-1 text-md m-auto my-8 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
       <button
-        className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+        className="m-auto my-6 block w-11/12 rounded-full border-none bg-white p-4 font-semibold text-off-black shadow-md outline-none transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg"
         onClick={handleGoogleSignin}
       >
         {loading ? 'Loading...' : 'Log in with Google'}
