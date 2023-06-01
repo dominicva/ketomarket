@@ -1,9 +1,12 @@
 import AuthForm from '@/components/AuthForm';
+import SignupForm from '@/components/SignupForm';
+import { Sign } from 'crypto';
 
 export default function Register() {
   return (
     <div>
-      <AuthForm mode="register" />
+      <SignupForm />
+      {/* <AuthForm mode="register" /> */}
     </div>
   );
 }
