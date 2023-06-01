@@ -2,6 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
 import Input from './Input';
@@ -80,9 +81,15 @@ export default function LoginForm() {
       </form>
       <hr className="border-t-solid border-t-1 text-md m-auto my-8 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
       <button
-        className="m-auto my-6 block w-11/12 rounded-full border-none bg-white p-4 font-semibold text-off-black shadow-md outline-none transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg"
+        className="m-auto my-6 flex h-14 w-11/12 items-center justify-center gap-4 rounded-full border-none bg-white font-medium text-off-black shadow-md outline-none transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg"
         onClick={handleGoogleSignin}
       >
+        <Image
+          src="/btn_google_light_normal.svg"
+          alt="google"
+          width={50}
+          height={50}
+        />
         {loading ? 'Loading...' : 'Log in with Google'}
       </button>
 
