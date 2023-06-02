@@ -9,12 +9,9 @@ export default async function RootPage() {
   const isLoggedIn = Boolean(session?.user);
 
   return (
-    <>
-      <Header session={session} />
-      <main className="h-full bg-white">
-        <Hero isLoggedIn={isLoggedIn} />
-        <ProductsTeaser />
-      </main>
-    </>
+    <main className="h-full bg-white">
+      <Hero isLoggedIn={isLoggedIn} />
+      <ProductsTeaser />
+    </main>
   );
 }

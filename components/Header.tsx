@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Session } from 'next-auth';
 import { Comfortaa } from 'next/font/google';
 import {
@@ -28,11 +29,13 @@ export default function Header({ session }: { session: Session | null }) {
 
   return (
     <header className="flex items-center justify-between p-4">
-      <h1
-        className={`${comfortaa.className} text-2xl font-semibold text-secondary`}
-      >
-        Ketomarket
-      </h1>
+      <Link href="/">
+        <h1
+          className={`${comfortaa.className} text-2xl font-semibold text-secondary`}
+        >
+          Ketomarket
+        </h1>
+      </Link>
       <div className="flex items-center gap-4">{buttons}</div>
     </header>
   );
