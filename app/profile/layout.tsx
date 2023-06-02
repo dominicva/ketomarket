@@ -5,6 +5,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { randomUUID } from 'crypto';
+import { ShoppingCart, List, Settings } from 'react-feather';
+import ProfileNav from '@/components/profile/ProfileNav';
 
 export default async function ProfileLayout({
   children,
@@ -64,19 +66,23 @@ export default async function ProfileLayout({
             <h2 className=" text-xl font-semibold">{user?.name}</h2>
           </figcaption>
         </figure>
-        <nav className="mt-6 flex">
-          <ul className="flex gap-4">
-            <li className="border-b-2 border-off-black border-opacity-50">
+        <ProfileNav />
+        {/* <nav className="mt-6 flex">
+          <ul className="flex gap-6">
+            <li className="flex items-end gap-2 border-b-2 border-off-black border-opacity-50 py-2">
+              <ShoppingCart />
               <Link href="/profile/cart">Cart</Link>
             </li>
-            <li>
+            <li className="flex items-end gap-2 border-b-2 border-off-black border-opacity-50 py-2">
+              <List />
               <Link href="/profile/orders">Orders</Link>
             </li>
-            <li>
+            <li className="flex items-end gap-2 border-b-2 border-off-black border-opacity-50 py-2">
+              <Settings />
               <Link href="/profile/settings">Settings</Link>
             </li>
           </ul>
-        </nav>
+        </nav> */}
       </section>
       {children}
     </main>
