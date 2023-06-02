@@ -1,14 +1,31 @@
+import { Session } from 'next-auth';
 import { Comfortaa } from 'next/font/google';
 import {
   LoginButton,
-  LogoutButton,
+  SignoutButton,
   ProfileButton,
   RegisterButton,
-} from './Buttons';
+} from './buttons';
 
 const comfortaa = Comfortaa({ subsets: ['latin'] });
 
-export default function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
+export default function Header({ session }: { session: Session | null }) {
+  const isLoggedIn = Boolean(session?.user);
+  const name = session?.user?.name;
+  const profilePic = session?.user?.image;
+
+  const buttons = isLoggedIn ? (
+    <>
+      <SignoutButton />
+      <ProfileButton name={name ?? null} imageSrc={profilePic ?? null} />
+    </>
+  ) : (
+    <>
+      <LoginButton />
+      <RegisterButton />
+    </>
+  );
+
   return (
     <header className="flex items-center justify-between p-4">
       <h1
@@ -16,19 +33,7 @@ export default function Header({ isLoggedIn }: { isLoggedIn: boolean }) {
       >
         Ketomarket
       </h1>
-      <div>
-        {isLoggedIn ? (
-          <>
-            <LogoutButton />
-            <ProfileButton />
-          </>
-        ) : (
-          <>
-            <LoginButton />
-            <RegisterButton />
-          </>
-        )}
-      </div>
+      <div className="flex items-center gap-4">{buttons}</div>
     </header>
   );
 }

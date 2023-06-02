@@ -10,7 +10,7 @@ export default async function RootPage() {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header session={session} />
       <main className="h-full bg-white">
         <Hero isLoggedIn={isLoggedIn} />
         <ProductsTeaser />
