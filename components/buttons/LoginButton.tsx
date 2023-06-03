@@ -1,9 +1,12 @@
 import Link from 'next/link';
+import Button from './Button';
 
 export const LoginButton = () => {
   return (
     <Link href="/signin">
-      <button className="mr-2 p-2">Log in</button>
+      <Button intent="tertiary" size="small">
+        Log in
+      </Button>
     </Link>
   );
 };

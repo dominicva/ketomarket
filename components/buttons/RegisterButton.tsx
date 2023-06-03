@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import Button from './Button';
 
 export const RegisterButton = () => {
   return (
     <Link href="/register">
-      <button className="rounded-full bg-secondary px-4 py-2 font-medium text-white">
+      <Button intent="primary" size="small">
         Sign up
-      </button>
+      </Button>
     </Link>
   );
 };

@@ -1,18 +1,25 @@
 import Link from 'next/link';
+import Button from './buttons/Button';
 
 export default function SignupCta() {
   return (
     <>
       <Link href="/register">
-        <button className="m-auto mb-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white">
+        <Button
+          intent="primary"
+          size="large"
+          className="m-auto mb-6 block w-11/12"
+        >
           Sign up
-        </button>
+        </Button>
       </Link>
       <p>
         Have an account already?{' '}
-        <button className="text-tertiary underline hover:text-accent hover:no-underline">
-          <Link href="/signin">Log in</Link>
-        </button>
+        <Link href="/signin">
+          <button className="text-tertiary underline hover:text-accent hover:no-underline">
+            Log in
+          </button>
+        </Link>
       </p>
     </>
   );
