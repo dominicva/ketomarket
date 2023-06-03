@@ -9,7 +9,7 @@ export default function ProductsTeaser() {
   return (
     <section className="p-4">
       <h2 className="mt-4 px-4 text-center text-2xl font-bold">
-        Choose from our collection of{' '}
+        Log in to order from our collection of{' '}
         <span className="text-tertiary">keto-friendly</span> products
       </h2>
       <div className="mt-8">

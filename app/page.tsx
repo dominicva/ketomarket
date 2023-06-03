@@ -3,6 +3,7 @@ import { authOptions } from '@/lib/auth';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import ProductsTeaser from '@/components/ProductsTeaser';
+import Greetings from '@/components/Greetings';
 
 export default async function RootPage() {
   const session = await getServerSession(authOptions);
@@ -10,8 +11,14 @@ export default async function RootPage() {
 
   return (
     <main className="h-full bg-white">
-      <Hero isLoggedIn={isLoggedIn} />
-      <ProductsTeaser />
+      {isLoggedIn ? (
+        <Greetings user={session?.user} />
+      ) : (
+        <>
+          <Hero isLoggedIn={isLoggedIn} />
+          <ProductsTeaser />
+        </>
+      )}
     </main>
   );
 }
