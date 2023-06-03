@@ -1,8 +1,20 @@
 import Link from 'next/link';
 import Button from './buttons/Button';
 import { ShoppingCart } from 'react-feather';
+import { prisma } from '@/lib/db';
 
-export default function Greetings({ user }: any) {
+export default async function Greetings({ user }: any) {
+  const carts = await prisma.cart.findMany({
+    where: {
+      userId: user.id,
+    },
+    include: {
+      cartItems: true,
+    },
+  });
+
+  const currentCartItems = carts[0].cartItems;
+
   return (
     <section className="bg-off-white px-4 py-6">
       <hgroup>
@@ -13,7 +25,7 @@ export default function Greetings({ user }: any) {
         <Link href="/profile/cart">
           <Button intent="secondary" className="mt-6 flex gap-2">
             <ShoppingCart />
-            Cart (0)
+            Cart ({currentCartItems.length})
           </Button>
         </Link>
       </hgroup>
