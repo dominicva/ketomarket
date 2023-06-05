@@ -2,9 +2,9 @@
 
 import { FormEvent, useState } from 'react';
 import { updateCartItemQty } from '@/lib/api';
-import Card from '@/components/Card';
 import { capitalize } from '@/lib/strings';
-import Button from '../buttons/Button';
+import Card from '@/components/Card';
+import Button from '@/components/buttons/Button';
 
 export default function CartItem({ cartItem }: { cartItem: any }) {
   const [quantity, setQuantity] = useState(cartItem.quantity);
