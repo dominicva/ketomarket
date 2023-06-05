@@ -1,4 +1,6 @@
-export async function fetcher({
+import type { CartItem } from '@prisma/client';
+
+export const fetcher = async ({
   url,
   method,
   body,
@@ -8,7 +10,7 @@ export async function fetcher({
   method: string;
   body: any;
   json?: boolean;
-}) {
+}) => {
   const res = await fetch(url, {
     method,
     ...(body && { body: JSON.stringify(body) }),
@@ -26,4 +28,15 @@ export async function fetcher({
     const data = await res.json();
     return data.data;
   }
-}
+};
+
+export const updateCartItemQty = async (
+  cartItemId: Pick<CartItem, 'id'>,
+  quantity: number
+) => {
+  return fetcher({
+    url: '/api/cart',
+    method: 'PUT',
+    body: { cartItemId, quantity },
+  });
+};

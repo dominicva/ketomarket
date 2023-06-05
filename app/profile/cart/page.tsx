@@ -1,13 +1,10 @@
-// 'use client';
-
 import { getServerSession } from 'next-auth';
 import { Cart } from '@prisma/client';
 import { prisma } from '@/lib/db';
 import { authOptions } from '@/lib/auth';
-import { capitalize } from '@/lib/strings';
-import type { ServerSession, CartWithItemsAndProducts } from '@/types';
 import Card from '@/components/Card';
 import CartItem from '@/components/cart/CartItem';
+import type { ServerSession, CartWithItemsAndProducts } from '@/types';
 
 const getCurrentCart = async (
   userId: string | undefined
@@ -40,13 +37,15 @@ export default async function Cart() {
   return (
     <section>
       <Card className="mt-4 bg-white">
-        <h2 className="text-xl font-semibold">Cart</h2>
+        <h2 className="text-2xl font-semibold">Cart</h2>
         <ul>
-          {currentCart
-            ? currentCart.cartItems.map((cartItem: any) => (
-                <CartItem key={cartItem.id} cartItem={cartItem} />
-              ))
-            : null}
+          {currentCart?.cartItems.length ? (
+            currentCart.cartItems.map((cartItem: any) => (
+              <CartItem key={cartItem.id} cartItem={cartItem} />
+            ))
+          ) : (
+            <p>No items in cart</p>
+          )}
         </ul>
       </Card>
     </section>
