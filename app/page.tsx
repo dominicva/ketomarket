@@ -9,8 +9,6 @@ export default async function RootPage() {
   const session: ServerSession = await getServerSession(authOptions);
   const isLoggedIn = Boolean(session?.user);
 
-  console.log('session', session);
-
   return (
     <main className="h-full bg-white">
       {session?.user?.id && isLoggedIn ? (

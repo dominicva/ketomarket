@@ -1,11 +1,15 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { List, Settings, ShoppingCart } from 'react-feather';
+import type { ServerSession } from '@/types/ServerSession';
 import NavItem from './ProfileNavItem';
 
-export default function ProfileNav() {
-  const [active, setActive] = useState('cart');
+export default function ProfileNav({ session }: { session: ServerSession }) {
+  // get the last part of the pathname
+  const initial = usePathname().split('/').at(-1);
+  const [active, setActive] = useState(initial);
 
   return (
     <nav className="my-6 flex">
