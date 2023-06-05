@@ -1,11 +1,10 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { randomUUID } from 'crypto';
-import { ShoppingCart, List, Settings } from 'react-feather';
+import { randomString } from '@/lib/randomString';
+import type { ServerSession } from '@/types/ServerSession';
 import ProfileNav from '@/components/profile/ProfileNav';
 
 export default async function ProfileLayout({
@@ -13,31 +12,26 @@ export default async function ProfileLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  const session: ServerSession = await getServerSession(authOptions);
   if (!session) {
-    redirect('/api/auth/signin');
+    redirect('/signin');
   }
 
   let user = await prisma.user.findUnique({
     where: {
-      // id attached with next-auth callbacks.session in auth.js
-      // @ts-ignore
       id: session?.user?.id,
     },
   });
 
   const isNewUser =
-    // @ts-ignore
-    !user && session?.user?.id && session?.user?.email && session?.user?.name;
+    !user && session.user.id && session.user.email && session.user.name;
 
   if (isNewUser) {
-    const randomPassword = randomUUID();
     const data = {
-      // @ts-ignore
       id: session.user.id,
       email: String(session?.user?.email),
       name: String(session?.user?.name),
-      password: randomPassword,
+      password: randomString(),
       image: '',
     };
 

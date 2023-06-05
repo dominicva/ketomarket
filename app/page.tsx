@@ -1,20 +1,15 @@
-import { Session, getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import type { ServerSession } from '@/types/ServerSession';
 import Hero from '@/components/Hero';
 import ProductsTeaser from '@/components/ProductsTeaser';
 import Greetings from '@/components/Greetings';
 
-type ServerSession =
-  | ({
-      user: {
-        id: string;
-      };
-    } & Session)
-  | null;
-
 export default async function RootPage() {
   const session: ServerSession = await getServerSession(authOptions);
   const isLoggedIn = Boolean(session?.user);
+
+  console.log('session', session);
 
   return (
     <main className="h-full bg-white">
