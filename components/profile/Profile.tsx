@@ -1,11 +1,6 @@
 import Image from 'next/image';
-import { ServerSession } from '@/types/ServerSession';
 import ProfileNav from './ProfileNav';
-
-interface ProfileProps {
-  session: ServerSession;
-  children: React.ReactNode;
-}
+import type { ProfileProps } from '@/types';
 
 export default function Profile({ session, children }: ProfileProps) {
   const user = session?.user;

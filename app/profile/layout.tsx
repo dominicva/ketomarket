@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { randomString } from '@/lib/randomString';
+import { randomString } from '@/lib/strings';
 import type { ServerSession } from '@/types/ServerSession';
 import Profile from '@/components/profile/Profile';
 
