@@ -4,18 +4,34 @@ import { FormEvent, useState } from 'react';
 import { updateCartItemQty } from '@/lib/api';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
-import Button from '@/components/buttons/Button';
+import { TwoSeventyRing } from 'react-svg-spinners';
+
+export function Skeleton() {
+  return (
+    <div className="flex h-6 w-14  items-center justify-center rounded bg-accent p-2">
+      <TwoSeventyRing color="white" width={20} height={20} />
+    </div>
+  );
+}
 
 export default function CartItem({ cartItem }: { cartItem: any }) {
+  const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(cartItem.quantity);
-  const total = (cartItem.product.price * quantity).toFixed(2);
+  const total = cartItem.product.price * quantity;
 
-  const updateCartItem = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSelectChange = async (e: FormEvent<HTMLSelectElement>) => {
+    const newQuantity = Number(e.currentTarget.value);
+    setLoading(true);
+    setQuantity(newQuantity);
+    await submitForm(e, newQuantity);
+    setLoading(false);
+  };
+
+  const submitForm = async (
+    e: FormEvent<HTMLSelectElement>,
+    newQuantity: number
+  ) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const elements = form.elements as HTMLFormControlsCollection;
-    const selectElement = elements[0] as HTMLSelectElement;
-    const newQuantity = Number(selectElement.value);
     await updateCartItemQty(cartItem.id, newQuantity);
   };
 
@@ -32,25 +48,21 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
 
         <hgroup>
           <h4 className="mb-2">Total</h4>
-          <p>${total}</p>
+          {loading ? <Skeleton /> : <p>${total.toFixed(2)}</p>}
         </hgroup>
 
-        <form className="ml-auto flex flex-col gap-2" onSubmit={updateCartItem}>
+        <form className="ml-auto flex flex-col gap-2">
           <label htmlFor="quantity">Quantity</label>
           <select
             id="quantity"
             name="quantity"
             value={quantity}
-            onChange={e => setQuantity(Number(e.target.value))}
-            onBlur={e => setQuantity(Number(e.target.value))}
+            onChange={handleSelectChange}
           >
             {Array.from(Array(10).keys()).map(i => (
               <option key={i}>{i + 1}</option>
             ))}
           </select>
-          <Button intent="secondary" size="small" className="mt-4">
-            Update
-          </Button>
         </form>
       </li>
     </Card>
