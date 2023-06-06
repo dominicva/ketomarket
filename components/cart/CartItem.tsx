@@ -1,12 +1,12 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import { updateCartItemQty } from '@/lib/api';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
-import { TwoSeventyRing } from 'react-svg-spinners';
 
-export function Skeleton() {
+function Spinner() {
   return (
     <div className="flex h-6 w-14  items-center justify-center rounded bg-accent p-2">
       <TwoSeventyRing color="white" width={20} height={20} />
@@ -48,7 +48,7 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
 
         <hgroup>
           <h4 className="mb-2">Total</h4>
-          {loading ? <Skeleton /> : <p>${total.toFixed(2)}</p>}
+          {loading ? <Spinner /> : <p>${total.toFixed(2)}</p>}
         </hgroup>
 
         <form className="ml-auto flex flex-col gap-2">

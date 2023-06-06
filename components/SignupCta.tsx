@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Button from './buttons/Button';
+import { Button } from './buttons';
 
 export default function SignupCta() {
   return (

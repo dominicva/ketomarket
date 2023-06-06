@@ -1,8 +1,8 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
 import Input from './Input';
@@ -18,7 +18,7 @@ export default function LoginForm() {
     setLoading(true);
 
     const result = await signIn('credentials', {
-      callbackUrl: '/',
+      callbackUrl: '/home',
       email: formState.email,
       password: formState.password,
     });
@@ -36,7 +36,7 @@ export default function LoginForm() {
   }
 
   async function handleGoogleSignin() {
-    await signIn('google', { callbackUrl: '/', prompt: 'select_account' });
+    await signIn('google', { callbackUrl: '/home', prompt: 'select_account' });
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {

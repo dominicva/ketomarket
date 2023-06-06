@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Button from './buttons/Button';
 import { ShoppingCart } from 'react-feather';
 import { prisma } from '@/lib/db';
+import { Button } from './buttons';
 
 interface UserSession {
   id: string;
