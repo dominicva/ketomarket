@@ -204,19 +204,19 @@ async function main() {
         cartId: aliceCart.id,
         productId: pecans.id,
         quantity: 1,
-        price: pecans.price,
+        // price: pecans.price,
       },
       {
         cartId: aliceCart.id,
         productId: almonds.id,
         quantity: 2,
-        price: almonds.price,
+        // price: almonds.price,
       },
       {
         cartId: aliceCart.id,
         productId: cashews.id,
         quantity: 3,
-        price: cashews.price,
+        // price: cashews.price,
       },
     ],
   });

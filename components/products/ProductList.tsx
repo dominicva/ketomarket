@@ -1,7 +1,9 @@
 import { prisma } from '@/lib/db';
 import { capitalize } from '@/lib/strings';
 import Product from './Product';
+import ProductSkeleton from './ProductSkeleton';
 import type { CategoryWithProducts } from '@/types';
+import { Suspense } from 'react';
 
 export default async function ProductList() {
   const categories: CategoryWithProducts[] = await prisma.category.findMany({
@@ -21,13 +23,17 @@ export default async function ProductList() {
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category.products.map(product => (
-                <Product
-                  key={product.id}
-                  name={product.name}
-                  description={product.description}
-                  price={product.price}
-                  category={category}
-                />
+                <Suspense fallback={<ProductSkeleton />}>
+                  {/* @ts-expect-error Async Server Component */}
+                  <Product
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    description={product.description}
+                    price={product.price}
+                    category={category}
+                  />
+                </Suspense>
               ))}
             </div>
           </div>
