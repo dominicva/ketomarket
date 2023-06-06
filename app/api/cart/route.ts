@@ -11,7 +11,7 @@ export async function PUT(req: NextRequest) {
     });
 
     return NextResponse.json({
-      cartItem,
+      data: cartItem,
     });
   } catch {
     return NextResponse.error();

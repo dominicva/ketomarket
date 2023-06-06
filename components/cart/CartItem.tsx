@@ -8,10 +8,15 @@ import Button from '@/components/buttons/Button';
 
 export default function CartItem({ cartItem }: { cartItem: any }) {
   const [quantity, setQuantity] = useState(cartItem.quantity);
+  const total = (cartItem.product.price * quantity).toFixed(2);
 
   const updateCartItem = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await updateCartItemQty(cartItem.id, quantity);
+    const form = e.target as HTMLFormElement;
+    const elements = form.elements as HTMLFormControlsCollection;
+    const selectElement = elements[0] as HTMLSelectElement;
+    const newQuantity = Number(selectElement.value);
+    await updateCartItemQty(cartItem.id, newQuantity);
   };
 
   return (
@@ -27,8 +32,9 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
 
         <hgroup>
           <h4 className="mb-2">Total</h4>
-          <p>${(cartItem.product.price * cartItem.quantity).toFixed(2)}</p>
+          <p>${total}</p>
         </hgroup>
+
         <form className="ml-auto flex flex-col gap-2" onSubmit={updateCartItem}>
           <label htmlFor="quantity">Quantity</label>
           <select
