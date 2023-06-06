@@ -1,11 +1,12 @@
 import { prisma } from '@/lib/db';
+import { capitalize } from '@/lib/strings';
 import Product from './Product';
-import type { ProductWithCategory } from '@/types/ProductWithCategory';
+import type { CategoryWithProducts } from '@/types';
 
 export default async function ProductList() {
-  const products: ProductWithCategory[] = await prisma.product.findMany({
+  const categories: CategoryWithProducts[] = await prisma.category.findMany({
     include: {
-      category: true,
+      products: true,
     },
   });
 
@@ -13,8 +14,23 @@ export default async function ProductList() {
     <div className="p-4">
       <h2 className="my-4 text-2xl font-semibold">Products</h2>
       <section className="flex flex-col gap-8">
-        {products.map(product => (
-          <Product key={product.id} {...product} />
+        {categories.map(category => (
+          <div key={category.id}>
+            <h3 className="mb-4 text-xl font-semibold">
+              {capitalize(category.name)} ({category.products.length})
+            </h3>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {category.products.map(product => (
+                <Product
+                  key={product.id}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  category={category}
+                />
+              ))}
+            </div>
+          </div>
         ))}
       </section>
     </div>

@@ -1,15 +1,16 @@
+import { Product } from '@prisma/client';
 import { Plus } from 'react-feather';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
-import type { ProductWithCategory } from '@/types/ProductWithCategory';
+import type { ProductProps } from '@/types';
 
 export default function Product({
   name,
   description,
   price,
   category,
-}: ProductWithCategory) {
+}: ProductProps) {
   return (
     <Card className="relative bg-off-white">
       <h3 className="text-xl">{capitalize(name)}</h3>

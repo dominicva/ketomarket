@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import Hero from '@/components/Hero';
 import ProductsTeaser from '@/components/ProductsTeaser';
-import type { ServerSession } from '@/types/ServerSession';
+import type { ServerSession } from '@/types';
 
 export default async function RootPage() {
   const session: ServerSession = await getServerSession(authOptions);
