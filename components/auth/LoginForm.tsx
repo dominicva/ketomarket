@@ -4,18 +4,20 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import { X } from 'react-feather';
 import Input from '../Input';
 
 const initial = { name: '', email: '', password: '' };
 
 export default function LoginForm() {
-  const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState({ ...initial });
+  const [credentialsLoading, setCredentialsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoading(true);
+    setCredentialsLoading(true);
 
     const result = await signIn('credentials', {
       callbackUrl: '/home',
@@ -25,18 +27,20 @@ export default function LoginForm() {
 
     if (result?.error) {
       console.error(result.error);
-      setLoading(false);
+      setCredentialsLoading(false);
       return;
     } else {
       console.log('successful login', result);
     }
 
-    setLoading(false);
+    setCredentialsLoading(false);
     setFormState({ ...initial });
   }
 
   async function handleGoogleSignin() {
+    setGoogleLoading(true);
     await signIn('google', { callbackUrl: '/home', prompt: 'select_account' });
+    setGoogleLoading(false);
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -73,10 +77,10 @@ export default function LoginForm() {
           autocomplete="current-password"
         />
         <button
-          className="m-auto my-6 block w-11/12 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
-          disabled={loading}
+          className="m-auto my-6 flex w-11/12 justify-center rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+          disabled={credentialsLoading}
         >
-          {loading ? 'Loading...' : 'Log in'}
+          {credentialsLoading ? <TwoSeventyRing color="white" /> : 'Log in'}
         </button>
       </form>
       <hr className="border-t-solid border-t-1 text-md m-auto my-8 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
@@ -84,13 +88,17 @@ export default function LoginForm() {
         className="m-auto my-6 flex h-14 w-11/12 items-center justify-center gap-4 rounded-full border-none bg-white font-medium text-off-black shadow-md outline-none transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg"
         onClick={handleGoogleSignin}
       >
-        <Image
-          src="/btn_google_light_normal.svg"
-          alt="google"
-          width={50}
-          height={50}
-        />
-        {loading ? 'Loading...' : 'Log in with Google'}
+        {googleLoading ? (
+          <TwoSeventyRing color="black" />
+        ) : (
+          <Image
+            src="/btn_google_light_normal.svg"
+            alt="google"
+            width={50}
+            height={50}
+          />
+        )}
+        {googleLoading ? 'Loading...' : 'Log in with Google'}
       </button>
 
       <p>

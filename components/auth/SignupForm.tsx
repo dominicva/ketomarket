@@ -1,30 +1,33 @@
 'use client';
 
-import { signIn, getSession } from 'next-auth/react';
+import Image from 'next/image';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import Input from '../Input';
-import Image from 'next/image';
 
 const initial = { name: '', email: '', password: '' };
 
 export default function SignupForm() {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState({ ...initial });
-
+  const [credentialsLoading, setCredentialsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoading(true);
+    setCredentialsLoading(true);
 
     const res = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formState),
     });
-    setLoading(false);
+
     if (!res.ok) {
       alert((await res.json()).message);
+      setCredentialsLoading(false);
       return;
     }
 
@@ -35,17 +38,18 @@ export default function SignupForm() {
     });
 
     setFormState({ ...initial });
-    setLoading(false);
+    setCredentialsLoading(false);
   }
 
   async function handleGoogleSignin() {
+    setGoogleLoading(true);
+
     await signIn('google', {
       callbackUrl: '/profile',
       prompt: 'select_account',
     });
 
-    const session = await getSession();
-    console.log(session);
+    setGoogleLoading(false);
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -92,10 +96,10 @@ export default function SignupForm() {
           autocomplete="new-password"
         />
         <button
-          className="m-auto my-6 block h-14 w-11/12 rounded-full bg-secondary font-semibold text-white shadow transition-all duration-200 focus-within:outline-accent hover:translate-y-0.5 hover:shadow-md"
-          disabled={loading}
+          className="m-auto my-6 flex h-14 w-11/12 items-center justify-center rounded-full bg-secondary font-semibold text-white shadow transition-all duration-200 focus-within:outline-accent hover:translate-y-0.5 hover:shadow-md"
+          disabled={credentialsLoading}
         >
-          {loading ? 'Loading...' : 'Sign up'}
+          {credentialsLoading ? <TwoSeventyRing color="white" /> : 'Sign up'}
         </button>
       </form>
       <hr className="border-t-solid border-t-1 text-md m-auto my-8 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
@@ -103,13 +107,17 @@ export default function SignupForm() {
         className="m-auto my-6 flex h-14 w-11/12 items-center justify-center gap-4 rounded-full border-none bg-white font-medium text-off-black shadow-md outline-none transition-all duration-200 hover:translate-y-0.5 hover:shadow-lg"
         onClick={handleGoogleSignin}
       >
-        <Image
-          src="/btn_google_light_normal.svg"
-          alt="google"
-          width={50}
-          height={50}
-        />
-        {loading ? 'Loading...' : 'Sign up with Google'}
+        {googleLoading ? (
+          <TwoSeventyRing color="black" />
+        ) : (
+          <Image
+            src="/btn_google_light_normal.svg"
+            alt="google"
+            width={50}
+            height={50}
+          />
+        )}
+        {googleLoading ? 'Loading...' : 'Sign up with Google'}
       </button>
 
       <p>
