@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import { Session } from 'next-auth';
-import { Comfortaa } from 'next/font/google';
+import { comfortaa } from '@/lib/fonts';
 import {
   LoginButton,
   SignoutButton,
   ProfileButton,
   RegisterButton,
 } from './buttons';
-
-const comfortaa = Comfortaa({ subsets: ['latin'] });
 
 export default function Header({ session }: { session: Session | null }) {
   const isLoggedIn = Boolean(session?.user);

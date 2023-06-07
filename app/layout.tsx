@@ -1,12 +1,10 @@
 import './globals.css';
 import { NextAuthProvider } from './providers';
-import { Inter } from 'next/font/google';
 import { getServerSession } from 'next-auth';
+import { inter } from '@/lib/fonts';
 import { authOptions } from '@/lib/auth';
 import type { ServerSession } from '@/types/ServerSession';
 import Header from '@/components/Header';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Ketomarket',
