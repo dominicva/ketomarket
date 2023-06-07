@@ -109,37 +109,4 @@ export const DELETE = async (req: NextRequest) => {
       { status: 500 }
     );
   }
-
-  // console.log('req', req);
-  // const reqBody = await req.json();
-  // console.log('reqBody', reqBody);
-  // try {
-  //   const { cartItemId } = await req.json();
-  //   console.log('cartItemId', cartItemId);
-  //   await prisma.cartItem.delete({
-  //     where: { id: cartItemId },
-  //   });
-  //   return NextResponse.json({
-  //     data: { cartItemId },
-  //   });
-  // } catch (error) {
-  //   console.error(error);
-  //   return NextResponse.json(
-  //     { error: 'There was an error removing the item from your cart.' },
-  //     { status: 500 }
-  //   );
-  // }
 };
-
-// export const GET = async (req: NextRequest) => {
-// const params = req.nextUrl.searchParams;
-// console.log('params', params);
-// const headersList = headers();
-// console.log('headersList', headersList);
-// try {
-//   console.log('here');
-// } catch (error) {
-//   console.log('error happening here!', error);
-// }
-// console.log('req', req);
-// };
