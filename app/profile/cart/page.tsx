@@ -52,6 +52,11 @@ export default async function Cart() {
         </ul>
       </Card>
       <div className="mt-12 flex flex-col gap-6">
+        <Link href="/home" className="flex items-center justify-center">
+          <Button intent="tertiary" size="large" className="w-11/12">
+            Continue shopping
+          </Button>
+        </Link>
         <Link href="/checkout" className="flex items-center justify-center">
           <Button
             intent={emptyCart ? 'disabled' : 'primary'}
@@ -61,11 +66,6 @@ export default async function Cart() {
             disabled={emptyCart}
           >
             Checkout
-          </Button>
-        </Link>
-        <Link href="/home" className="flex items-center justify-center">
-          <Button intent="tertiary" size="large" className="w-11/12">
-            Continue shopping
           </Button>
         </Link>
       </div>
