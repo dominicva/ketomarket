@@ -19,7 +19,8 @@ export default function Product({
   const router = useRouter();
   const productTitle = capitalize(name);
 
-  const Msg = ({ closeToast }: { closeToast: () => void }) => {
+  // @ts-expect-error react-toastify injects closeToast() into the component
+  const Msg = ({ closeToast }) => {
     return (
       <div className="flex flex-col justify-center px-4">
         <p className="font-bold">{`Added ${productTitle} to cart!`}</p>
@@ -39,6 +40,7 @@ export default function Product({
   };
 
   const notify = () =>
+    // @ts-expect-error react-toastify injects props into the component
     toast(Msg, {
       type: 'success',
       position: 'bottom-center',

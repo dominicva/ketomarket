@@ -84,6 +84,62 @@ export const PUT = async (req: NextRequest) => {
       data: cartItem,
     });
   } catch {
-    return NextResponse.error();
+    return NextResponse.json(
+      { error: 'There was an error updating the item in your cart.' },
+      { status: 500 }
+    );
   }
 };
+
+export const DELETE = async (req: NextRequest) => {
+  try {
+    const cartItemId = req.nextUrl.searchParams.get('cartItemId') ?? '';
+
+    const deletedCartItem = await prisma.cartItem.delete({
+      where: { id: cartItemId },
+    });
+
+    return NextResponse.json({
+      data: deletedCartItem,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: 'There was an error removing the item from your cart.' },
+      { status: 500 }
+    );
+  }
+
+  // console.log('req', req);
+  // const reqBody = await req.json();
+  // console.log('reqBody', reqBody);
+  // try {
+  //   const { cartItemId } = await req.json();
+  //   console.log('cartItemId', cartItemId);
+  //   await prisma.cartItem.delete({
+  //     where: { id: cartItemId },
+  //   });
+  //   return NextResponse.json({
+  //     data: { cartItemId },
+  //   });
+  // } catch (error) {
+  //   console.error(error);
+  //   return NextResponse.json(
+  //     { error: 'There was an error removing the item from your cart.' },
+  //     { status: 500 }
+  //   );
+  // }
+};
+
+// export const GET = async (req: NextRequest) => {
+// const params = req.nextUrl.searchParams;
+// console.log('params', params);
+// const headersList = headers();
+// console.log('headersList', headersList);
+// try {
+//   console.log('here');
+// } catch (error) {
+//   console.log('error happening here!', error);
+// }
+// console.log('req', req);
+// };
