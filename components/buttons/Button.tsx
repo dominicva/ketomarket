@@ -21,6 +21,7 @@ const buttonClasses = cva(
         secondary: ['bg-tertiary', 'text-white', 'border-gray-200'],
         tertiary: ['text-secondary', 'border-secondary', 'border-2'],
         text: ['bg-transparent', 'text-off-black', 'hover:bg-gray-100'],
+        disabled: ['bg-gray-300', 'text-gray-400', 'cursor-not-allowed'],
       },
       size: {
         small: ['text-md', 'px-3', 'py-2'],
@@ -52,5 +53,3 @@ export const Button: FC<ButtonProps> = ({
     </button>
   );
 };
-
-// export default Button;

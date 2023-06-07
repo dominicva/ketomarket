@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { Trash } from 'react-feather';
 import { updateCartItemQty } from '@/lib/api';
@@ -16,6 +17,18 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
   const [quantity, setQuantity] = useState(cartItem.quantity);
   const total = cartItem.product.price * quantity;
 
+  const notify = () =>
+    toast(`${capitalize(cartItem.product.name)} removed from cart`, {
+      type: 'success',
+      position: 'bottom-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: 'light',
+    });
+
   const handleDelete = async () => {
     setLoadingDelete(true);
     await fetch(`/api/cart?cartItemId=${cartItem.id}`, {
@@ -23,6 +36,7 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
     });
 
     router.refresh();
+    notify();
     setLoadingDelete(false);
   };
 
@@ -91,6 +105,14 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
             )}
           </Button>
         </div>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </li>
     </Card>
   );

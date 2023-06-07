@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import { Plus } from 'react-feather';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
@@ -16,6 +18,7 @@ export default function Product({
   price,
   category,
 }: ProductProps) {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const productTitle = capitalize(name);
 
@@ -53,6 +56,7 @@ export default function Product({
     });
 
   const addToCart = async () => {
+    setLoading(true);
     await fetch('/api/cart', {
       method: 'POST',
       body: JSON.stringify({
@@ -64,11 +68,12 @@ export default function Product({
     });
 
     router.refresh();
+    setLoading(false);
     notify();
   };
 
   return (
-    <Card className="relative bg-off-white">
+    <Card className="relative">
       <h3 className="text-xl">{productTitle}</h3>
       <h5 className="text-sm font-bold text-secondary">
         {capitalize(category.name)}
@@ -82,7 +87,7 @@ export default function Product({
         className="absolute right-4 top-4 mt-4 flex gap-2"
         onClick={addToCart}
       >
-        <Plus />
+        {loading ? <TwoSeventyRing color="#09624B" /> : <Plus />}
         Add to cart
       </Button>
       <ToastContainer
