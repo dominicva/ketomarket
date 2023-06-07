@@ -1,9 +1,9 @@
+import { Suspense } from 'react';
 import { prisma } from '@/lib/db';
 import { capitalize } from '@/lib/strings';
 import Product from './Product';
 import ProductSkeleton from './ProductSkeleton';
 import type { CategoryWithProducts } from '@/types';
-import { Suspense } from 'react';
 
 export default async function ProductList() {
   const categories: CategoryWithProducts[] = await prisma.category.findMany({

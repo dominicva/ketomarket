@@ -1,11 +1,11 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { Plus } from 'react-feather';
-import { getServerSession } from 'next-auth';
-import { prisma } from '@/lib/db';
-import { authOptions } from '@/lib/auth';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
-import type { ProductProps, ServerSession } from '@/types';
+import type { ProductProps } from '@/types';
 
 export default async function Product({
   id,
@@ -14,87 +14,20 @@ export default async function Product({
   price,
   category,
 }: ProductProps) {
-  const session: ServerSession = await getServerSession(authOptions);
-
-  if (!session?.user) {
-    return null;
-  }
+  const router = useRouter();
 
   const addToCart = async () => {
-    'use server';
-
-    const existingCart = await prisma.cart.findFirst({
-      where: {
-        userId: session?.user.id,
+    await fetch('/api/cart', {
+      method: 'POST',
+      body: JSON.stringify({
+        productId: id,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
       },
     });
 
-    console.log('existingCart', existingCart ?? 'no cart');
-
-    if (existingCart) {
-      const existingCartItem = await prisma.cartItem.findFirst({
-        where: {
-          cartId: existingCart?.id,
-          productId: id,
-        },
-      });
-      console.log('existingCartItem', existingCartItem);
-
-      if (existingCartItem) {
-        await prisma.cartItem.update({
-          where: {
-            id: existingCartItem.id,
-          },
-          data: {
-            quantity: existingCartItem.quantity + 1,
-          },
-        });
-      } else {
-        await prisma.cartItem.create({
-          data: {
-            cartId: existingCart.id,
-            productId: id,
-            quantity: 1,
-          },
-        });
-      }
-    } else {
-      const newCart = await prisma.cart.create({
-        data: {
-          userId: session?.user.id,
-          cartItems: {
-            create: {
-              productId: id,
-              quantity: 1,
-            },
-          },
-        },
-      });
-      console.log('newCart', newCart);
-    }
-
-    // if (existingCartItem) {
-    //   await prisma.cartItem.update({
-    //     where: {
-    //       id: existingCartItem.id,
-    //     },
-    //     data: {
-    //       quantity: existingCartItem.quantity + 1,
-    //     },
-    //   });
-    // }
-
-    // if (!existingCartItem && existingCart) {
-    //   const newCartItem = await prisma.cartItem.create({
-    //     data: {
-    //       cartId: existingCart.id,
-    //       productId: id,
-    //       quantity: 1,
-    //     },
-    //   });
-
-    // console.log('newCartItem', newCartItem);
-    // }
+    router.refresh();
   };
 
   return (
@@ -105,16 +38,16 @@ export default async function Product({
       </h5>
       <h4 className="mb-2 font-semibold">${price}</h4>
       <p>{description}</p>
-      <form action={addToCart}>
-        <Button
-          intent="tertiary"
-          size="small"
-          className="absolute right-4 top-4 mt-4 flex gap-2"
-        >
-          <Plus />
-          Add to cart
-        </Button>
-      </form>
+
+      <Button
+        intent="tertiary"
+        size="small"
+        className="absolute right-4 top-4 mt-4 flex gap-2"
+        onClick={addToCart}
+      >
+        <Plus />
+        Add to cart
+      </Button>
     </Card>
   );
 }
