@@ -50,6 +50,7 @@ export default function CartItem({
     setLoadingUpdate(true);
     setQuantity(newQuantity);
     await submitForm(e, newQuantity);
+    router.refresh();
     setLoadingUpdate(false);
   };
 

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { User } from 'react-feather';
 
 interface ProfileButtonProps {
@@ -9,7 +10,7 @@ interface ProfileButtonProps {
 
 export const ProfileButton = ({ name, imageSrc }: ProfileButtonProps) => {
   return (
-    <Link href="/profile">
+    <Link href="/profile/cart">
       <button>
         {imageSrc ? (
           <Image

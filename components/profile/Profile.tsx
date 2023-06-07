@@ -22,7 +22,8 @@ export default function Profile({ session, children }: ProfileProps) {
             <h2 className=" text-xl font-semibold">{user?.name}</h2>
           </figcaption>
         </figure>
-        <ProfileNav session={session} />
+        <ProfileNav />
+        {/* <ProfileNav session={session} /> */}
       </section>
       {children}
     </>

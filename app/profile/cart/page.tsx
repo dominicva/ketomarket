@@ -1,45 +1,18 @@
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { Cart } from '@prisma/client';
-import { prisma } from '@/lib/db';
+import { getCurrentCart, getCartTotal } from '@/lib/cart';
 import { authOptions } from '@/lib/auth';
 import Card from '@/components/Card';
 import CartItem from '@/components/cart/CartItem';
 import { Button } from '@/components/buttons';
-import type {
-  ServerSession,
-  CartWithItemsAndProducts,
-  CartItemWithProduct,
-} from '@/types';
-
-const getCurrentCart = async (
-  userId: string | undefined
-): Promise<CartWithItemsAndProducts | null> => {
-  try {
-    const carts = await prisma.cart.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        cartItems: {
-          include: {
-            product: true,
-          },
-        },
-      },
-    });
-
-    return carts[0];
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
+import type { ServerSession, CartItemWithProduct } from '@/types';
 
 export default async function Cart() {
   const session: ServerSession = await getServerSession(authOptions);
   const currentCart = await getCurrentCart(session?.user.id);
   const emptyCart = !currentCart?.cartItems.length;
+  const cartTotal = currentCart ? getCartTotal(currentCart) : 0;
 
   return (
     <section>
@@ -54,6 +27,13 @@ export default async function Cart() {
             <p className="mt-6 text-lg">No items in cart 😞</p>
           )}
         </ul>
+      </Card>
+      <Card className="mt-4 bg-white">
+        <h2 className="text-2xl font-semibold">Order Summary</h2>
+        <div className="mt-6 flex justify-between">
+          <p className="text-lg">Subtotal</p>
+          <p className="text-lg">${cartTotal.toFixed(2)}</p>
+        </div>
       </Card>
       <div className="mt-12 flex flex-col gap-6">
         <Link href="/home" className="flex items-center justify-center">
