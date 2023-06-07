@@ -9,34 +9,29 @@ import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
 
-// function Spinner() {
-//   return (
-//     <div className="flex h-6 w-14  items-center justify-center rounded bg-accent p-2">
-//       <TwoSeventyRing color="white" width={20} height={20} />
-//     </div>
-//   );
-// }
-
 export default function CartItem({ cartItem }: { cartItem: any }) {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [quantity, setQuantity] = useState(cartItem.quantity);
   const total = cartItem.product.price * quantity;
 
   const handleDelete = async () => {
+    setLoadingDelete(true);
     await fetch(`/api/cart?cartItemId=${cartItem.id}`, {
       method: 'DELETE',
     });
 
     router.refresh();
+    setLoadingDelete(false);
   };
 
   const handleSelectChange = async (e: FormEvent<HTMLSelectElement>) => {
     const newQuantity = Number(e.currentTarget.value);
-    setLoading(true);
+    setLoadingUpdate(true);
     setQuantity(newQuantity);
     await submitForm(e, newQuantity);
-    setLoading(false);
+    setLoadingUpdate(false);
   };
 
   const submitForm = async (
@@ -60,7 +55,7 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
 
         <hgroup>
           <h4 className="mb-2">Total</h4>
-          {loading ? (
+          {loadingUpdate ? (
             <div className="flex h-6 w-14  items-center justify-center rounded bg-accent p-2">
               <TwoSeventyRing color="white" width={20} height={20} />
             </div>
@@ -89,7 +84,11 @@ export default function CartItem({ cartItem }: { cartItem: any }) {
             className="flex justify-center"
             onClick={handleDelete}
           >
-            <Trash size={20} />
+            {loadingDelete ? (
+              <TwoSeventyRing color="white" width={20} height={20} />
+            ) : (
+              <Trash size={20} />
+            )}
           </Button>
         </div>
       </li>
