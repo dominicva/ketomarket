@@ -23,10 +23,8 @@ export default async function ProductList() {
             </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category.products.map(product => (
-                <Suspense fallback={<ProductSkeleton />}>
-                  {/* @ts-expect-error Async Server Component */}
+                <Suspense key={product.id} fallback={<ProductSkeleton />}>
                   <Product
-                    key={product.id}
                     id={product.id}
                     name={product.name}
                     description={product.description}
