@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { TwoSeventyRing } from 'react-svg-spinners';
@@ -16,6 +17,7 @@ export default function Product({
   name,
   description,
   price,
+  image,
   category,
 }: ProductProps) {
   const [loading, setLoading] = useState(false);
@@ -73,31 +75,41 @@ export default function Product({
   };
 
   return (
-    <Card className="relative">
-      <h3 className="text-xl">{productTitle}</h3>
-      <h5 className="text-sm font-bold text-secondary">
-        {capitalize(category.name)}
-      </h5>
-      <h4 className="mb-2 font-semibold">${price}</h4>
-      <p>{description}</p>
-
-      <Button
-        intent="tertiary"
-        size="small"
-        className="absolute right-4 top-4 mt-4 flex gap-2"
-        onClick={addToCart}
-      >
-        {loading ? <TwoSeventyRing color="#09624B" /> : <Plus />}
-        Add to cart
-      </Button>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={3000}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+    <Card>
+      <Image
+        src={image ?? ''}
+        alt={name}
+        width={200}
+        height={200}
+        className="m-auto mb-4 w-full rounded-md shadow-md"
       />
+
+      <div className="relative">
+        <h3 className="text-xl">{productTitle}</h3>
+        <h5 className="text-sm font-bold text-secondary">
+          {capitalize(category.name)}
+        </h5>
+        <h4 className="mb-2 font-semibold">${price}</h4>
+        <p>{description}</p>
+
+        <Button
+          intent="tertiary"
+          size="small"
+          className="absolute right-0 top-0 flex items-center gap-1"
+          onClick={addToCart}
+        >
+          {loading ? <TwoSeventyRing color="#09624B" /> : <Plus size={18} />}
+          Add to cart
+        </Button>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
     </Card>
   );
 }

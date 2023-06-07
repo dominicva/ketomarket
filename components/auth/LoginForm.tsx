@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
-import Input from './Input';
+import Input from '../Input';
 
 const initial = { name: '', email: '', password: '' };
 

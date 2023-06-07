@@ -40,6 +40,8 @@ async function main() {
       description:
         'Pecans are a type of tree nut native to North America. Thanks to their rich and buttery flavor, they’re a popular ingredient in desserts and other dishes, such as pecan pie, pecan-crusted chicken, and butter pecan ice cream.',
       price: 5.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/pecans_yb4vlt',
       category: { connect: { name: 'nuts' } },
     },
   });
@@ -52,6 +54,8 @@ async function main() {
       description:
         'Almonds are among the world’s most popular tree nuts. They are highly nutritious and rich in healthy fats, antioxidants, vitamins and minerals.',
       price: 4.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/almonds_vwlne0',
       category: { connect: { name: 'nuts' } },
     },
   });
@@ -64,6 +68,8 @@ async function main() {
       description:
         'Cashews are low in sugar and rich in fiber, heart-healthy fats, and plant protein. They’re also a good source of copper, magnesium, and manganese — nutrients important for energy production, brain health, immunity, and bone health.',
       price: 6.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/cashews_or3mix',
       category: { connect: { name: 'nuts' } },
     },
   });
@@ -76,6 +82,8 @@ async function main() {
       description:
         'Walnuts are a single-seed fruit that provide healthful fats, protein, copper, manganese, and other essential nutrients.',
       price: 7.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/walnuts_tykrwf',
       category: { connect: { name: 'nuts' } },
     },
   });
@@ -98,6 +106,8 @@ async function main() {
       description:
         'Parmesan cheese is a good source of protein and fat. It’s also rich in vitamins and minerals like calcium, vitamin A, vitamins B6 and B12, phosphorus, zinc, and copper.',
       price: 8.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/parmesan_yrndka',
       category: { connect: { name: 'dairy' } },
     },
   });
@@ -110,6 +120,8 @@ async function main() {
       description:
         'Eggs are a very good source of inexpensive, high quality protein. More than half the protein of an egg is found in the egg white, which also includes vitamin B2 and lower amounts of fat than the yolk. Eggs are rich sources of selenium, vitamin D, B6, B12 and minerals such as zinc, iron and copper.',
       price: 3.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/eggs_sc4zjd',
       category: { connect: { name: 'dairy' } },
     },
   });
@@ -132,6 +144,8 @@ async function main() {
       description:
         'Broccoli is a good source of fiber and protein, and contains iron, potassium, calcium, selenium and magnesium as well as the vitamins A, C, E, K and a good array of B vitamins including folic acid.',
       price: 2.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/broccoli_du5rig',
       category: { connect: { name: 'vegetables' } },
     },
   });
@@ -144,6 +158,8 @@ async function main() {
       description:
         'Spinach is an excellent source of vitamin K, vitamin A (in the form of carotenoids), manganese, folate, magnesium, iron, copper, vitamin B2, vitamin B6, vitamin E, calcium, potassium and vitamin C. It is a very good source of dietary fiber, phosphorus, vitamin B1, zinc, protein and choline.',
       price: 1.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/spinach_jrlfmi',
       category: { connect: { name: 'vegetables' } },
     },
   });
@@ -166,6 +182,8 @@ async function main() {
       description:
         'Salmon is a popular fatty fish and great source of vitamin D. ... Salmon is also a good source of vitamin B12, selenium and choline. It contains the antioxidant astaxanthin, which has benefits for heart, eye and skin health.',
       price: 9.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/salmon_herzsm',
       category: { connect: { name: 'seafood' } },
     },
   });
@@ -178,6 +196,8 @@ async function main() {
       description:
         'Tuna is a good source of essential nutrients, such as omega-3 fatty acids, high quality protein, selenium and Vitamin D. It is widely available and most commonly consumed as canned tuna.',
       price: 8.99,
+      image:
+        'https://res.cloudinary.com/dwyxxivqb/image/upload/f_auto,q_auto/tuna_gmqfya',
       category: { connect: { name: 'seafood' } },
     },
   });

@@ -29,6 +29,7 @@ export default async function ProductList() {
                     name={product.name}
                     description={product.description}
                     price={product.price}
+                    image={product.image}
                     category={category}
                   />
                 </Suspense>

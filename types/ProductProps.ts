@@ -3,7 +3,7 @@ import { ProductWithCategory } from './ProductWithCategory';
 
 export type ProductProps = Pick<
   Product,
-  'id' | 'name' | 'description' | 'price'
+  'id' | 'name' | 'description' | 'price' | 'image'
 > & {
   category: ProductWithCategory['category'];
 };

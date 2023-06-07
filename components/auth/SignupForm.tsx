@@ -4,7 +4,7 @@ import { signIn, getSession } from 'next-auth/react';
 import Link from 'next/link';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
-import Input from './Input';
+import Input from '../Input';
 import Image from 'next/image';
 
 const initial = { name: '', email: '', password: '' };
