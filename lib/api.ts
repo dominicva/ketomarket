@@ -1,4 +1,4 @@
-import type { CartItem } from '@prisma/client';
+import type { CartItemWithProduct } from '@/types';
 
 export const fetcher = async ({
   url,
@@ -31,7 +31,7 @@ export const fetcher = async ({
 };
 
 export const updateCartItemQty = async (
-  cartItemId: Pick<CartItem, 'id'>,
+  cartItemId: CartItemWithProduct['id'],
   quantity: number
 ) => {
   return fetcher({

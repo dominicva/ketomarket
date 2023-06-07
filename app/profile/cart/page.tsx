@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { Cart } from '@prisma/client';
 import { prisma } from '@/lib/db';
@@ -5,8 +6,11 @@ import { authOptions } from '@/lib/auth';
 import Card from '@/components/Card';
 import CartItem from '@/components/cart/CartItem';
 import { Button } from '@/components/buttons';
-import type { ServerSession, CartWithItemsAndProducts } from '@/types';
-import Link from 'next/link';
+import type {
+  ServerSession,
+  CartWithItemsAndProducts,
+  CartItemWithProduct,
+} from '@/types';
 
 const getCurrentCart = async (
   userId: string | undefined
@@ -43,7 +47,7 @@ export default async function Cart() {
         <h2 className="text-2xl font-semibold">Cart</h2>
         <ul>
           {currentCart?.cartItems.length ? (
-            currentCart.cartItems.map((cartItem: any) => (
+            currentCart.cartItems.map((cartItem: CartItemWithProduct) => (
               <CartItem key={cartItem.id} cartItem={cartItem} />
             ))
           ) : (

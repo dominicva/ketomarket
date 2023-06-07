@@ -9,8 +9,13 @@ import { updateCartItemQty } from '@/lib/api';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
+import type { CartItemWithProduct } from '@/types';
 
-export default function CartItem({ cartItem }: { cartItem: any }) {
+export default function CartItem({
+  cartItem,
+}: {
+  cartItem: CartItemWithProduct;
+}) {
   const router = useRouter();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
