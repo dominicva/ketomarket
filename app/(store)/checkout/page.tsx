@@ -6,6 +6,7 @@ import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import type { ServerSession } from '@/types';
 import { Button } from '@/components/buttons';
+import Link from 'next/link';
 
 export default async function Checkout() {
   const session: ServerSession = await getServerSession(authOptions);
@@ -69,13 +70,24 @@ export default async function Checkout() {
           <p className="text-lg font-bold">${total.toFixed(2)}</p>
         </div>
       </Card>
-      <Button
-        className="m-auto mt-8 block w-11/12"
-        intent="primary"
-        size="large"
-      >
-        Proceed to payment
-      </Button>
+      <Link href="/checkout/payment">
+        <Button
+          className="m-auto mt-8 block w-11/12"
+          intent="primary"
+          size="large"
+        >
+          Proceed to payment
+        </Button>
+      </Link>
+      <Link href="/home">
+        <Button
+          className="m-auto mt-8 block w-11/12"
+          intent="tertiary"
+          size="large"
+        >
+          Return to store
+        </Button>
+      </Link>
     </div>
   );
 }
