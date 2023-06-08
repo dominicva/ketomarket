@@ -7,6 +7,9 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import { TwoSeventyRing } from 'react-svg-spinners';
+import Card from './Card';
+import { Button } from './buttons';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -82,19 +85,32 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <LinkAuthenticationElement
-        id="link-authentication-element"
-        onChange={(e: any) => setEmail(e.target?.value)}
-      />
-      {/* @ts-expect-error */}
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button id="submit" disabled={isLoading || !stripe || !elements}>
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}
-        </span>
-      </button>
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+    <Card>
+      <h2 className="mb-8 text-2xl font-semibold">Complete your payment</h2>
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <LinkAuthenticationElement
+          id="link-authentication-element"
+          onChange={(e: any) => setEmail(e.target?.value)}
+        />
+        {/* @ts-expect-error */}
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <Button
+          id="submit"
+          // @ts-expect-error disabled prop missing from buttonTypes
+          disabled={isLoading || !stripe || !elements}
+          className="m-auto mb-4 mt-8 flex w-11/12 justify-center py-2"
+        >
+          {isLoading ? <TwoSeventyRing color="white" /> : 'Pay now'}
+        </Button>
+        {message && (
+          <div
+            id="payment-message"
+            className="text-center text-lg font-semibold text-tertiary"
+          >
+            ❌ {message}
+          </div>
+        )}
+      </form>
+    </Card>
   );
 }
