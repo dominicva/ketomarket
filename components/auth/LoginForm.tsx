@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { signIn } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { TwoSeventyRing } from 'react-svg-spinners';
-import { X } from 'react-feather';
+import { X, Mail } from 'react-feather';
 import Input from '../Input';
 
 const initial = { name: '', email: '', password: '' };
@@ -77,10 +77,17 @@ export default function LoginForm() {
           autocomplete="current-password"
         />
         <button
-          className="m-auto my-6 flex w-11/12 justify-center rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
+          className="m-auto my-6 flex w-11/12 justify-center gap-7 rounded-full bg-secondary p-4 font-semibold text-white focus-within:outline-accent"
           disabled={credentialsLoading}
         >
-          {credentialsLoading ? <TwoSeventyRing color="white" /> : 'Log in'}
+          {credentialsLoading ? (
+            <TwoSeventyRing color="white" />
+          ) : (
+            <>
+              <Mail />
+              Log in with email
+            </>
+          )}
         </button>
       </form>
       <hr className="border-t-solid border-t-1 text-md m-auto my-8 w-11/12 overflow-visible border-off-black text-center text-off-black opacity-50 after:relative after:-top-[13px] after:bg-white after:p-2 after:content-['or']" />
