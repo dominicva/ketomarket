@@ -70,7 +70,8 @@ export default async function Checkout() {
           <p className="text-lg font-bold">${total.toFixed(2)}</p>
         </div>
       </Card>
-      <Link href="/checkout/payment">
+      {/* Stripe wants the total price in cents */}
+      <Link href={`/checkout/${total}/payment`}>
         <Button
           className="m-auto mt-8 block w-11/12"
           intent="primary"

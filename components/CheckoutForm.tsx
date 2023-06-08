@@ -1,5 +1,6 @@
 'use client';
 
+import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import {
   PaymentElement,
@@ -12,6 +13,8 @@ import Card from './Card';
 import { Button } from './buttons';
 
 export default function CheckoutForm() {
+  const params = useParams();
+  const total = Number(params.total);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -87,6 +90,7 @@ export default function CheckoutForm() {
   return (
     <Card>
       <h2 className="mb-8 text-2xl font-semibold">Complete your payment</h2>
+      {/* <h3 className="mb-4 text-xl">{total}</h3> */}
       <form id="payment-form" onSubmit={handleSubmit}>
         <LinkAuthenticationElement
           id="link-authentication-element"
@@ -100,7 +104,11 @@ export default function CheckoutForm() {
           disabled={isLoading || !stripe || !elements}
           className="m-auto mb-4 mt-8 flex w-11/12 justify-center py-2"
         >
-          {isLoading ? <TwoSeventyRing color="white" /> : 'Pay now'}
+          {isLoading ? (
+            <TwoSeventyRing color="white" />
+          ) : (
+            `Pay $${total.toFixed(2)}`
+          )}
         </Button>
         {message && (
           <div

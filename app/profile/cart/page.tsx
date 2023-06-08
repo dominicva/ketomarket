@@ -10,7 +10,8 @@ import type { ServerSession, CartItemWithProduct } from '@/types';
 
 export default async function Cart() {
   const session: ServerSession = await getServerSession(authOptions);
-  const currentCart = await getCurrentCart(session?.user.id);
+  const userId = session?.user.id;
+  const currentCart = await getCurrentCart(userId);
   const emptyCart = !currentCart?.cartItems.length;
   const cartTotal = currentCart ? getCartTotal(currentCart) : 0;
 
@@ -41,7 +42,10 @@ export default async function Cart() {
             Continue shopping
           </Button>
         </Link>
-        <Link href="/checkout" className="flex items-center justify-center">
+        <Link
+          href={`/checkout/${cartTotal}`}
+          className="flex items-center justify-center"
+        >
           <Button
             intent={emptyCart ? 'disabled' : 'primary'}
             size="large"
