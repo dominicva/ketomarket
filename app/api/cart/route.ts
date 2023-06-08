@@ -18,8 +18,6 @@ export const GET = async (req: NextRequest) => {
     },
   };
 
-  console.log('res', res);
-
   return NextResponse.json({
     data: {
       cart,
