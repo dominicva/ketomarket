@@ -1,6 +1,5 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import {
   PaymentElement,
@@ -13,8 +12,7 @@ import Card from './Card';
 import { Button } from './buttons';
 
 export default function CheckoutForm() {
-  const params = useParams();
-  const total = Number(params.total);
+  const [total, setTotal] = useState(0);
   const stripe = useStripe();
   const elements = useElements();
 
@@ -23,6 +21,18 @@ export default function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const getCartTotal = async () => {
+      const res = await fetch('/api/cart');
+      const {
+        data: { cartTotal },
+      } = await res.json();
+      return cartTotal;
+    };
+
+    getCartTotal().then(cartTotal => {
+      setTotal(cartTotal);
+    });
+
     if (!stripe) {
       return;
     }

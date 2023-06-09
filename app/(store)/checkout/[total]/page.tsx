@@ -1,18 +1,14 @@
-import Image from 'next/image';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { getCurrentCart, getCartTotal } from '@/lib/cart';
-import { capitalize } from '@/lib/strings';
-import Card from '@/components/Card';
-import type { ServerSession } from '@/types';
-import { Button } from '@/components/buttons';
 import Link from 'next/link';
+import Image from 'next/image';
+import { capitalize } from '@/lib/strings';
+import { getCartData } from '@/lib/cart';
+import Card from '@/components/Card';
+import { Button } from '@/components/buttons';
 
 export default async function Checkout() {
-  const session: ServerSession = await getServerSession(authOptions);
-  const userId = session?.user.id;
-  const cart = await getCurrentCart(userId);
-  const total = cart ? getCartTotal(cart) : 0;
+  const {
+    data: { cart, cartTotal },
+  } = await getCartData();
 
   return (
     <div className="p-4">
@@ -59,7 +55,7 @@ export default async function Checkout() {
         <h2 className="text-2xl font-semibold">Order Summary</h2>
         <div className="mt-6 flex justify-between">
           <p className="text-lg">Subtotal</p>
-          <p className="text-lg">${total.toFixed(2)}</p>
+          <p className="text-lg">${cartTotal.toFixed(2)}</p>
         </div>
         <div className="mt-6 flex justify-between border-b-4 border-primary pb-6">
           <p className="text-lg">Shipping</p>
@@ -67,11 +63,11 @@ export default async function Checkout() {
         </div>
         <div className="mt-4 flex justify-between">
           <p className="text-lg font-bold">Total</p>
-          <p className="text-lg font-bold">${total.toFixed(2)}</p>
+          <p className="text-lg font-bold">${cartTotal.toFixed(2)}</p>
         </div>
       </Card>
-      {/* Stripe wants the total price in cents */}
-      <Link href={`/checkout/${total}/payment`}>
+      {/* Stripe wants the cartTotal price in cents */}
+      <Link href={`/checkout/${cartTotal}/payment`}>
         <Button
           className="m-auto mt-8 block w-11/12"
           intent="primary"
