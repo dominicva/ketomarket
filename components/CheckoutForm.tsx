@@ -80,7 +80,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         receipt_email: email,
-        return_url: `${window.location.origin}/checkout/${total}/payment/completion`,
+        return_url: `${window.location.origin}/checkout/payment/completion`,
       },
     });
 
