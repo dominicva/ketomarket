@@ -67,7 +67,7 @@ export default async function Checkout() {
         </div>
       </Card>
       {/* Stripe wants the cartTotal price in cents */}
-      <Link href={`/checkout/${cartTotal}/payment`}>
+      <Link href={`/checkout/payment`}>
         <Button
           className="m-auto mt-8 block w-11/12"
           intent="primary"

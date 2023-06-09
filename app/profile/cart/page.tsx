@@ -42,10 +42,7 @@ export default async function Cart() {
             Continue shopping
           </Button>
         </Link>
-        <Link
-          href={`/checkout/${cartTotal}`}
-          className="flex items-center justify-center"
-        >
+        <Link href={`/checkout`} className="flex items-center justify-center">
           <Button
             intent={emptyCart ? 'disabled' : 'primary'}
             size="large"
