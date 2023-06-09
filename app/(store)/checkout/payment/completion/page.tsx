@@ -1,7 +1,8 @@
+import Link from 'next/link';
 import { CheckCircle } from 'react-feather';
 import { getCartData } from '@/lib/cart';
 import Card from '@/components/Card';
-import { OrderReview } from '@/components/order';
+import { Button } from '@/components/buttons';
 
 export default async function Payment() {
   const {
@@ -17,14 +18,11 @@ export default async function Payment() {
           <CheckCircle className="h-32 w-32 text-green-500" size="xl" />
         </div>
       </Card>
-      {cart ? (
-        <OrderReview cart={cart} />
-      ) : (
-        <div className="mt-8 text-center text-lg">
-          <p>Order details are currently unavailable.</p>
-          <p>Please check your email for your receipt.</p>
-        </div>
-      )}
+      <Link href="/home">
+        <Button size="large" className="m-auto mt-8 block w-11/12">
+          Back to store
+        </Button>
+      </Link>
     </div>
   );
 }
