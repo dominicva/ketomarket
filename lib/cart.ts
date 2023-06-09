@@ -1,5 +1,7 @@
+import { getServerSession } from 'next-auth';
 import { prisma } from './db';
-import type { CartWithItemsAndProducts } from '@/types';
+import { authOptions } from './auth';
+import type { CartWithItemsAndProducts, ServerSession } from '@/types';
 
 export const getCurrentCart = async (
   userId: string | undefined
@@ -33,4 +35,18 @@ export const getCartTotal = (cart: CartWithItemsAndProducts): number => {
   }
 
   return total;
+};
+
+export const getCartData = async () => {
+  const session: ServerSession = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+  const cart = await getCurrentCart(String(userId));
+  const cartTotal = cart ? getCartTotal(cart) : 0;
+
+  return {
+    data: {
+      cart,
+      cartTotal,
+    },
+  };
 };

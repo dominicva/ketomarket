@@ -6,7 +6,7 @@ export default async function ProductsTeaser() {
 
   return (
     <section className="p-4">
-      <h2 className="mt-4 px-4 text-center text-2xl font-bold">
+      <h2 className="mb-12 mt-6 px-4 text-center text-2xl font-bold">
         Log in to order from our collection of{' '}
         <span className="text-tertiary">keto-friendly</span> products
       </h2>

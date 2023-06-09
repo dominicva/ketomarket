@@ -2,28 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { getCurrentCart, getCartTotal } from '@/lib/cart';
+import { getCartData } from '@/lib/cart';
 import type { ServerSession } from '@/types';
 
-export const GET = async (req: NextRequest) => {
-  const searchParams = new URL(req.url).searchParams;
-  const userId = searchParams.get('userId');
-  const cart = await getCurrentCart(String(userId));
-  const cartTotal = cart ? getCartTotal(cart) : 0;
-
-  const res = {
-    data: {
-      cart,
-      cartTotal,
-    },
-  };
-
-  return NextResponse.json({
-    data: {
-      cart,
-      cartTotal,
-    },
-  });
+export const GET = async () => {
+  const { data } = await getCartData();
+  return NextResponse.json({ data });
 };
 
 export const POST = async (req: NextRequest) => {

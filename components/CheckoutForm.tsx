@@ -69,7 +69,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
+        receipt_email: email,
         return_url: `${window.location.origin}/checkout/${total}/payment/completion`,
       },
     });
@@ -90,7 +90,6 @@ export default function CheckoutForm() {
   return (
     <Card>
       <h2 className="mb-8 text-2xl font-semibold">Complete your payment</h2>
-      {/* <h3 className="mb-4 text-xl">{total}</h3> */}
       <form id="payment-form" onSubmit={handleSubmit}>
         <LinkAuthenticationElement
           id="link-authentication-element"
