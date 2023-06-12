@@ -4,7 +4,7 @@ import type { CartItemWithProduct } from '@/types';
 
 export function OrderItem({ item }: { item: CartItemWithProduct }) {
   return (
-    <>
+    <div className="mt-4 flex items-center justify-between border-b-2 pb-4">
       <div className="flex items-center">
         <Image
           src={String(item.product.image)}
@@ -31,6 +31,6 @@ export function OrderItem({ item }: { item: CartItemWithProduct }) {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

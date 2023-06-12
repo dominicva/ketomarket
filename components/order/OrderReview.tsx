@@ -9,12 +9,7 @@ export function OrderReview({ cart }: { cart: CartWithItemsAndProducts }) {
       <h3 className="mt-6 text-xl">Review your order</h3>
       <section className="mt-6">
         {cart.cartItems.map(item => (
-          <div
-            key={item.id}
-            className="mt-4 flex items-center justify-between border-b-2 pb-4"
-          >
-            <OrderItem item={item} />
-          </div>
+          <OrderItem key={item.id} item={item} />
         ))}
       </section>
     </Card>
