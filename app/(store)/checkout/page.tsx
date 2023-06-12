@@ -15,7 +15,7 @@ export default async function Checkout() {
         <p className="mt-6 text-lg">No items in cart 😞</p>
       )}
       <OrderSummary cartTotal={cartTotal} />
-      <OrderCta />
+      <OrderCta cart={cart} />
     </div>
   );
 }
