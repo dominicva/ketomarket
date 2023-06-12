@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST() {
   const {
-    data: { cartTotal },
+    data: { cart, cartTotal },
   } = await getCartData();
 
   const session = await stripe.checkout.sessions.create({
@@ -34,11 +34,9 @@ export async function POST() {
     ],
     payment_method_types: ['card'],
     mode: 'payment',
-    success_url: 'http://localhost:3000/checkout/success',
-    cancel_url: 'http://localhost:3000/checkout/cancel',
+    success_url: `http://localhost:3000/checkout/${cart?.id}/success`,
+    cancel_url: `http://localhost:3000/checkout/${cart?.id}/cancel`,
   });
-
-  console.log('session', session);
 
   // const paymentIntent = await stripe.paymentIntents.create({
   //   // Stripe expects the amount in cents
