@@ -1,10 +1,10 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { CheckCircle } from 'react-feather';
 import { prisma } from '@/lib/db';
 import { getCartData } from '@/lib/cart';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
-import { redirect } from 'next/navigation';
 
 export default async function Success({
   params,
@@ -19,44 +19,43 @@ export default async function Success({
     redirect('/checkout');
   }
 
-  const newOrder = await prisma.order.create({
-    data: {
-      userId: cart.userId,
-      orderItems: {
-        create: cart.cartItems.map(item => ({
-          quantity: item.quantity,
-          productId: item.productId,
-          price: item.product.price,
-        })),
+  let user;
+  let newOrder;
+
+  try {
+    newOrder = await prisma.order.create({
+      data: {
+        userId: cart.userId,
+        orderItems: {
+          create: cart.cartItems.map(item => ({
+            quantity: item.quantity,
+            productId: item.productId,
+            price: item.product.price,
+          })),
+        },
       },
-    },
-  });
+    });
 
-  // await prisma.order.delete({
-  //   where: {
-  //     id: newOrder.id,
-  //   },
-  // });
+    await prisma.cartItem.deleteMany({
+      where: {
+        cartId: cart.id,
+      },
+    });
 
-  // console.log('newOrder', newOrder);
+    await prisma.cart.delete({
+      where: {
+        id: cart.id,
+      },
+    });
 
-  const deletedCartItems = await prisma.cartItem.deleteMany({
-    where: {
-      cartId: cart.id,
-    },
-  });
-
-  const deletedCart = await prisma.cart.delete({
-    where: {
-      id: cart.id,
-    },
-  });
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: cart.userId,
-    },
-  });
+    user = await prisma.user.findUnique({
+      where: {
+        id: cart.userId,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <div className="p-4">
@@ -75,12 +74,13 @@ export default async function Success({
         </p>
         <div className="mt-6 flex flex-col gap-2 text-lg">
           <p>
-            Order ID: <span className="block font-semibold">{newOrder.id}</span>
+            Order ID:{' '}
+            <span className="block font-semibold">{newOrder?.id}</span>
           </p>
           <p>
             Order Date:{' '}
             <span className="block font-semibold">
-              {newOrder.createdAt.toLocaleString()}
+              {newOrder?.createdAt.toLocaleString()}
             </span>
           </p>
           <p className="mt-6 font-bold">

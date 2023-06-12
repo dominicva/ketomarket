@@ -1,6 +1,5 @@
 import { getCartData } from '@/lib/cart';
 import { OrderCta, OrderReview, OrderSummary } from '@/components/order';
-import Card from '@/components/Card';
 
 export default async function Checkout() {
   const {

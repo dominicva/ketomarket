@@ -13,8 +13,6 @@ export async function POST() {
   } = await getCartData();
 
   const session = await stripe.checkout.sessions.create({
-    // include client reference id to check it matches the user on the success page
-    // client_reference_id: '1234',
     line_items: [
       {
         price_data: {
@@ -38,17 +36,5 @@ export async function POST() {
     cancel_url: `http://localhost:3000/checkout/${cart?.id}/cancel`,
   });
 
-  // const paymentIntent = await stripe.paymentIntents.create({
-  //   // Stripe expects the amount in cents
-  //   amount: Number((cartTotal * 100).toFixed(0)),
-  //   currency: 'usd',
-  //   automatic_payment_methods: {
-  //     enabled: true,
-  //   },
-  // });
-
-  // return NextResponse.json({
-  //   clientSecret: paymentIntent.client_secret,
-  // });
   return NextResponse.redirect(String(session.url), { status: 303 });
 }
