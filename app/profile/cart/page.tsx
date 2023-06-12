@@ -47,8 +47,6 @@ export default async function Cart() {
             intent={emptyCart ? 'disabled' : 'primary'}
             size="large"
             className="w-11/12 disabled:cursor-not-allowed disabled:bg-gray-300"
-            // @ts-expect-error disabled prop is not in ButtonProps
-            disabled={emptyCart}
           >
             Checkout
           </Button>
