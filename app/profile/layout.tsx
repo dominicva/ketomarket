@@ -45,7 +45,8 @@ export default async function ProfileLayout({
   }
   return (
     <main className="px-4 py-6 text-off-black">
-      <Profile session={session}>{children}</Profile>
+      {/* @ts-expect-error Async Server Component */}
+      <Profile>{children}</Profile>
     </main>
   );
 }

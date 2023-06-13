@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import { User } from 'react-feather';
+import { getUserFromDb } from '@/lib/user';
 import ProfileNav from './ProfileNav';
-import type { ProfileProps } from '@/types';
 
-export default function Profile({ session, children }: ProfileProps) {
-  const user = session?.user;
+export default async function Profile({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const user = await getUserFromDb();
 
   return (
     <>

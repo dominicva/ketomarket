@@ -16,7 +16,7 @@ export default async function Orders() {
   return (
     <section className="py-4">
       <h2 className="text-2xl font-semibold">Orders</h2>
-      {orders.length === 0 ? (
+      {orders.length ? (
         orders.map((order: any) => <Order key={order.id} order={order} />)
       ) : (
         <Card className="mt-6">

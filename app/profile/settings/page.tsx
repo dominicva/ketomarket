@@ -54,38 +54,60 @@ export default function Settings() {
     }
   }, [image]);
 
+  const handleNameUpdate = async () => {
+    setEditMode(!editMode);
+    try {
+      const res = await fetch('/api/user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: username }),
+      });
+      const data = await res.json();
+      router.refresh();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className="py-4">
       <h2 className="mb-6 text-2xl font-semibold">User Settings</h2>
 
-      <div>
-        <Button
-          intent={editMode ? 'secondary' : 'tertiary'}
-          onClick={() => setEditMode(!editMode)}
-          className="mr-4"
-        >
-          {editMode ? 'Cancel' : 'Edit'}
-        </Button>
-        {editMode && (
-          <Button intent="primary" onClick={() => setEditMode(!editMode)}>
-            Save
+      <div className="flex flex-col gap-4">
+        <div>
+          <label htmlFor="username" className="text-md mt-6 block font-medium">
+            Name
+          </label>
+          {editMode ? (
+            <input
+              id="username"
+              type="text"
+              className="mt-1 w-full rounded-md border px-3 py-2"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              disabled={!editMode}
+            />
+          ) : (
+            <p className="mt-1 w-full px-3 py-2">{username}</p>
+          )}
+        </div>
+        <div className="flex">
+          <Button
+            intent={editMode ? 'secondary' : 'tertiary'}
+            onClick={() => setEditMode(!editMode)}
+            className="mr-4"
+          >
+            {editMode ? 'Cancel' : 'Edit'}
           </Button>
-        )}
-        <label htmlFor="username" className="text-md mt-6 block font-medium">
-          Name
-        </label>
-        {editMode ? (
-          <input
-            id="username"
-            type="text"
-            className="mt-1 w-full rounded-md border px-3 py-2"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            disabled={!editMode}
-          />
-        ) : (
-          <p className="mt-1 px-3 py-2">{username}</p>
-        )}
+          {editMode && (
+            <Button intent="primary" onClick={handleNameUpdate}>
+              Save
+            </Button>
+          )}
+        </div>
       </div>
       <div className="mt-8">
         <h3 className="text-md mb-1 block font-medium">Profile picture</h3>

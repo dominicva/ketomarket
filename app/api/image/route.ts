@@ -2,15 +2,6 @@ import type { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getUser } from '@/lib/user';
 
-export async function GET(req: NextRequest, res: NextResponse) {
-  return new Response('Hello, world!', {
-    status: 200,
-    headers: {
-      'content-type': 'text/plain',
-    },
-  });
-}
-
 export async function POST(req: NextRequest, res: NextResponse) {
   const { image } = await req.json();
   const user = await getUser();

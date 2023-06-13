@@ -36,6 +36,8 @@ export default async function Success({
       },
     });
 
+    console.log('newOrder', newOrder);
+
     await prisma.cartItem.deleteMany({
       where: {
         cartId: cart.id,

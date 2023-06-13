@@ -1,5 +1,4 @@
 export type { ServerSession } from './ServerSession';
-export type { ProfileProps } from './ProfileProps';
 export type { CartWithItemsAndProducts } from './CartWithItemsAndProducts';
 export type { CartItemWithProduct } from './CartItemWithProduct';
 export type { ProductWithCategory } from './ProductWithCategory';
