@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { User } from 'react-feather';
 import ProfileNav from './ProfileNav';
 import type { ProfileProps } from '@/types';
 
@@ -9,21 +10,23 @@ export default function Profile({ session, children }: ProfileProps) {
     <>
       <section>
         <figure className="flex flex-wrap items-center gap-4">
-          {user?.image && user?.name && (
+          {user?.image ? (
             <Image
               src={user.image}
-              alt={user.name}
-              width={60}
-              height={60}
-              className=" rounded-full"
+              alt={String(user.name)}
+              width={72}
+              height={72}
+              className="rounded-full"
             />
+          ) : (
+            <User className="h-16 w-16" />
           )}
+
           <figcaption>
             <h2 className=" text-xl font-semibold">{user?.name}</h2>
           </figcaption>
         </figure>
         <ProfileNav />
-        {/* <ProfileNav session={session} /> */}
       </section>
       {children}
     </>
