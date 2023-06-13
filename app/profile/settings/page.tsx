@@ -1,10 +1,12 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { CldUploadButton } from 'next-cloudinary';
 import { Button } from '@/components/buttons';
 
 export default function Settings() {
+  const router = useRouter();
   const [editMode, setEditMode] = useState(false);
   const [username, setUsername] = useState('');
   const [image, setImage] = useState('');
@@ -25,6 +27,7 @@ export default function Settings() {
       postProfileImage()
         .then(data => {
           console.log('data', data);
+          router.refresh();
         })
         .catch(err => {
           console.log('err', err);
@@ -65,7 +68,6 @@ export default function Settings() {
         <CldUploadButton
           uploadPreset="ketomarket_profile_pic"
           onUpload={(res: any) => {
-            console.log('Cloudinary res', res);
             setImage(res.info.secure_url);
           }}
         />

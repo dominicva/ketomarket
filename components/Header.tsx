@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { Session } from 'next-auth';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { getUserFromDb } from '@/lib/user';
 import { comfortaa } from '@/lib/fonts';
 import {
   LoginButton,
@@ -7,11 +9,14 @@ import {
   ProfileButton,
   RegisterButton,
 } from './buttons';
+import type { ServerSession } from '@/types';
 
-export default function Header({ session }: { session: Session | null }) {
-  const isLoggedIn = Boolean(session?.user);
-  const name = session?.user?.name;
-  const profilePic = session?.user?.image;
+export default async function Header() {
+  const serverSession: ServerSession = await getServerSession(authOptions);
+  const user = await getUserFromDb();
+  const isLoggedIn = Boolean(serverSession?.user);
+  const name = user?.name;
+  const profilePic = user?.image;
 
   const buttons = isLoggedIn ? (
     <>

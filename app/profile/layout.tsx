@@ -23,6 +23,10 @@ export default async function ProfileLayout({
     },
   });
 
+  if (session.user.image !== user?.image) {
+    session.user.image = user?.image;
+  }
+
   const isNewUser =
     !user && session.user.id && session.user.email && session.user.name;
 
@@ -32,12 +36,8 @@ export default async function ProfileLayout({
       email: String(session?.user?.email),
       name: String(session?.user?.name),
       password: randomString(),
-      image: '',
+      image: String(session.user.image),
     };
-
-    if (session.user.image) {
-      data.image = String(session.user.image);
-    }
 
     user = await prisma.user.create({
       data,
