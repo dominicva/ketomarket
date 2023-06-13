@@ -19,9 +19,4 @@ export const getUserFromDb = async () => {
       id,
     },
   });
-  // return await prisma.user.findUnique({
-  //   where: {
-  //     email,
-  //   },
-  // });
 };
