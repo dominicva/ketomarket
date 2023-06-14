@@ -75,7 +75,7 @@ export default function Product({
   };
 
   return (
-    <Card>
+    <Card className="relative basis-[46%] p-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg">
       <Image
         src={image ?? '/'}
         alt={name}
@@ -84,22 +84,22 @@ export default function Product({
         className="m-auto mb-4 w-full rounded-md shadow-md"
       />
 
-      <div className="relative">
+      <div className="px-2 pb-2">
         <h3 className="text-xl">{productTitle}</h3>
         <h5 className="text-sm font-bold text-secondary">
           {capitalize(category.name)}
         </h5>
         <h4 className="mb-2 font-semibold">${price}</h4>
-        <p>{description}</p>
+        {/* <p>{description}</p> */}
 
         <Button
-          intent="tertiary"
-          size="small"
-          className="absolute right-0 top-0 flex items-center gap-1"
+          intent="primary"
+          size="round"
+          className="absolute right-2 top-2 flex items-center"
           onClick={addToCart}
         >
-          {loading ? <TwoSeventyRing color="#09624B" /> : <Plus size={18} />}
-          Add to cart
+          {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
+          {/* Add to cart */}
         </Button>
         <ToastContainer
           position="bottom-center"

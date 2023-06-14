@@ -8,7 +8,7 @@ export default function Card({
   return (
     <div
       className={`rounded-lg p-6 shadow-md ${className}`}
-      style={{ minWidth: '300px' }}
+      // style={{ minWidth: '300px' }}
     >
       {children}
     </div>

@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import Hero from '@/components/Hero';
-import ProductsTeaser from '@/components/products/ProductsTeaser';
+import ProductsTeaser from '@/components/product/ProductsTeaser';
 import type { ServerSession } from '@/types';
 
 export default async function RootPage() {

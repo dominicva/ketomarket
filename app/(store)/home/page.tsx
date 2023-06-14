@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import Greetings from '@/components/Greetings';
-import ProductList from '@/components/products/ProductList';
+import ProductList from '@/components/product/ProductList';
 import type { ServerSession } from '@/types';
 
 export default async function Home() {
