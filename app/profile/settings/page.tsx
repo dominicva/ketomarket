@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { User } from 'react-feather';
 import { CldUploadButton } from 'next-cloudinary';
 import { Button } from '@/components/buttons';
@@ -17,9 +17,9 @@ export default function Settings() {
     const getUser = async () => {
       const res = await fetch('/api/user');
       const data = await res.json();
-      console.log('data', data);
       return data;
     };
+
     getUser()
       .then(data => {
         setUsername(data.user.name);
@@ -42,10 +42,10 @@ export default function Settings() {
       const data = await res.json();
       return data;
     };
+
     if (image) {
       postProfileImage()
         .then(data => {
-          console.log('data', data);
           router.refresh();
         })
         .catch(err => {
@@ -66,6 +66,24 @@ export default function Settings() {
       });
       const data = await res.json();
       router.refresh();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteAccount = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/user', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await res.json();
+      console.log('data', data);
+      router.push('/');
       return data;
     } catch (error) {
       console.log(error);
@@ -135,6 +153,15 @@ export default function Settings() {
             </CldUploadButton>
           </div>
         </div>
+      </div>
+
+      <div className="mt-8">
+        <h3 className="mb-1 block border-t-4 border-tertiary pt-4 text-xl font-bold text-tertiary">
+          Danger zone
+        </h3>
+        <form className="mt-6" onSubmit={handleDeleteAccount}>
+          <Button intent="secondary">Delete account</Button>
+        </form>
       </div>
     </section>
   );

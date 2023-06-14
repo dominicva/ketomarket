@@ -42,3 +42,24 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     },
   });
 }
+
+export async function DELETE() {
+  const user = await getUserFromDb();
+
+  // const deletedUser = await prisma.user.delete({
+  //   where: { id: user?.id },
+  // });
+
+  // return new Response(JSON.stringify(deletedUser), {
+  //   status: 200,
+  //   headers: {
+  //     'content-type': 'application/json',
+  //   },
+  // });
+  return new Response(JSON.stringify('Not implemented'), {
+    status: 200,
+    headers: {
+      'content-type': 'application/json',
+    },
+  });
+}
