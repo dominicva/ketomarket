@@ -21,10 +21,7 @@ export default async function Header() {
   const buttons = isLoggedIn ? (
     <>
       <SignoutButton />
-      <ProfileButton
-        name={name ?? null}
-        imageSrc={profilePic ?? '/broccoli.png'}
-      />
+      <ProfileButton name={name ?? null} imageSrc={profilePic ?? null} />
     </>
   ) : (
     <>

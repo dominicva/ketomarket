@@ -13,6 +13,8 @@ export default async function ProfileLayout({
 }) {
   const session: ServerSession = await getServerSession(authOptions);
 
+  console.log('session', session);
+
   if (!session) {
     redirect('/signin');
   }
@@ -23,10 +25,6 @@ export default async function ProfileLayout({
     },
   });
 
-  if (session.user.image !== user?.image) {
-    session.user.image = user?.image;
-  }
-
   const isNewUser =
     !user && session.user.id && session.user.email && session.user.name;
 
@@ -36,7 +34,7 @@ export default async function ProfileLayout({
       email: String(session?.user?.email),
       name: String(session?.user?.name),
       password: randomString(),
-      image: String(session.user.image),
+      image: session.user.image ?? null,
     };
 
     user = await prisma.user.create({

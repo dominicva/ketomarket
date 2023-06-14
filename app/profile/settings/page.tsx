@@ -109,7 +109,7 @@ export default function Settings() {
           console.log('err', err);
         });
     }
-  }, [image]);
+  }, [image, router]);
 
   return (
     <section className="py-4">
@@ -153,7 +153,7 @@ export default function Settings() {
         <div className="flex flex-col items-start gap-4">
           {image ? (
             <Image
-              src={image ?? '/broccoli.png'}
+              src={image}
               alt="profile"
               width={96}
               height={96}

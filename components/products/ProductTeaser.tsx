@@ -7,7 +7,7 @@ export default function ProductTeaser({ product }: { product: any }) {
     <div>
       <li key={product.id} className="flex items-center gap-4 shadow-sm">
         <Image
-          src={String(product.image) ?? '/broccoli.png'}
+          src={String(product.image)}
           alt={product.name}
           width={64}
           height={64}
