@@ -16,7 +16,7 @@ export default async function Profile({
         <figure className="flex flex-wrap items-center gap-4">
           {user?.image ? (
             <Image
-              src={user.image}
+              src={user.image ?? '/broccoli.png'}
               alt={String(user.name)}
               width={72}
               height={72}

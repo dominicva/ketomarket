@@ -13,7 +13,7 @@ export const ProfileButton = ({ name, imageSrc }: ProfileButtonProps) => {
       <button>
         {imageSrc ? (
           <Image
-            src={imageSrc}
+            src={imageSrc ?? '/broccoli.png'}
             alt={name ?? 'profile picture'}
             width={40}
             height={40}

@@ -2,16 +2,73 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import { useState, useEffect, FormEvent } from 'react';
+import Modal from 'react-modal';
 import { User } from 'react-feather';
 import { CldUploadButton } from 'next-cloudinary';
 import { Button } from '@/components/buttons';
+
+Modal.setAppElement('#modal');
 
 export default function Settings() {
   const router = useRouter();
   const [editMode, setEditMode] = useState(false);
   const [username, setUsername] = useState('');
   const [image, setImage] = useState('');
+  const [modalIsOpen, setIsOpen] = useState(false);
+  let subtitle: any;
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const afterOpenModal = () => {
+    subtitle.style.color = '#000';
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleNameUpdate = async () => {
+    setEditMode(!editMode);
+    try {
+      const res = await fetch('/api/user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: username }),
+      });
+      const data = await res.json();
+      router.refresh();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteAccount = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch('/api/user', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await res.json();
+      signOut({
+        callbackUrl: '/',
+      });
+      console.log('data', data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -53,42 +110,6 @@ export default function Settings() {
         });
     }
   }, [image]);
-
-  const handleNameUpdate = async () => {
-    setEditMode(!editMode);
-    try {
-      const res = await fetch('/api/user', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: username }),
-      });
-      const data = await res.json();
-      router.refresh();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDeleteAccount = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/user', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await res.json();
-      console.log('data', data);
-      router.push('/');
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <section className="py-4">
@@ -132,7 +153,7 @@ export default function Settings() {
         <div className="flex flex-col items-start gap-4">
           {image ? (
             <Image
-              src={image}
+              src={image ?? '/broccoli.png'}
               alt="profile"
               width={96}
               height={96}
@@ -156,12 +177,47 @@ export default function Settings() {
       </div>
 
       <div className="mt-8">
-        <h3 className="mb-1 block border-t-4 border-tertiary pt-4 text-xl font-bold text-tertiary">
+        <h3 className="mb-6 block border-t-4 border-tertiary pt-4 text-xl font-bold text-tertiary">
           Danger zone
         </h3>
-        <form className="mt-6" onSubmit={handleDeleteAccount}>
-          <Button intent="secondary">Delete account</Button>
-        </form>
+        <Button intent="secondary" onClick={openModal}>
+          Delete account
+        </Button>
+        <Modal
+          ariaHideApp={false}
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          contentLabel="Delete account"
+          className="absolute left-1/2 top-1/2 flex h-64 w-11/12 -translate-x-1/2 -translate-y-1/2 transform flex-col justify-around rounded-md bg-white p-6 shadow-md"
+        >
+          <div className="flex items-center justify-between">
+            <h2
+              className="text-xl font-semibold"
+              ref={_subtitle => (subtitle = _subtitle)}
+            >
+              Delete account
+            </h2>
+            <Button intent="tertiary" onClick={closeModal} size="small">
+              Close
+            </Button>
+          </div>
+          <form className="mt-6" onSubmit={handleDeleteAccount}>
+            <label
+              htmlFor="delete-account"
+              className="block text-center font-semibold"
+            >
+              Warning: this cannot be undone.
+            </label>
+            <Button
+              id="delete-account"
+              intent="secondary"
+              className="m-auto mt-4 block w-11/12"
+            >
+              Delete account
+            </Button>
+          </form>
+        </Modal>
       </div>
     </section>
   );

@@ -1,9 +1,6 @@
 import './globals.css';
 import { NextAuthProvider } from './providers';
-import { getServerSession } from 'next-auth';
 import { inter } from '@/lib/fonts';
-import { authOptions } from '@/lib/auth';
-import type { ServerSession } from '@/types/ServerSession';
 import Header from '@/components/Header';
 
 export const metadata = {
@@ -16,15 +13,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session: ServerSession = await getServerSession(authOptions);
-
   return (
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <Header session={session} />
+          {/* @ts-expect-error Async Server Component */}
+          <Header />
           {children}
         </NextAuthProvider>
+        {/* For delete account confirmation in profile/settings page */}
+        <div id="modal"></div>
       </body>
     </html>
   );

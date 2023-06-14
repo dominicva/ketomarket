@@ -77,7 +77,7 @@ export default function Product({
   return (
     <Card>
       <Image
-        src={image ?? ''}
+        src={image ?? '/broccoli.png'}
         alt={name}
         width={200}
         height={200}

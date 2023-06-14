@@ -7,7 +7,7 @@ export function OrderItem({ item }: { item: CartItemWithProduct }) {
     <div className="mt-4 flex items-center justify-between border-b-2 pb-4">
       <div className="flex items-center">
         <Image
-          src={String(item.product.image)}
+          src={String(item.product.image) ?? '/broccoli.png'}
           alt={item.product.name}
           className="h-16 w-16 rounded-md object-cover"
           width={64}

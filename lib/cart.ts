@@ -50,3 +50,24 @@ export const getCartData = async () => {
     },
   };
 };
+
+export const deleteCarts = async (userId: string | undefined) => {
+  const currentCart = await getCurrentCart(userId);
+  try {
+    const deletedCartItems = await prisma.cartItem.deleteMany({
+      where: { cartId: currentCart?.id },
+    });
+
+    const deletedCarts = await prisma.cart.deleteMany({
+      where: { userId },
+    });
+
+    return {
+      deletedCarts,
+      deletedCartItems,
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};

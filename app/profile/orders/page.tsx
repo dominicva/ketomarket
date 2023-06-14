@@ -1,17 +1,13 @@
-import { prisma } from '@/lib/db';
 import { Order } from '@/components/order';
+import { getOrders } from '@/lib/order';
+import { getUser } from '@/lib/user';
 import Card from '@/components/Card';
 
 export default async function Orders() {
-  const orders = await prisma.order.findMany({
-    include: {
-      orderItems: {
-        include: {
-          product: true,
-        },
-      },
-    },
-  });
+  const user = await getUser();
+  console.log('user', user);
+  // @ts-expect-error
+  const orders = (await getOrders(user?.id)) ?? [];
 
   return (
     <section className="py-4">
