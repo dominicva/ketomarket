@@ -33,7 +33,7 @@ export async function POST() {
     payment_method_types: ['card'],
     mode: 'payment',
     success_url: `http://localhost:3000/checkout/${cart?.id}/success`,
-    cancel_url: `http://localhost:3000/checkout/${cart?.id}/cancel`,
+    cancel_url: `http://localhost:3000/checkout`,
   });
 
   return NextResponse.redirect(String(session.url), { status: 303 });
