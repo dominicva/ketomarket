@@ -3,9 +3,8 @@ import { Cart } from '@prisma/client';
 import { getCurrentCart, getCartTotal } from '@/lib/cart';
 import { authOptions } from '@/lib/auth';
 import Card from '@/components/Card';
-import CartItem from '@/components/cart/CartItem';
-import CartCta from '@/components/cart/CartCta';
-import type { ServerSession, CartItemWithProduct } from '@/types';
+import { CartCta, CartItemsList } from '@/components/cart';
+import type { ServerSession } from '@/types';
 
 export default async function Cart() {
   const session: ServerSession = await getServerSession(authOptions);
@@ -17,15 +16,7 @@ export default async function Cart() {
   return (
     <section>
       <h2 className="text-2xl font-semibold">Cart</h2>
-      <ul>
-        {currentCart?.cartItems.length ? (
-          currentCart.cartItems.map((cartItem: CartItemWithProduct) => (
-            <CartItem key={cartItem.id} cartItem={cartItem} />
-          ))
-        ) : (
-          <p className="mt-6 text-lg">No items in cart 😞</p>
-        )}
-      </ul>
+      <CartItemsList cart={currentCart} />
       <Card className="mt-4 bg-white">
         <h2 className="text-2xl font-semibold">Order Summary</h2>
         <div className="mt-6 flex justify-between">

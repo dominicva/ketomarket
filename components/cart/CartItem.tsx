@@ -11,11 +11,7 @@ import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
 import type { CartItemWithProduct } from '@/types';
 
-export default function CartItem({
-  cartItem,
-}: {
-  cartItem: CartItemWithProduct;
-}) {
+export function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
   const router = useRouter();
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingUpdate, setLoadingUpdate] = useState(false);

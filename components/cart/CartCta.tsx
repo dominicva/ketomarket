@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { Button } from '../buttons';
 
-export default function CartCta({ emptyCart }: { emptyCart: boolean }) {
+export function CartCta({ emptyCart }: { emptyCart: boolean }) {
   const [isLoadingCheckout, setIsLoadingCheckout] = useState(false);
   const [isLoadingContinueShopping, setIsLoadingContinueShopping] =
     useState(false);
