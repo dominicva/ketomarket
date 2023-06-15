@@ -16,7 +16,7 @@ export default async function Home() {
   return (
     <div>
       {/* @ts-expect-error Async Server Component */}
-      <Greetings id={session?.user.id} name={session?.user.name} />
+      <Greetings id={session?.user.id} />
       {/* @ts-expect-error Async Server Component */}
       <ProductList />
     </div>
