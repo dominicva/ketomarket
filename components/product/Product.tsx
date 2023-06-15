@@ -3,13 +3,12 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import 'react-toastify/dist/ReactToastify.min.css';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { Plus, CheckCircle } from 'react-feather';
 import { capitalize } from '@/lib/strings';
+import { debounce } from '@/lib/debounce';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
-import { debounce } from '@/lib/debounce';
 import type { ProductProps } from '@/types';
 
 export default function Product({
@@ -43,6 +42,7 @@ export default function Product({
 
   const addToCart = async () => {
     setLoading(true);
+
     await fetch('/api/cart', {
       method: 'POST',
       body: JSON.stringify({
@@ -100,7 +100,7 @@ export default function Product({
               onClick={() => router.push(`/profile/cart`)}
               className="flex items-center gap-2 bg-primary px-4"
             >
-              <CheckCircle size={18} />
+              <CheckCircle size={20} />
               View cart
             </Button>
           ) : (

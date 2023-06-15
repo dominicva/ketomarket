@@ -17,18 +17,18 @@ export default async function Cart() {
 
   return (
     <section>
-      <Card className="mt-4 bg-white">
-        <h2 className="text-2xl font-semibold">Cart</h2>
-        <ul>
-          {currentCart?.cartItems.length ? (
-            currentCart.cartItems.map((cartItem: CartItemWithProduct) => (
-              <CartItem key={cartItem.id} cartItem={cartItem} />
-            ))
-          ) : (
-            <p className="mt-6 text-lg">No items in cart 😞</p>
-          )}
-        </ul>
-      </Card>
+      {/* <Card className="mt-4 bg-white px-0"> */}
+      <h2 className="text-2xl font-semibold">Cart</h2>
+      <ul>
+        {currentCart?.cartItems.length ? (
+          currentCart.cartItems.map((cartItem: CartItemWithProduct) => (
+            <CartItem key={cartItem.id} cartItem={cartItem} />
+          ))
+        ) : (
+          <p className="mt-6 text-lg">No items in cart 😞</p>
+        )}
+      </ul>
+      {/* </Card> */}
       <Card className="mt-4 bg-white">
         <h2 className="text-2xl font-semibold">Order Summary</h2>
         <div className="mt-6 flex justify-between">
