@@ -4,3 +4,4 @@ export type { CartItemWithProduct } from './CartItemWithProduct';
 export type { ProductWithCategory } from './ProductWithCategory';
 export type { CategoryWithProducts } from './CategoryWithProducts';
 export type { ProductProps } from './ProductProps';
+export type { UserSession } from './UserSession';

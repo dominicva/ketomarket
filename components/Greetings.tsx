@@ -1,12 +1,6 @@
 import { prisma } from '@/lib/db';
 import { GoToCart } from './buttons';
-
-interface UserSession {
-  id: string;
-  name: string;
-  email: string;
-  image?: string;
-}
+import type { UserSession } from '@/types';
 
 export default async function Greetings({ id }: Pick<UserSession, 'id'>) {
   const user = await prisma.user.findUnique({
