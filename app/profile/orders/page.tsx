@@ -5,7 +5,6 @@ import Card from '@/components/Card';
 
 export default async function Orders() {
   const user = await getUser();
-  console.log('user', user);
   // @ts-expect-error
   const orders = (await getOrders(user?.id)) ?? [];
 

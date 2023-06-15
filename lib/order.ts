@@ -1,3 +1,4 @@
+import { OrderWithOrderItems } from '@/types/OrderWithOrderItems';
 import { prisma } from './db';
 import { Order } from '@prisma/client';
 
@@ -51,4 +52,10 @@ export const deleteOrders = async (orders: Order[]) => {
     console.error(error);
     return null;
   }
+};
+
+export const getOrderTotal = (order: OrderWithOrderItems) => {
+  return order.orderItems.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, 0);
 };

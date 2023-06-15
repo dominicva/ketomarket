@@ -2,7 +2,7 @@ import Card from '@/components/Card';
 
 export function OrderSummary({ cartTotal }: { cartTotal: number }) {
   return (
-    <Card className="mt-4 bg-white">
+    <Card className="mb-6 bg-white">
       <h2 className="text-2xl font-semibold">Order Summary</h2>
       <div className="mt-6 flex justify-between">
         <p className="text-lg">Subtotal</p>
