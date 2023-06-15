@@ -3,10 +3,9 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { TwoSeventyRing } from 'react-svg-spinners';
-import { Plus } from 'react-feather';
+import { Plus, CheckCircle } from 'react-feather';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
@@ -20,42 +19,10 @@ export default function Product({
   image,
   category,
 }: ProductProps) {
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const productTitle = capitalize(name);
-
-  // @ts-expect-error react-toastify injects closeToast() into the component
-  const Msg = ({ closeToast }) => {
-    return (
-      <div className="flex flex-col justify-center px-4">
-        <p className="font-bold">{`Added ${productTitle} to cart!`}</p>
-        <Button
-          intent="tertiary"
-          size="small"
-          className="mt-4"
-          onClick={() => {
-            closeToast();
-            router.push('/profile/cart');
-          }}
-        >
-          View cart
-        </Button>
-      </div>
-    );
-  };
-
-  const notify = () =>
-    // @ts-expect-error react-toastify injects props into the component
-    toast(Msg, {
-      type: 'success',
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: 'light',
-    });
 
   const addToCart = async () => {
     setLoading(true);
@@ -71,7 +38,10 @@ export default function Product({
 
     router.refresh();
     setLoading(false);
-    notify();
+    setSuccess(true);
+    setTimeout(() => {
+      setSuccess(false);
+    }, 5000);
   };
 
   return (
@@ -90,25 +60,22 @@ export default function Product({
           {capitalize(category.name)}
         </h5>
         <h4 className="mb-2 font-semibold">${price}</h4>
-        {/* <p>{description}</p> */}
-
-        <Button
-          intent="primary"
-          size="round"
-          className="absolute right-2 top-2 flex items-center"
-          onClick={addToCart}
-        >
-          {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
-          {/* Add to cart */}
-        </Button>
-        <ToastContainer
-          position="bottom-center"
-          autoClose={3000}
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        <div className="absolute right-2 top-2 flex items-center">
+          {success ? (
+            <Button
+              intent="primary"
+              onClick={() => router.push(`/profile/cart`)}
+              className="flex items-center gap-2 bg-primary px-4"
+            >
+              <CheckCircle size={18} />
+              View cart
+            </Button>
+          ) : (
+            <Button intent="primary" size="round" onClick={addToCart}>
+              {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );
