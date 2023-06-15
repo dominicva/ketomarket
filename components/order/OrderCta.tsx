@@ -15,7 +15,7 @@ export function OrderCta({ cart }: { cart: any }) {
           Proceed to payment
         </Button>
       </form>
-      <Link href={`/${emptyCart ? 'home' : 'cart'}`}>
+      <Link href={`/${emptyCart ? 'home' : 'profile/cart'}`}>
         <Button
           className="m-auto mt-8 block w-11/12"
           intent="tertiary"
