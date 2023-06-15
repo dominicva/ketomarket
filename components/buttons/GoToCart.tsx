@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { ShoppingCart } from 'react-feather';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { useNavigationLoading } from '@/lib/hooks/useNavigationLoading';

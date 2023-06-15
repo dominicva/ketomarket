@@ -1,38 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { TwoSeventyRing } from 'react-svg-spinners';
+import { useNavigationLoading } from '@/lib/hooks/useNavigationLoading';
 import { Button } from '../buttons';
 
 export function CartCta({ emptyCart }: { emptyCart: boolean }) {
-  const [isLoadingCheckout, setIsLoadingCheckout] = useState(false);
-  const [isLoadingContinueShopping, setIsLoadingContinueShopping] =
-    useState(false);
+  const {
+    isLoading: isLoadingCheckout,
+    handleStartLoading: handleStartLoadingCheckout,
+    handleStopLoading: handleStopLoadingCheckout,
+  } = useNavigationLoading();
 
-  const handleCheckoutClick = () => {
-    setIsLoadingCheckout(true);
-  };
-
-  const handleContinueShoppingClick = () => {
-    setIsLoadingContinueShopping(true);
-  };
-
-  const handleCheckoutNavigationComplete = () => {
-    setIsLoadingCheckout(false);
-  };
-
-  const handleContinueShoppingNavigationComplete = () => {
-    setIsLoadingContinueShopping(false);
-  };
+  const {
+    isLoading: isLoadingContinueShopping,
+    handleStartLoading: handleStartLoadingContinueShopping,
+    handleStopLoading: handleStopLoadingContinueShopping,
+  } = useNavigationLoading();
 
   return (
     <div className="mt-12 flex flex-col gap-6">
       <Link
         href="/home"
         passHref
-        onClick={handleContinueShoppingClick}
-        onLoad={handleContinueShoppingNavigationComplete}
+        onClick={handleStartLoadingContinueShopping}
+        onLoad={handleStopLoadingContinueShopping}
         className="flex items-center justify-center"
       >
         <Button
@@ -50,8 +42,8 @@ export function CartCta({ emptyCart }: { emptyCart: boolean }) {
       <Link
         href={`/checkout`}
         passHref
-        onClick={handleCheckoutClick}
-        onLoad={handleCheckoutNavigationComplete}
+        onClick={handleStartLoadingCheckout}
+        onLoad={handleStopLoadingCheckout}
         className="flex items-center justify-center"
       >
         <Button

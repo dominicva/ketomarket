@@ -1,38 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { TwoSeventyRing } from 'react-svg-spinners';
+import { useNavigationLoading } from '@/lib/hooks/useNavigationLoading';
 import { Button } from '@/components/buttons';
 
 export function OrderCta({ cart }: { cart: any }) {
-  const [isLoadingPayment, setIsLoadingPayment] = useState(false);
-  const [isLoadingReturnToCart, setIsLoadingReturnToCart] = useState(false);
+  const {
+    isLoading: isLoadingPayment,
+    handleStartLoading: handleStartLoadingPayment,
+    handleStopLoading: handleStopLoadingPayment,
+  } = useNavigationLoading();
+  const {
+    isLoading: isLoadingReturnToCart,
+    handleStartLoading: handleStartLoadingReturnToCart,
+    handleStopLoading: handleStopLoadingReturnToCart,
+  } = useNavigationLoading();
   const emptyCart = !cart?.cartItems.length;
-
-  const handlePaymentClick = () => {
-    setIsLoadingPayment(true);
-  };
-
-  const handlePaymentNavigationComplete = () => {
-    setIsLoadingPayment(false);
-  };
-
-  const handleReturnToCartClick = () => {
-    setIsLoadingReturnToCart(true);
-  };
-
-  const handleReturnToCartNavigationComplete = () => {
-    setIsLoadingReturnToCart(false);
-  };
 
   return (
     <>
       <form
         action="/api/create-payment-intent"
         method="POST"
-        onClick={handlePaymentClick}
-        onLoad={handlePaymentNavigationComplete}
+        onClick={handleStartLoadingPayment}
+        onLoad={handleStopLoadingPayment}
       >
         <Button
           className="m-auto mt-8 flex w-11/12 items-center justify-center"
@@ -49,8 +41,8 @@ export function OrderCta({ cart }: { cart: any }) {
       <Link
         href={`/${emptyCart ? 'home' : 'profile/cart'}`}
         passHref
-        onClick={handleReturnToCartClick}
-        onLoad={handleReturnToCartNavigationComplete}
+        onClick={handleStartLoadingReturnToCart}
+        onLoad={handleStopLoadingReturnToCart}
       >
         <Button
           className="m-auto mt-8 flex w-11/12 items-center justify-center"
