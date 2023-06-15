@@ -24,7 +24,6 @@ export default async function ProductList() {
                   <Product
                     id={product.id}
                     name={product.name}
-                    description={product.description}
                     price={product.price}
                     image={product.image}
                     category={category}

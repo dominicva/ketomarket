@@ -2,19 +2,19 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { Plus, CheckCircle } from 'react-feather';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
+import { debounce } from '@/lib/debounce';
 import type { ProductProps } from '@/types';
 
 export default function Product({
   id,
   name,
-  description,
   price,
   image,
   category,
@@ -22,7 +22,24 @@ export default function Product({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [screenSize, setScreenSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 0,
+    height: typeof window !== 'undefined' ? window.innerHeight : 0,
+  });
   const productTitle = capitalize(name);
+
+  useEffect(() => {
+    const handleResize = debounce(() => {
+      setScreenSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }, 100);
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const addToCart = async () => {
     setLoading(true);
@@ -43,6 +60,22 @@ export default function Product({
       setSuccess(false);
     }, 5000);
   };
+
+  const addToCartButton =
+    screenSize.width > 600 ? (
+      <Button
+        intent="primary"
+        onClick={addToCart}
+        className="flex items-center gap-2"
+      >
+        {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
+        Add to cart
+      </Button>
+    ) : (
+      <Button intent="primary" size="round" onClick={addToCart}>
+        {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
+      </Button>
+    );
 
   return (
     <Card className="relative basis-[46%] p-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg">
@@ -71,9 +104,7 @@ export default function Product({
               View cart
             </Button>
           ) : (
-            <Button intent="primary" size="round" onClick={addToCart}>
-              {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
-            </Button>
+            addToCartButton
           )}
         </div>
       </div>
