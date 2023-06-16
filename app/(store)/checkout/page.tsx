@@ -7,7 +7,7 @@ export default async function Checkout() {
   } = await getCartData();
 
   return (
-    <div className="p-4">
+    <div className="m-auto max-w-5xl p-4">
       {cart?.cartItems.length ? (
         <OrderReview cart={cart} />
       ) : (

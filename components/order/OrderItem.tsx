@@ -19,7 +19,7 @@ export function OrderItem({ item }: { item: CartItemWithProduct }) {
           </h4>
         </div>
       </div>
-      <div className="flex items-center gap-6 pr-4">
+      <div className="flex basis-[35%] items-center gap-6 pr-4">
         <div className="flex flex-col">
           <h5 className="border-b-2 pb-1 font-medium">Quantity</h5>
           <p className="mr-4 mt-1 text-lg">{item.quantity}</p>
@@ -27,7 +27,7 @@ export function OrderItem({ item }: { item: CartItemWithProduct }) {
         <div className="flex flex-col">
           <h5 className="border-b-2 pb-1 font-medium">Total</h5>
           <p className="mt-1 text-lg font-medium">
-            ${item.product.price * item.quantity}
+            ${(item.product.price * item.quantity).toFixed(2)}
           </p>
         </div>
       </div>

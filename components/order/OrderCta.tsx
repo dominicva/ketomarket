@@ -25,9 +25,10 @@ export function OrderCta({ cart }: { cart: any }) {
         method="POST"
         onClick={handleStartLoadingPayment}
         onLoad={handleStopLoadingPayment}
+        className="max-w-xl"
       >
         <Button
-          className="m-auto mt-8 flex w-11/12 items-center justify-center"
+          className="m-auto mt-8 flex w-11/12 items-center justify-center sm:w-2/3"
           intent={emptyCart ? 'disabled' : 'primary'}
           size="large"
         >
@@ -43,9 +44,10 @@ export function OrderCta({ cart }: { cart: any }) {
         passHref
         onClick={handleStartLoadingReturnToCart}
         onLoad={handleStopLoadingReturnToCart}
+        className="block max-w-xl"
       >
         <Button
-          className="m-auto mt-8 flex w-11/12 items-center justify-center"
+          className="m-auto mt-8 flex w-11/12 items-center justify-center sm:w-2/3"
           intent="tertiary"
           size="large"
         >
