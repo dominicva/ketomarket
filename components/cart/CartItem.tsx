@@ -7,7 +7,6 @@ import { TwoSeventyRing } from 'react-svg-spinners';
 import { Trash } from 'react-feather';
 import { updateCartItemQty } from '@/lib/api';
 import { capitalize } from '@/lib/strings';
-import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
 import type { CartItemWithProduct } from '@/types';
 
@@ -46,32 +45,47 @@ export function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
   };
 
   return (
-    <li className="mb-6">
-      <Card className="mt-4 bg-secondary-lighter px-4 py-4">
-        <h3 className="mb-2 text-lg font-semibold">
-          {capitalize(cartItem.product.name)}
-        </h3>
-        <div className="grid grid-cols-3 gap-y-6">
+    <li className="my-6">
+      <div className="flex flex-wrap justify-between">
+        <div className="flex gap-4">
           <Image
             src={cartItem.product.image ?? '/images/placeholder.png'}
             alt={cartItem.product.name}
             width={80}
             height={80}
-            className="col-span-1 self-end rounded-md"
+            className="rounded"
           />
-          <hgroup className="col-span-1">
-            <h4 className="mb-2">Price</h4>
-            <p>${cartItem.product.price}</p>
-          </hgroup>
+          <div>
+            <h3 className="mb-2 text-lg font-semibold">
+              {capitalize(cartItem.product.name)}
+            </h3>
+            <Button
+              intent="text"
+              size="small"
+              onClick={handleDelete}
+              className="-ml-1 flex items-center justify-center gap-2 text-sm"
+            >
+              {loadingDelete ? (
+                <TwoSeventyRing color="#0d0a0b" width={20} height={20} />
+              ) : (
+                <Trash size={18} />
+              )}
+              Remove
+            </Button>
+          </div>
+        </div>
+        <div className="flex gap-4">
           <form>
             <div className="flex flex-col gap-2">
-              <label htmlFor="quantity">Quantity</label>
+              <label htmlFor="quantity" className="sr-only">
+                Quantity
+              </label>
               <select
                 id="quantity"
                 name="quantity"
                 value={quantity}
                 onChange={handleSelectChange}
-                className="h-6 w-16 rounded"
+                className="block h-6 w-16 rounded border-2 border-gray-300 text-secondary"
               >
                 {Array.from(Array(10).keys()).map(i => (
                   <option key={i}>{i + 1}</option>
@@ -79,31 +93,17 @@ export function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
               </select>
             </div>
           </form>
-          <hgroup className="col-span-1">
-            <h4 className="mb-2 font-semibold">Total</h4>
+          <hgroup className="">
             {loadingUpdate ? (
               <div className="flex h-6 w-14  items-center justify-center rounded bg-accent p-2">
                 <TwoSeventyRing color="white" width={20} height={20} />
               </div>
             ) : (
-              <p className="font-semibold">${total.toFixed(2)}</p>
+              <p className="">${total.toFixed(2)}</p>
             )}
           </hgroup>
-
-          <Button
-            intent="secondary"
-            size="round"
-            onClick={handleDelete}
-            className="flex h-10 w-10 items-center justify-center self-center"
-          >
-            {loadingDelete ? (
-              <TwoSeventyRing color="white" width={20} height={20} />
-            ) : (
-              <Trash size={20} />
-            )}
-          </Button>
         </div>
-      </Card>
+      </div>
     </li>
   );
 }

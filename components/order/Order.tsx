@@ -1,8 +1,8 @@
 import Card from '@/components/Card';
 import { OrderItem } from './OrderItem';
-import type { OrderWithOrderItems } from '@/types/OrderWithOrderItems';
 import { OrderSummary } from './OrderSummary';
 import { getOrderTotal } from '@/lib/order';
+import type { OrderWithOrderItems } from '@/types/OrderWithOrderItems';
 
 export function Order({ order }: { order: OrderWithOrderItems }) {
   const orderTotal = getOrderTotal(order);

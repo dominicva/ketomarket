@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { X } from 'react-feather';
 import { TwoSeventyRing } from 'react-svg-spinners';
@@ -11,7 +11,6 @@ import Input from '../Input';
 const initial = { name: '', email: '', password: '' };
 
 export default function SignupForm() {
-  // const [loading, setLoading] = useState(false);
   const [formState, setFormState] = useState({ ...initial });
   const [credentialsLoading, setCredentialsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
