@@ -78,16 +78,16 @@ export default function Product({
     );
 
   return (
-    <Card className="relative basis-[46%] p-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg">
+    <Card className="relative basis-[46%] pl-0 pr-0 pt-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg">
       <Image
         src={image ?? '/'}
         alt={name}
         width={200}
         height={200}
-        className="m-auto mb-4 w-full rounded-md shadow-md"
+        className="m-auto mb-4 w-full rounded-md rounded-b-none"
       />
 
-      <div className="px-2 pb-2">
+      <div className="px-4 pb-2">
         <h3 className="text-xl">{productTitle}</h3>
         <h5 className="text-sm font-bold text-secondary">
           {capitalize(category.name)}

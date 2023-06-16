@@ -13,13 +13,13 @@ export function OrderItem({ item }: { item: CartItemWithProduct }) {
           width={48}
           height={48}
         />
-        <div className="ml-4">
+        <div className="ml-2 sm:ml-4">
           <h4 className="text-lg font-medium">
             {capitalize(item.product.name)}
           </h4>
         </div>
       </div>
-      <div className="flex basis-[43%] items-center gap-6">
+      <div className="flex items-center gap-6 pr-4">
         <div className="flex flex-col">
           <h5 className="border-b-2 pb-1 font-medium">Quantity</h5>
           <p className="mr-4 mt-1 text-lg">{item.quantity}</p>

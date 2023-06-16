@@ -112,7 +112,7 @@ export default function Settings() {
   }, [image, router]);
 
   return (
-    <section className="py-4">
+    <section className="max-w-xl py-4">
       <h2 className="mb-6 text-2xl font-semibold">User Settings</h2>
 
       <div className="flex flex-col gap-4">

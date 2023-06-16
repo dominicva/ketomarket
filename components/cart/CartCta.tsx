@@ -19,7 +19,7 @@ export function CartCta({ emptyCart }: { emptyCart: boolean }) {
   } = useNavigationLoading();
 
   return (
-    <div className="mt-12 flex flex-col gap-6">
+    <div className="mt-12 flex max-w-xl flex-col gap-6">
       <Link
         href="/home"
         passHref
@@ -30,7 +30,7 @@ export function CartCta({ emptyCart }: { emptyCart: boolean }) {
         <Button
           intent="tertiary"
           size="large"
-          className="flex w-11/12 items-center justify-center"
+          className="flex w-11/12 items-center justify-center sm:w-2/3"
         >
           {isLoadingContinueShopping ? (
             <TwoSeventyRing color="#09624B" />
@@ -49,7 +49,7 @@ export function CartCta({ emptyCart }: { emptyCart: boolean }) {
         <Button
           intent={emptyCart ? 'disabled' : 'primary'}
           size="large"
-          className="flex w-11/12 items-center justify-center disabled:cursor-not-allowed disabled:bg-gray-300"
+          className="flex w-11/12 items-center justify-center disabled:cursor-not-allowed disabled:bg-gray-300 sm:w-2/3"
         >
           {isLoadingCheckout ? (
             <TwoSeventyRing color="white" />

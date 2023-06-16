@@ -8,7 +8,7 @@ export function Order({ order }: { order: OrderWithOrderItems }) {
   const orderTotal = getOrderTotal(order);
 
   return (
-    <Card className="mt-4 bg-secondary-lighter">
+    <Card className="mt-4 bg-secondary-lighter px-4 sm:px-6">
       <h2 className="mb-6 text-lg font-semibold">
         Order Number <span className="block">#{order.id}</span>
       </h2>

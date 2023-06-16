@@ -42,7 +42,7 @@ export default async function ProfileLayout({
     });
   }
   return (
-    <main className="px-4 py-6 text-off-black">
+    <main className="m-auto max-w-5xl px-4 py-6 text-off-black lg:px-6">
       {/* @ts-expect-error Async Server Component */}
       <Profile>{children}</Profile>
     </main>

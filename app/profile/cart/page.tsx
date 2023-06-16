@@ -14,10 +14,10 @@ export default async function Cart() {
   const cartTotal = currentCart ? getCartTotal(currentCart) : 0;
 
   return (
-    <section>
+    <section className="max-w-xl py-4">
       <h2 className="text-2xl font-semibold">Cart</h2>
       <CartItemsList cart={currentCart} />
-      <Card className="mt-4 bg-white">
+      <Card className="mt-4 max-w-xl bg-white">
         <h2 className="text-2xl font-semibold">Order Summary</h2>
         <div className="mt-6 flex justify-between">
           <p className="text-lg">Subtotal</p>
