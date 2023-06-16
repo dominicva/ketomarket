@@ -65,15 +65,22 @@ export default function Product({
     screenSize.width > 680 ? (
       <Button
         intent="primary"
+        size="round"
         onClick={addToCart}
-        className="flex items-center gap-2"
+        className="flex h-8 w-8 items-center justify-center sm:h-10 sm:w-10"
       >
         {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
-        Add to cart
+        <span className="sr-only">Add to cart</span>
       </Button>
     ) : (
-      <Button intent="primary" size="round" onClick={addToCart}>
+      <Button
+        intent="primary"
+        size="round"
+        onClick={addToCart}
+        className="flex h-8 w-8 items-center justify-center sm:h-10 sm:w-10"
+      >
         {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
+        <span className="sr-only">Add to cart</span>
       </Button>
     );
 
