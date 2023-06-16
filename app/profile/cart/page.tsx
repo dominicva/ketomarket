@@ -21,7 +21,7 @@ export default async function Cart() {
         <h2 className="text-2xl font-semibold">Order Summary</h2>
         <div className="mt-6 flex justify-between">
           <p className="text-lg">Subtotal</p>
-          <p className="text-lg">${cartTotal.toFixed(2)}</p>
+          <p className="mr-1 text-lg font-semibold">${cartTotal.toFixed(2)}</p>
         </div>
       </Card>
       <CartCta emptyCart={emptyCart} />
