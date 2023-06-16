@@ -9,10 +9,10 @@ export function Order({ order }: { order: OrderWithOrderItems }) {
 
   return (
     <Card className="mt-4 bg-secondary-lighter">
-      <OrderSummary cartTotal={orderTotal} />
-      <h2 className="mb-8 text-lg font-semibold">
+      <h2 className="mb-6 text-lg font-semibold">
         Order Number <span className="block">#{order.id}</span>
       </h2>
+      <OrderSummary cartTotal={orderTotal} />
       <ul>
         {order.orderItems.map((item: any) => (
           <OrderItem key={item.id} item={item} />
