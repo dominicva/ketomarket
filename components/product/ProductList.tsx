@@ -10,7 +10,7 @@ export default async function ProductList() {
     (await getCategoriesWithProducts()) ?? [];
 
   return (
-    <div className="p-4">
+    <div className="m-auto max-w-5xl p-4 lg:p-8">
       <h2 className="my-4 text-2xl font-semibold">Products</h2>
       <section className="flex flex-col gap-8">
         {categories.map(category => (
@@ -18,7 +18,7 @@ export default async function ProductList() {
             <h3 className="mb-4 text-xl font-semibold">
               {capitalize(category.name)} ({category.products.length})
             </h3>
-            <div className="flex flex-wrap gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-wrap gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3">
               {category.products.map(product => (
                 <Suspense key={product.id} fallback={<ProductSkeleton />}>
                   <Product

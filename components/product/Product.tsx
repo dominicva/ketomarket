@@ -62,7 +62,7 @@ export default function Product({
   };
 
   const addToCartButton =
-    screenSize.width > 600 ? (
+    screenSize.width > 680 ? (
       <Button
         intent="primary"
         onClick={addToCart}
