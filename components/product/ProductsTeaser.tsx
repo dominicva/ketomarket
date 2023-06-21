@@ -5,7 +5,7 @@ export default async function ProductsTeaser() {
   const products = await prisma.product.findMany();
 
   return (
-    <section className="p-4">
+    <section className="m-auto max-w-5xl p-4">
       <h2 className="mb-12 mt-6 px-4 text-center text-2xl font-bold">
         Log in to order from our collection of{' '}
         <span className="text-tertiary">keto-friendly</span> products

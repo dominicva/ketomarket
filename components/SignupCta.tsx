@@ -8,7 +8,7 @@ export default function SignupCta() {
         <Button
           intent="primary"
           size="large"
-          className="m-auto mb-6 block w-11/12"
+          className="m-auto mb-6 block w-11/12 md:mx-0 md:w-1/2"
         >
           Sign up
         </Button>

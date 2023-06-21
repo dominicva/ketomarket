@@ -85,7 +85,7 @@ export default function Product({
     );
 
   return (
-    <Card className="relative basis-[46%] pl-0 pr-0 pt-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg">
+    <Card className="relative basis-[46%] pb-2 pl-0 pr-0 pt-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg sm:pb-4">
       <Image
         src={image ?? '/'}
         alt={name}
