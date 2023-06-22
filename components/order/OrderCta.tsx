@@ -18,6 +18,14 @@ export function OrderCta({ cart }: { cart: any }) {
   } = useNavigationLoading();
   const emptyCart = !cart?.cartItems.length;
 
+  // const handleClick = async () => {
+  //   const res = await fetch('/api/create-payment-intent', {
+  //     method: 'POST',
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  // };
+
   return (
     <>
       <form
@@ -31,6 +39,8 @@ export function OrderCta({ cart }: { cart: any }) {
           className="m-auto mt-8 flex w-11/12 items-center justify-center sm:w-2/3"
           intent={emptyCart ? 'disabled' : 'primary'}
           size="large"
+          // @ts-expect-error type not in ButtonProps
+          type="submit"
         >
           {isLoadingPayment ? (
             <TwoSeventyRing color="white" />
