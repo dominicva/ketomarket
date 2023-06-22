@@ -20,25 +20,25 @@ export function OrderCta({ cart }: { cart: any }) {
 
   return (
     <>
-      <form
-        action="/api/create-payment-intent"
-        method="POST"
-        onClick={handleStartLoadingPayment}
-        onLoad={handleStopLoadingPayment}
-        className="max-w-xl"
+      <Button
+        className="m-auto mt-8 flex w-11/12 items-center justify-center sm:w-2/3"
+        intent={emptyCart ? 'disabled' : 'primary'}
+        size="large"
       >
-        <Button
-          className="m-auto mt-8 flex w-11/12 items-center justify-center sm:w-2/3"
-          intent={emptyCart ? 'disabled' : 'primary'}
-          size="large"
+        <form
+          action="/api/create-payment-intent"
+          method="POST"
+          onClick={handleStartLoadingPayment}
+          onLoad={handleStopLoadingPayment}
+          className="max-w-xl"
         >
           {isLoadingPayment ? (
             <TwoSeventyRing color="white" />
           ) : (
             <span>Proceed to payment</span>
           )}
-        </Button>
-      </form>
+        </form>
+      </Button>
       <Link
         href={`/${emptyCart ? 'home' : 'profile/cart'}`}
         passHref
