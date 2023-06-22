@@ -3,7 +3,7 @@ import Card from '@/components/Card';
 export default function ProductSkeleton() {
   return (
     <Card className="bg -off-white relative">
-      <div className="animate-pulse">
+      <div className="flex animate-pulse flex-col gap-2">
         <div className="h-4 w-3/4 rounded bg-gray-300"></div>
         <div className="h-4 w-1/2 rounded bg-gray-300"></div>
         <div className="h-4 w-1/3 rounded bg-gray-300"></div>

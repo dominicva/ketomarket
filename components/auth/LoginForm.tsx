@@ -49,7 +49,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="pt-2 text-off-black">
+    <div className="m-auto mt-10 max-w-xl pt-2 text-off-black">
       <Link href="/" className="absolute">
         <X />
       </Link>

@@ -60,7 +60,7 @@ export default async function Success({
   }
 
   return (
-    <div className="p-4">
+    <div className="m-auto max-w-xl p-4">
       <Card className="mt-6 shadow-lg">
         <h2 className="mt-12 text-center text-2xl font-semibold">Success!</h2>
         <p className="mt-2 text-center text-lg">Your order has been placed.</p>
