@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { useRef } from 'react';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { useNavigationLoading } from '@/lib/hooks/useNavigationLoading';
 import { Button } from '@/components/buttons';
 
 export function OrderCta({ cart }: { cart: any }) {
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     isLoading: isLoadingPayment,
     handleStartLoading: handleStartLoadingPayment,
@@ -18,19 +20,12 @@ export function OrderCta({ cart }: { cart: any }) {
   } = useNavigationLoading();
   const emptyCart = !cart?.cartItems.length;
 
-  // const handleClick = async () => {
-  //   const res = await fetch('/api/create-payment-intent', {
-  //     method: 'POST',
-  //   });
-  //   const data = await res.json();
-  //   console.log(data);
-  // };
-
   return (
     <>
       <form
         action="/api/create-payment-intent"
         method="POST"
+        ref={formRef}
         onClick={handleStartLoadingPayment}
         onLoad={handleStopLoadingPayment}
         className="max-w-xl"
@@ -39,6 +34,11 @@ export function OrderCta({ cart }: { cart: any }) {
           className="m-auto mt-8 flex w-11/12 items-center justify-center sm:w-2/3"
           intent={emptyCart ? 'disabled' : 'primary'}
           size="large"
+          onClick={() => {
+            if (!emptyCart) {
+              formRef.current?.submit();
+            }
+          }}
           // @ts-expect-error type not in ButtonProps
           type="submit"
         >
