@@ -1,3 +1,7 @@
+/*
+  Avoiding prisma client reinitialization in development on hot reloads. See:
+  https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
+*/
 import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = global as unknown as {

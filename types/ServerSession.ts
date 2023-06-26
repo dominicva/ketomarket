@@ -1,6 +1,6 @@
 import { Session } from 'next-auth';
 
-// Extend the Session type to include the user idß
+// Extend the Session type to include the user id
 export type ServerSession =
   | ({
       user: {
