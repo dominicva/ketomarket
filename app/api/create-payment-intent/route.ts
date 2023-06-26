@@ -12,6 +12,9 @@ export async function POST() {
     data: { cart, cartTotal },
   } = await getCartData();
 
+  console.log('cart', cart);
+  console.log('cartTotal', cartTotal);
+
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {

@@ -10,7 +10,7 @@ export default async function Orders() {
 
   return (
     <section className="max-w-xl py-4">
-      <h2 className="text-2xl font-semibold">Orders</h2>
+      <h2 className="text-2xl font-semibold">Orders ({orders.length})</h2>
       {orders.length ? (
         orders.map((order: any) => <Order key={order.id} order={order} />)
       ) : (

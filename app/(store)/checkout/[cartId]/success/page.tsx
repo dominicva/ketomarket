@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { CheckCircle } from 'react-feather';
+import sgMail from '@sendgrid/mail';
 import { prisma } from '@/lib/db';
 import { getCartData } from '@/lib/cart';
 import Card from '@/components/Card';
 import { Button } from '@/components/buttons';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export default async function Success({
   params,
@@ -21,6 +24,7 @@ export default async function Success({
 
   let user;
   let newOrder;
+  let emailData;
 
   try {
     newOrder = await prisma.order.create({
@@ -35,8 +39,6 @@ export default async function Success({
         },
       },
     });
-
-    console.log('newOrder', newOrder);
 
     await prisma.cartItem.deleteMany({
       where: {
@@ -55,6 +57,21 @@ export default async function Success({
         id: cart.userId,
       },
     });
+
+    emailData = {
+      to: user?.email,
+      from: 'dominicvana@gmail.com',
+      templateId: 'd-b9577c198f73411b8d45cfaf1414377a',
+      subject: 'Order confirmed',
+      dynamicTemplateData: {
+        name: `${user?.name}`,
+        order_id: `${newOrder?.id}`,
+        order_date: newOrder?.createdAt.toLocaleString(),
+        order_total: `$${cartTotal}`,
+      },
+    };
+
+    await sgMail.send(emailData);
   } catch (error) {
     console.error(error);
   }
@@ -86,7 +103,7 @@ export default async function Success({
             </span>
           </p>
           <p className="mt-6 font-bold">
-            Order Total: <span className="ml-2">${cartTotal}</span>
+            Order Total: <span className="ml-2">${cartTotal.toFixed(2)}</span>
           </p>
         </div>
       </Card>
