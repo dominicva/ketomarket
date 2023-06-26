@@ -57,7 +57,7 @@ export default function SignupForm() {
   }
 
   return (
-    <div className="m-auto mt-10 max-w-xl pt-2 text-off-black">
+    <div className="m-auto max-w-xl text-off-black">
       <Link href="/" className="absolute">
         <X />
       </Link>
