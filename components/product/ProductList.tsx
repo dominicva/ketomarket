@@ -1,5 +1,3 @@
-'use client';
-
 import { Suspense } from 'react';
 import { capitalize } from '@/lib/strings';
 import Product from './Product';

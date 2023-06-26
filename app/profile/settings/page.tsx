@@ -189,7 +189,7 @@ export default function Settings() {
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           contentLabel="Delete account"
-          className="absolute left-1/2 top-1/2 flex h-64 w-11/12 -translate-x-1/2 -translate-y-1/2 transform flex-col justify-around rounded-md bg-white p-6 shadow-md"
+          className="absolute left-1/2 top-1/2 m-auto flex h-64 w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 transform flex-col justify-around rounded-md bg-white p-6 shadow-md"
         >
           <div className="flex items-center justify-between">
             <h2
