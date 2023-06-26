@@ -1,38 +1,54 @@
 import { Suspense } from 'react';
 import { capitalize } from '@/lib/strings';
-import { getCategoriesWithProducts } from '@/lib/category';
 import Product from './Product';
 import ProductSkeleton from './ProductSkeleton';
-import type { CategoryWithProducts } from '@/types';
+import type { ProductPropsAPI } from '@/types';
 
-export default async function ProductList() {
-  const categories: CategoryWithProducts[] =
-    (await getCategoriesWithProducts()) ?? [];
+export default async function ProductList({
+  products,
+}: {
+  products: ProductPropsAPI[];
+}) {
+  const items: any = [];
+  let lastCategory: null | string = null;
+
+  products.forEach(product => {
+    if (product.category !== lastCategory) {
+      const categoryLength = products.filter(
+        p => p.category === product.category
+      ).length;
+
+      items.push(
+        <h3
+          key={product.category}
+          className="mt-8 basis-full text-xl font-semibold sm:col-span-2 md:col-span-3"
+        >
+          {capitalize(product.category)} ({categoryLength})
+        </h3>
+      );
+    }
+    items.push(
+      <Suspense key={product.id} fallback={<ProductSkeleton />}>
+        <Product
+          key={product.id}
+          id={product.id}
+          name={product.name}
+          price={product.price}
+          image={product.image}
+          category={product.category}
+        />
+      </Suspense>
+    );
+    lastCategory = product.category;
+  });
 
   return (
     <div className="m-auto max-w-5xl p-4 lg:p-8">
       <h2 className="my-4 text-2xl font-semibold">Products</h2>
       <section className="flex flex-col gap-8">
-        {categories.map(category => (
-          <div key={category.id}>
-            <h3 className="mb-4 text-xl font-semibold">
-              {capitalize(category.name)} ({category.products.length})
-            </h3>
-            <div className="flex flex-wrap gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3">
-              {category.products.map(product => (
-                <Suspense key={product.id} fallback={<ProductSkeleton />}>
-                  <Product
-                    id={product.id}
-                    name={product.name}
-                    price={product.price}
-                    image={product.image}
-                    category={category}
-                  />
-                </Suspense>
-              ))}
-            </div>
-          </div>
-        ))}
+        <div className="flex flex-wrap gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3">
+          {items}
+        </div>
       </section>
     </div>
   );
