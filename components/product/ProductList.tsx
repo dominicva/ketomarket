@@ -1,10 +1,12 @@
+'use client';
+
 import { Suspense } from 'react';
 import { capitalize } from '@/lib/strings';
 import Product from './Product';
 import ProductSkeleton from './ProductSkeleton';
 import type { ProductPropsAPI } from '@/types';
 
-export default async function ProductList({
+export default function ProductList({
   products,
 }: {
   products: ProductPropsAPI[];
@@ -44,7 +46,6 @@ export default async function ProductList({
 
   return (
     <div className="m-auto max-w-5xl p-4 lg:p-8">
-      <h2 className="my-4 text-2xl font-semibold">Products</h2>
       <section className="flex flex-col gap-8">
         <div className="flex flex-wrap gap-6 sm:grid sm:grid-cols-2 md:grid-cols-3">
           {items}

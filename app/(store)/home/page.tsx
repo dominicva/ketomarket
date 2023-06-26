@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth';
 getProducts;
 import Greetings from '@/components/Greetings';
 import ProductList from '@/components/product/ProductList';
+import FilterableProductList from '@/components/product/FilterableProductList';
 import type { ServerSession } from '@/types';
 import { getProducts } from '@/lib/product';
 
@@ -20,8 +21,8 @@ export default async function Home() {
     <div>
       {/* @ts-expect-error Async Server Component */}
       <Greetings id={session?.user.id} />
-      {/* @ts-expect-error Async Server Component */}
-      <ProductList products={products} />
+      <FilterableProductList products={products} />
+      {/* <ProductList products={products} /> */}
     </div>
   );
 }
