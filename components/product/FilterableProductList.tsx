@@ -23,7 +23,7 @@ export default function FilterableProductList({
   }, [searchTerm]);
 
   return (
-    <section className="mt-12">
+    <section className="mt-8">
       <h2 className="m-auto max-w-5xl p-4 text-2xl font-semibold lg:p-8">
         Products
       </h2>
