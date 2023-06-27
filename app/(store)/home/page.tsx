@@ -22,7 +22,6 @@ export default async function Home() {
       {/* @ts-expect-error Async Server Component */}
       <Greetings id={session?.user.id} />
       <FilterableProductList products={products} />
-      {/* <ProductList products={products} /> */}
     </div>
   );
 }

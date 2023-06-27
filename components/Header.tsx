@@ -31,7 +31,7 @@ export default async function Header() {
   );
 
   return (
-    <header className="m-auto flex max-w-5xl items-center justify-between p-4 lg:p-6">
+    <header className="m-auto flex max-w-5xl items-center justify-between p-4  lg:p-6 lg:pl-0">
       <Link href="/">
         <h1
           className={`${comfortaa.className} text-2xl font-semibold text-secondary`}
