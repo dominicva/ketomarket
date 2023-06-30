@@ -1,16 +1,15 @@
 export default function Card({
+  as: Component = 'div',
   className,
   children,
 }: {
+  as?: React.ElementType;
   className?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className={`rounded-lg p-6 shadow-md ${className}`}
-      // style={{ minWidth: '300px' }}
-    >
+    <Component className={`rounded-lg p-6 shadow-md ${className}`}>
       {children}
-    </div>
+    </Component>
   );
 }

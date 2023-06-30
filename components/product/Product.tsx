@@ -1,8 +1,9 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { Suspense, useState } from 'react';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import { Plus, CheckCircle } from 'react-feather';
 import { capitalize } from '@/lib/strings';
@@ -45,27 +46,34 @@ export default function Product({
   };
 
   return (
-    <Card className="relative basis-[46%] pb-2 pl-0 pr-0 pt-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg sm:pb-4">
-      <Image
-        src={image ?? '/'}
-        alt={name}
-        width={200}
-        height={200}
-        className="m-auto mb-4 w-full rounded-md rounded-b-none"
-      />
-
+    <Card
+      as="article"
+      className="relative basis-[46%] pb-2 pl-0 pr-0 pt-0 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg sm:pb-4"
+    >
+      <Link href={`/product/${id}`} passHref>
+        <Image
+          src={image ?? '/'}
+          alt={name}
+          width={200}
+          height={200}
+          className="m-auto mb-4 w-full rounded-md rounded-b-none"
+        />
+      </Link>
       <div className="px-4 pb-2">
-        <h3 className="text-xl">{productTitle}</h3>
-        <h5 className="text-sm font-bold text-secondary">
-          {capitalize(category)}
-        </h5>
-        <h4 className="mb-2 font-semibold">${price}</h4>
+        <Link href={`/product/${id}`} passHref>
+          <h3 className="text-xl">{productTitle}</h3>
+          <h5 className="text-sm font-bold text-secondary">
+            {capitalize(category)}
+          </h5>
+          <h4 className="mb-2 font-semibold">${price}</h4>
+        </Link>
+
         <div className="absolute right-2 top-2 flex items-center">
           {success ? (
             <Button
               intent="primary"
               onClick={() => router.push(`/profile/cart`)}
-              className="flex items-center gap-2 bg-primary px-4"
+              className="z-10 flex items-center gap-2 bg-primary px-4"
             >
               <CheckCircle size={20} />
               View cart
@@ -75,7 +83,7 @@ export default function Product({
               intent="primary"
               size="round"
               onClick={addToCart}
-              className="flex h-8 w-8 items-center justify-center sm:h-10 sm:w-10"
+              className="z-10 flex h-8 w-8 items-center justify-center sm:h-10 sm:w-10"
             >
               {loading ? <TwoSeventyRing color="white" /> : <Plus size={18} />}
               <span className="sr-only">Add to cart</span>
