@@ -59,82 +59,54 @@ export default function AddToCart({
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-        <fieldset>
-          <legend className="sr-only">Quantity</legend>
-          <div className="flex items-center justify-between">
-            <label htmlFor="quantity" className="sr-only">
-              Quantity
-            </label>
-            <select
-              id="quantity"
-              name="quantity"
-              value={quantity}
-              onChange={e => setQuantity(Number(e.target.value))}
-              className="outline-none-grey-200 block h-12 w-full cursor-pointer rounded border-2  border-gray-300 text-center text-xl text-secondary focus:border-tertiary focus-visible:border-tertiary active:border-tertiary"
-            >
-              {Array.from(Array(10).keys()).map(i => (
-                <option key={i}>{i + 1}</option>
-              ))}
-            </select>
-          </div>
-        </fieldset>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <fieldset>
+        <legend className="sr-only">Quantity</legend>
+        <div className="flex items-center justify-between">
+          <label htmlFor="quantity" className="sr-only">
+            Quantity
+          </label>
+          <select
+            id="quantity"
+            name="quantity"
+            value={quantity}
+            onChange={e => setQuantity(Number(e.target.value))}
+            className="outline-none-grey-200 block h-12 w-full cursor-pointer rounded border-2  border-gray-300 text-center text-xl text-secondary focus:border-tertiary focus-visible:border-tertiary active:border-tertiary"
+          >
+            {Array.from(Array(10).keys()).map(i => (
+              <option key={i}>{i + 1}</option>
+            ))}
+          </select>
+        </div>
+      </fieldset>
 
-        {/* <Button
+      {loading ? (
+        <Button
           intent="primary"
           size="large"
           className="flex w-full justify-center"
           // @ts-expect-error
           disabled={loading}
-        > */}
-        {loading ? (
-          <Button
-            intent="primary"
-            size="large"
-            className="flex w-full justify-center"
-            // @ts-expect-error
-            disabled={loading}
-          >
-            <TwoSeventyRing color="white" />
-          </Button>
-        ) : success ? (
-          <Button
-            size="large"
-            onClick={() => router.push('/profile/cart')}
-            className="flex w-full items-center justify-center gap-2"
-          >
-            <CheckCircle size={20} />
-            <span>Go to Cart</span>
-          </Button>
-        ) : (
-          <Button
-            size="large"
-            className="flex w-full items-center justify-center"
-          >
-            Update Cart ({quantity})
-          </Button>
-        )}
-      </form>
-      {/* <Link
-        href="/profile/cart"
-        passHref
-        onClick={handleStartLoading}
-        onLoad={handleStopLoading}
-        className="block"
-      >
+        >
+          <TwoSeventyRing color="white" />
+        </Button>
+      ) : success ? (
         <Button
           size="large"
-          intent="tertiary"
-          className="flex h-14 w-full justify-center"
+          onClick={() => router.push('/profile/cart')}
+          className="flex w-full items-center justify-center gap-2"
         >
-          {isLoading ? (
-            <TwoSeventyRing color="#09624B" />
-          ) : (
-            <span>View Cart</span>
-          )}
+          <CheckCircle size={20} />
+          <span>Go to Cart</span>
         </Button>
-      </Link> */}
-    </>
+      ) : (
+        <Button
+          size="large"
+          className="flex w-full items-center justify-center"
+        >
+          Update Cart ({quantity})
+        </Button>
+      )}
+    </form>
   );
 }

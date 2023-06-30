@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
@@ -48,16 +49,24 @@ export function CartItem({ cartItem }: { cartItem: CartItemWithProduct }) {
     <li className="my-6">
       <div className="flex flex-wrap justify-between">
         <div className="flex gap-4">
-          <Image
-            src={cartItem.product.image ?? '/images/placeholder.png'}
-            alt={cartItem.product.name}
-            width={80}
-            height={80}
-            className="rounded"
-          />
+          <Link
+            href={`/product/${cartItem.product.id}`}
+            passHref
+            className="block basis-[50%] self-center"
+          >
+            <Image
+              src={cartItem.product.image ?? '/images/placeholder.png'}
+              alt={cartItem.product.name}
+              width={80}
+              height={80}
+              className="rounded"
+            />
+          </Link>
           <div>
             <h3 className="mb-2 text-lg font-semibold">
-              {capitalize(cartItem.product.name)}
+              <Link href={`/product/${cartItem.product.id}`} passHref>
+                {capitalize(cartItem.product.name)}
+              </Link>
             </h3>
             <Button
               intent="text"
