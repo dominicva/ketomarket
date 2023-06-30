@@ -5,7 +5,6 @@ import { prisma } from '@/lib/db';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import AddToCart from '@/components/product/AddToCart';
-import ProductPageSkeleton from '@/components/skeletons/ProductPageSkeleton';
 
 export default async function Product({
   params,
@@ -26,38 +25,40 @@ export default async function Product({
 
   return (
     <main className="p-6">
-      <Card
-        as="article"
-        className="m-auto flex max-w-5xl flex-col flex-wrap gap-4 transition duration-200 ease-in-out hover:translate-y-1 hover:shadow-lg sm:pb-4"
-      >
-        <Image
-          src={product?.image ?? '/'}
-          alt={product?.name ?? 'product image'}
-          width={300}
-          height={300}
-          className="rounded-md rounded-b-none"
-        />
-        <section className="flex flex-col">
-          <h3 className="text-xl">{capitalize(String(product?.name))}</h3>
-          <h5 className="text-sm font-bold text-secondary">
-            {capitalize(String(product?.category.name))}
-          </h5>
-          <p>{product?.description}</p>
-        </section>
-      </Card>
-      <Card className="m-auto flex max-w-5xl flex-col gap-6">
-        <hgroup>
-          <h3 className="text-xl font-semibold text-secondary">
-            ${product?.price}
-          </h3>
-          <p className="font-semibold text-tertiary">Free Delivery</p>
-        </hgroup>
-        <AddToCart
-          cartItemId={cartItemId}
-          cartItemQty={cartItem ? cartItem.quantity : undefined}
-          productId={product?.id}
-        />
-      </Card>
+      <div className="flex flex-col items-center lg:flex-row">
+        <Card
+          as="article"
+          className="m-auto flex max-w-2xl flex-col flex-wrap gap-8 sm:flex-row sm:pb-4 lg:ml-auto lg:mr-0"
+        >
+          <Image
+            src={product?.image ?? '/'}
+            alt={product?.name ?? 'product image'}
+            width={300}
+            height={300}
+            className="rounded-md rounded-b-none sm:basis-[40%]"
+          />
+          <section className="flex flex-col sm:basis-[40%]">
+            <h3 className="text-xl">{capitalize(String(product?.name))}</h3>
+            <h5 className="text-sm font-bold text-secondary">
+              {capitalize(String(product?.category.name))}
+            </h5>
+            <p>{product?.description}</p>
+          </section>
+        </Card>
+        <Card className="m-auto flex w-full max-w-sm flex-col gap-4 lg:ml-8">
+          <hgroup>
+            <h3 className="text-xl font-semibold text-secondary">
+              ${product?.price}
+            </h3>
+            <p className="font-semibold text-tertiary">Free Delivery</p>
+          </hgroup>
+          <AddToCart
+            cartItemId={cartItemId}
+            cartItemQty={cartItem ? cartItem.quantity : undefined}
+            productId={product?.id}
+          />
+        </Card>
+      </div>
     </main>
   );
 }

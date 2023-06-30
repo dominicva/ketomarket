@@ -35,8 +35,8 @@ export async function POST() {
     ],
     payment_method_types: ['card'],
     mode: 'payment',
-    success_url: `http://localhost:3000/checkout/${cart?.id}/success`, // DEVELOPMENT
-    // success_url: `https://ketomarket.vercel.app/checkout/${cart?.id}/success`, // PRODUCTION
+    // success_url: `http://localhost:3000/checkout/${cart?.id}/success`, // DEVELOPMENT
+    success_url: `https://ketomarket.vercel.app/checkout/${cart?.id}/success`, // PRODUCTION
     // cancel_url: `http://localhost:3000/checkout`, // DEVELOPMENT
     cancel_url: `https://ketomarket.vercel.app/checkout`, // PRODUCTION
   });
