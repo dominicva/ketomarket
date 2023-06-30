@@ -1,14 +1,9 @@
-import { getServerSession } from 'next-auth';
 import { Cart } from '@prisma/client';
 import { getCurrentCart, getCartTotal } from '@/lib/cart';
-import { authOptions } from '@/lib/auth';
 import Card from '@/components/Card';
 import { CartCta, CartItemsList } from '@/components/cart';
-import type { ServerSession } from '@/types';
 
 export default async function Cart() {
-  const session: ServerSession = await getServerSession(authOptions);
-  const userId = session?.user.id;
   const currentCart = await getCurrentCart();
   const emptyCart = !currentCart?.cartItems.length;
   const cartTotal = currentCart ? getCartTotal(currentCart) : 0;

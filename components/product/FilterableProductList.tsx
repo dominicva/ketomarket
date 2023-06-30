@@ -21,7 +21,7 @@ export default function FilterableProductList({
         product.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredProducts(results);
-  }, [searchTerm]);
+  }, [searchTerm, products]);
 
   return (
     <Suspense
