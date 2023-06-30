@@ -9,7 +9,7 @@ import type { ServerSession } from '@/types';
 export default async function Cart() {
   const session: ServerSession = await getServerSession(authOptions);
   const userId = session?.user.id;
-  const currentCart = await getCurrentCart(userId);
+  const currentCart = await getCurrentCart();
   const emptyCart = !currentCart?.cartItems.length;
   const cartTotal = currentCart ? getCartTotal(currentCart) : 0;
 
