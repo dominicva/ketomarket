@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import { getProductById } from '@/lib/product';
+import { getCartItemId } from '@/lib/cart';
+import { prisma } from '@/lib/db';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
+import AddToCart from '@/components/product/AddToCart';
 import { Button } from '@/components/buttons';
+import Link from 'next/link';
 
 export default async function Product({
   params,
@@ -12,7 +16,15 @@ export default async function Product({
   };
 }) {
   const product = await getProductById(params.id);
-  console.log('product', product);
+  const cartItemId = await getCartItemId(String(product?.id));
+  const cartItem =
+    cartItemId &&
+    (await prisma.cartItem.findUnique({
+      where: {
+        id: cartItemId,
+      },
+    }));
+
   return (
     <main className="p-6">
       <Card
@@ -41,7 +53,11 @@ export default async function Product({
           </h3>
           <p className="font-semibold text-tertiary">Free Delivery</p>
         </hgroup>
-        <Button>Add to cart</Button>
+        <AddToCart
+          cartItemId={cartItemId}
+          cartItemQty={cartItem ? cartItem.quantity : undefined}
+          productId={product?.id}
+        />
       </Card>
     </main>
   );

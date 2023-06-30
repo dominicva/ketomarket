@@ -1,31 +1,84 @@
-import { getServerSession } from 'next-auth';
 import { prisma } from './db';
-import { authOptions } from './auth';
-import type { CartWithItemsAndProducts, ServerSession } from '@/types';
+import type { CartWithItemsAndProducts } from '@/types';
+import { getUserFromDb } from './user';
 
-export const getCurrentCart = async (
-  userId: string | undefined
-): Promise<CartWithItemsAndProducts | null> => {
-  try {
-    const carts = await prisma.cart.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        cartItems: {
-          include: {
-            product: true,
+// export const addToCart = async (productId: string) => {
+//   const user = await getUserFromDb();
+//   try {
+//     const existingCart = await prisma.cart.findFirst({
+//       where: {
+//         userId: user?.id,
+//       },
+//     });
+
+//     if (existingCart) {
+//       const existingCartItem = await prisma.cartItem.findFirst({
+//         where: {
+//           cartId: existingCart?.id,
+//           productId,
+//         },
+//       });
+
+//       if (existingCartItem) {
+//         await prisma.cartItem.update({
+//           where: {
+//             id: existingCartItem.id,
+//           },
+//           data: {
+//             quantity: existingCartItem.quantity + 1,
+//           },
+//         });
+//       } else {
+//         await prisma.cartItem.create({
+//           data: {
+//             cartId: existingCart.id,
+//             productId,
+//             quantity: 1,
+//           },
+//         });
+//       }
+//     } else {
+//       const newCart = await prisma.cart.create({
+//         data: {
+//           userId: user?.id,
+//           cartItems: {
+//             create: {
+//               productId,
+//               quantity: 1,
+//             },
+//           },
+//         },
+//       });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     return null;
+//   }
+// };
+
+export const getCurrentCart =
+  async (): Promise<CartWithItemsAndProducts | null> => {
+    const user = await getUserFromDb();
+    try {
+      const carts = await prisma.cart.findMany({
+        where: {
+          userId: user?.id,
+        },
+        include: {
+          cartItems: {
+            include: {
+              product: true,
+            },
           },
         },
-      },
-    });
+      });
 
-    return carts[0];
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
+      return carts[0];
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
 
 export const getCartTotal = (cart: CartWithItemsAndProducts): number => {
   let total = 0;
@@ -38,9 +91,7 @@ export const getCartTotal = (cart: CartWithItemsAndProducts): number => {
 };
 
 export const getCartData = async () => {
-  const session: ServerSession = await getServerSession(authOptions);
-  const userId = session?.user?.id;
-  const cart = await getCurrentCart(String(userId));
+  const cart = await getCurrentCart();
   const cartTotal = cart ? getCartTotal(cart) : 0;
 
   return {
@@ -52,7 +103,7 @@ export const getCartData = async () => {
 };
 
 export const deleteCarts = async (userId: string | undefined) => {
-  const currentCart = await getCurrentCart(userId);
+  const currentCart = await getCurrentCart();
   try {
     const deletedCartItems = await prisma.cartItem.deleteMany({
       where: { cartId: currentCart?.id },
@@ -70,4 +121,16 @@ export const deleteCarts = async (userId: string | undefined) => {
     console.error(error);
     return null;
   }
+};
+
+export const getCartItemId = async (productId: string) => {
+  const currentCart = await getCurrentCart();
+  const cartItem = await prisma.cartItem.findFirst({
+    where: {
+      cartId: currentCart?.id,
+      productId,
+    },
+  });
+
+  return cartItem?.id;
 };

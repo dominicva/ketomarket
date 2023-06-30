@@ -76,7 +76,7 @@ export default function Product({
               className="z-10 flex items-center gap-2 bg-primary px-4"
             >
               <CheckCircle size={20} />
-              View cart
+              View Cart
             </Button>
           ) : (
             <Button

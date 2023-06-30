@@ -12,7 +12,7 @@ export const GET = async () => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { productId } = await req.json();
+    const { productId, quantity } = await req.json();
     const session: ServerSession = await getServerSession(authOptions);
     const userId = session?.user?.id;
 
@@ -43,7 +43,7 @@ export const POST = async (req: NextRequest) => {
             id: existingCartItem.id,
           },
           data: {
-            quantity: existingCartItem.quantity + 1,
+            quantity: existingCartItem.quantity + quantity ? quantity : 1,
           },
         });
       } else {
@@ -51,7 +51,7 @@ export const POST = async (req: NextRequest) => {
           data: {
             cartId: existingCart.id,
             productId,
-            quantity: 1,
+            quantity: quantity ? quantity : 1,
           },
         });
       }
@@ -62,7 +62,7 @@ export const POST = async (req: NextRequest) => {
           cartItems: {
             create: {
               productId,
-              quantity: 1,
+              quantity: quantity ? quantity : 1,
             },
           },
         },
@@ -86,13 +86,24 @@ export const PUT = async (req: NextRequest) => {
       data: { quantity },
     });
 
-    return NextResponse.json({
-      data: cartItem,
+    console.log('cartItem', cartItem ?? 'error');
+
+    return new Response(JSON.stringify({ data: cartItem }), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
   } catch {
-    return NextResponse.json(
-      { error: 'There was an error updating the item in your cart.' },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({
+        error: 'There was an error updating the item in your cart.',
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        status: 500,
+      }
     );
   }
 };

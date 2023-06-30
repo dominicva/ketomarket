@@ -34,9 +34,17 @@ export const updateCartItemQty = async (
   cartItemId: CartItemWithProduct['id'],
   quantity: number
 ) => {
-  return fetcher({
-    url: '/api/cart',
+  return fetch('/api/cart', {
     method: 'PUT',
-    body: { cartItemId, quantity },
+    body: JSON.stringify({ cartItemId, quantity }),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
   });
+  // return fetcher({
+  //   url: '/api/cart',
+  //   method: 'PUT',
+  //   body: { cartItemId, quantity },
+  // });
 };
