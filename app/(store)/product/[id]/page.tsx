@@ -26,10 +26,10 @@ export default async function Product({
 
   return (
     <main className="p-6">
-      <div className="flex flex-col items-center lg:flex-row">
+      <div className="flex flex-col items-center ">
         <Card
           as="article"
-          className="m-auto flex max-w-2xl flex-col flex-wrap gap-8 sm:flex-row sm:pb-4 lg:ml-auto lg:mr-0"
+          className="m-auto flex max-w-2xl flex-col flex-wrap gap-8 sm:flex-row sm:pb-4 lg:ml-auto"
         >
           <Image
             src={product?.image ?? '/'}
@@ -46,7 +46,7 @@ export default async function Product({
             <p>{product?.description}</p>
           </section>
         </Card>
-        <Card className="m-auto flex w-full flex-col gap-4 lg:ml-8">
+        <Card className="m-auto flex w-full max-w-md flex-col gap-4 sm:w-1/2">
           <hgroup>
             <h3 className="text-xl font-semibold text-secondary">
               ${product?.price}
