@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 getProducts;
 import Greetings from '@/components/Greetings';
-import ProductList from '@/components/product/ProductList';
 import FilterableProductList from '@/components/product/FilterableProductList';
 import type { ServerSession } from '@/types';
 import { getProducts } from '@/lib/product';
