@@ -5,7 +5,6 @@ import { prisma } from '@/lib/db';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import AddToCart from '@/components/product/AddToCart';
-import ProductPageSkeleton from '@/components/skeletons/ProductPageSkeleton';
 
 export default async function Product({
   params,
