@@ -5,6 +5,7 @@ import { prisma } from '@/lib/db';
 import { capitalize } from '@/lib/strings';
 import Card from '@/components/Card';
 import AddToCart from '@/components/product/AddToCart';
+import ProductPageSkeleton from '@/components/skeletons/ProductPageSkeleton';
 
 export default async function Product({
   params,
@@ -35,7 +36,7 @@ export default async function Product({
             alt={product?.name ?? 'product image'}
             width={300}
             height={300}
-            className="rounded-md rounded-b-none sm:basis-[40%]"
+            className="w-full rounded-md rounded-b-none sm:basis-[40%]"
           />
           <section className="flex flex-col sm:basis-[40%]">
             <h3 className="text-xl">{capitalize(String(product?.name))}</h3>
@@ -45,7 +46,7 @@ export default async function Product({
             <p>{product?.description}</p>
           </section>
         </Card>
-        <Card className="m-auto flex w-full max-w-sm flex-col gap-4 lg:ml-8">
+        <Card className="m-auto flex w-full flex-col gap-4 lg:ml-8">
           <hgroup>
             <h3 className="text-xl font-semibold text-secondary">
               ${product?.price}
