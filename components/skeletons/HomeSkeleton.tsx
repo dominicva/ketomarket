@@ -14,7 +14,7 @@ export default function HomeSkeleton() {
           .fill(0)
           .map((_, i) => {
             return (
-              <div className="flex">
+              <div key={i} className="flex">
                 <div className="mr-4 h-12 w-16 self-center rounded bg-gray-300"></div>
                 <div className="flex flex-col justify-center">
                   <div className="mb-1 h-8 w-16 bg-gray-300"></div>
