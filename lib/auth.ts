@@ -39,7 +39,6 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id,
           email: user.email,
-          isAdmin: user.isAdmin,
           name: user.name,
           image: user.image,
         };
@@ -52,15 +51,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     session: ({ session, token }) => {
-      const o = {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-        },
-      };
-
-      // console.log('SESSION', o);
       return {
         ...session,
         user: {

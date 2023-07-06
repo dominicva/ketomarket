@@ -10,7 +10,7 @@ export default function NotAuthorized() {
     setTimeout(() => {
       router.push('/');
     }, 3000);
-  }, []);
+  }, [router]);
 
   return (
     <main className="p-6">
