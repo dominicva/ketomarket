@@ -5,13 +5,12 @@ import { FormEvent, useState } from 'react';
 import { Eye, EyeOff } from 'react-feather';
 import { TwoSeventyRing } from 'react-svg-spinners';
 import Card from '@/components/Card';
-import Input from '@/components/Input';
 import { Button } from './buttons';
 
 export default function AdminCheck({
-  adminPassword,
+  hashedPassword,
 }: {
-  adminPassword: string;
+  hashedPassword: string;
 }) {
   const router = useRouter();
   const [password, setPassword] = useState('');
@@ -22,9 +21,19 @@ export default function AdminCheck({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (password === adminPassword) {
+    const res = await fetch('/api/admin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password }),
+    });
+
+    const { authorized } = await res.json();
+
+    if (authorized) {
       setLoading(false);
-      router.push('/admin/dashboard');
+      router.push(`/admin/${hashedPassword}/dashboard`);
     } else {
       setError(true);
       setTimeout(() => {
@@ -33,6 +42,8 @@ export default function AdminCheck({
         router.push('/');
       }, 3000);
     }
+
+    setLoading(false);
   };
 
   return (
