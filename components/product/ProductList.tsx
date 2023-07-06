@@ -1,7 +1,5 @@
-import { Suspense } from 'react';
 import { capitalize } from '@/lib/strings';
 import Product from './Product';
-import ProductSkeleton from './ProductSkeleton';
 import type { ProductPropsAPI } from '@/types';
 
 export default function ProductList({
@@ -9,26 +7,28 @@ export default function ProductList({
 }: {
   products: ProductPropsAPI[];
 }) {
-  const items: any = [];
-  let lastCategory: null | string = null;
-
-  products.forEach(product => {
-    if (product.category !== lastCategory) {
-      const categoryLength = products.filter(
-        p => p.category === product.category
-      ).length;
-
-      items.push(
-        <h3
-          key={product.category}
-          className="mt-8 basis-full text-xl font-semibold sm:col-span-2 md:col-span-3"
-        >
-          {capitalize(product.category)} ({categoryLength})
-        </h3>
-      );
+  const categories = products.reduce((acc, product) => {
+    if (acc[product.category]) {
+      acc[product.category].push(product);
+    } else {
+      acc[product.category] = [product];
     }
+    return acc;
+  }, {} as Record<string, ProductPropsAPI[]>);
+
+  const items: any = [];
+
+  for (const [category, products] of Object.entries(categories)) {
     items.push(
-      <Suspense key={product.id} fallback={<ProductSkeleton />}>
+      <h3
+        key={category}
+        className="mt-8 basis-full text-xl font-semibold sm:col-span-2 md:col-span-3"
+      >
+        {capitalize(category)} ({products.length})
+      </h3>
+    );
+    products.forEach(product => {
+      items.push(
         <Product
           key={product.id}
           id={product.id}
@@ -37,10 +37,9 @@ export default function ProductList({
           image={product.image}
           category={product.category}
         />
-      </Suspense>
-    );
-    lastCategory = product.category;
-  });
+      );
+    });
+  }
 
   return (
     <div className="m-auto max-w-5xl p-4 lg:p-8">
