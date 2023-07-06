@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import Card from '@/components/Card';
 import Input from '@/components/Input';
@@ -12,8 +13,19 @@ const initial = {
   image: '',
 };
 
-export default function AdminDashboardPage() {
+export default function AdminDashboardPage({
+  params,
+}: {
+  params: { hash: string };
+}) {
+  // console.log('params:', params);
+  // console.log('admin secret:', process.env.ADMIN_SECRET);
+  const router = useRouter();
   const [formState, setFormState] = useState({ ...initial });
+
+  // if (params.hash !== process.env.ADMIN_SECRET) {
+  //   router.push('/');
+  // }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

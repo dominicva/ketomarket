@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ['@acme/ui'],
+  env: {
+    ADMIN_SECRET: process.env.ADMIN_SECRET,
   },
   images: {
     remotePatterns: [

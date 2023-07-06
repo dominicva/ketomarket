@@ -1,12 +1,13 @@
-import { hash } from 'bcrypt';
-import AdminCheck from '@/components/auth/AdminCheck';
+import { getUserFromDb } from '@/lib/user';
+import { redirect } from 'next/navigation';
+import NotAuthorized from '@/components/auth/NotAuthorized';
 
 export default async function AdminPage() {
-  const hashedPassword = await hash(process.env.ADMIN_SECRET!, 10);
+  const user = await getUserFromDb();
 
-  return (
-    <main className="p-4">
-      <AdminCheck hashedPassword={hashedPassword} />
-    </main>
-  );
+  if (user?.isAdmin) {
+    redirect('/admin/dashboard');
+  } else {
+    return <NotAuthorized />;
+  }
 }

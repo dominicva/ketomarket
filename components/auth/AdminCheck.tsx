@@ -1,93 +1,95 @@
-'use client';
+// 'use client';
+export default function Auth() {}
+// import { useRouter } from 'next/navigation';
+// import { FormEvent, useState } from 'react';
+// import { Eye, EyeOff } from 'react-feather';
+// import { TwoSeventyRing } from 'react-svg-spinners';
+// import Card from '@/components/Card';
+// import { Button } from './buttons';
 
-import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
-import { Eye, EyeOff } from 'react-feather';
-import { TwoSeventyRing } from 'react-svg-spinners';
-import Card from '@/components/Card';
-import { Button } from './buttons';
+// export default function AdminCheck({
+//   hashedAdminSecret,
+// }: {
+//   hashedAdminSecret: string;
+// }) {
+//   const router = useRouter();
+//   const [password, setPassword] = useState('');
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(false);
 
-export default function AdminCheck({
-  hashedPassword,
-}: {
-  hashedPassword: string;
-}) {
-  const router = useRouter();
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+//   // console.log('hashedAdminSecret:', hashedAdminSecret);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    const res = await fetch('/api/admin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ password }),
-    });
+//   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     const res = await fetch('/api/admin', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ password }),
+//     });
 
-    const { authorized } = await res.json();
+//     const { authorized } = await res.json();
 
-    if (authorized) {
-      setLoading(false);
-      router.push(`/admin/${hashedPassword}/dashboard`);
-    } else {
-      setError(true);
-      setTimeout(() => {
-        setLoading(false);
-        setError(false);
-        router.push('/');
-      }, 3000);
-    }
+//     if (authorized) {
+//       setLoading(false);
+//       router.push(`/admin/${hashedAdminSecret}/dashboard`);
+//     } else {
+//       setError(true);
+//       setTimeout(() => {
+//         setLoading(false);
+//         setError(false);
+//         router.push('/');
+//       }, 3000);
+//     }
 
-    setLoading(false);
-  };
+//     setLoading(false);
+//   };
 
-  return (
-    <section className="m-auto mt-6 max-w-md">
-      <h1 className="mb-4 text-center text-xl font-semibold">
-        So you&apos;re an admin?
-      </h1>
-      <Card>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="password" className="mb-1 block">
-            Enter admin password
-          </label>
-          <div className="relative mb-6 flex">
-            <input
-              required={true}
-              id="password"
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              className=" w-full border-2 p-2 focus-within:outline-secondary"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-[0.65rem] top-[0.65rem] block"
-            >
-              {showPassword ? (
-                <EyeOff color="#09624B" />
-              ) : (
-                <Eye color="#09624B" />
-              )}
-            </button>
-          </div>
+//   return (
+//     <section className="m-auto mt-6 max-w-md">
+//       <h1 className="mb-4 text-center text-xl font-semibold">
+//         So you&apos;re an admin?
+//       </h1>
+//       <Card>
+//         <form onSubmit={handleSubmit}>
+//           <label htmlFor="password" className="mb-1 block">
+//             Enter admin password
+//           </label>
+//           <div className="relative mb-6 flex">
+//             <input
+//               required={true}
+//               id="password"
+//               type={showPassword ? 'text' : 'password'}
+//               value={password}
+//               onChange={e => setPassword(e.target.value)}
+//               className=" w-full border-2 p-2 focus-within:outline-secondary"
+//             />
+//             <button
+//               type="button"
+//               onClick={() => setShowPassword(!showPassword)}
+//               className="absolute right-[0.65rem] top-[0.65rem] block"
+//             >
+//               {showPassword ? (
+//                 <EyeOff color="#09624B" />
+//               ) : (
+//                 <Eye color="#09624B" />
+//               )}
+//             </button>
+//           </div>
 
-          <Button size="large" className="flex w-full justify-center">
-            {loading ? <TwoSeventyRing color="white" /> : 'Submit'}
-          </Button>
-        </form>
-        {error ? (
-          <p className="mt-6 font-semibold text-accent">
-            Access denied! Redirecting you to the home page...
-          </p>
-        ) : null}
-      </Card>
-    </section>
-  );
-}
+//           <Button size="large" className="flex w-full justify-center">
+//             {loading ? <TwoSeventyRing color="white" /> : 'Submit'}
+//           </Button>
+//         </form>
+//         {error ? (
+//           <p className="mt-6 font-semibold text-accent">
+//             Access denied! Redirecting you to the home page...
+//           </p>
+//         ) : null}
+//       </Card>
+//     </section>
+//   );
+// }
