@@ -8,6 +8,7 @@ import {
   SignoutButton,
   ProfileButton,
   RegisterButton,
+  Button,
 } from './buttons';
 import type { ServerSession } from '@/types';
 
@@ -17,6 +18,7 @@ export default async function Header() {
   const isLoggedIn = Boolean(serverSession?.user);
   const name = user?.name;
   const profilePic = user?.image;
+  const isAdmin = user?.isAdmin ?? false;
 
   const buttons = isLoggedIn ? (
     <>

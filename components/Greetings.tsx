@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import { prisma } from '@/lib/db';
-import { GoToCart } from './buttons';
+import { Button, GoToCart } from './buttons';
 import type { UserSession } from '@/types';
 
 export default async function Greetings({ id }: Pick<UserSession, 'id'>) {
@@ -16,6 +17,8 @@ export default async function Greetings({ id }: Pick<UserSession, 'id'>) {
     },
   });
 
+  const isAdmin = user?.isAdmin ?? false;
+
   const currentCartItemsCount = user?.carts[0]?.cartItems?.length ?? 0;
 
   return (
@@ -26,7 +29,16 @@ export default async function Greetings({ id }: Pick<UserSession, 'id'>) {
           <p className="mt-4 text-lg text-gray-600">
             Time to shop! We have a great selection of keto-friendly products.
           </p>
-          <GoToCart cartItemsCount={currentCartItemsCount} />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <GoToCart cartItemsCount={currentCartItemsCount} />
+            {isAdmin ? (
+              <Link href="/admin/dashboard">
+                <Button size="medium" className="sm:mt-6">
+                  Admin dashboard
+                </Button>
+              </Link>
+            ) : null}
+          </div>
         </hgroup>
       </div>
     </section>
