@@ -35,7 +35,7 @@ export default async function Product({
             alt={product?.name ?? 'product image'}
             width={300}
             height={300}
-            className="w-full rounded-md rounded-b-none sm:basis-[40%]"
+            className="w-full rounded-md rounded-b-none sm:basis-[50%]"
           />
           <section className="flex flex-col sm:basis-[40%]">
             <h3 className="text-xl">{capitalize(String(product?.name))}</h3>
