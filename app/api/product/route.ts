@@ -1,7 +1,6 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getProducts } from '@/lib/product';
-import { NextApiRequest } from 'next';
-import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
   try {
@@ -20,12 +19,10 @@ export const GET = async () => {
 };
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
-  const { name, description, price, image, category } = await req.json();
-  console.log('name', name);
-  console.log('description', description);
-  console.log('price', price);
-  console.log('image', image);
-  console.log('category', category);
+  const body = await req.json();
+  const { description, image, category } = body;
+  const name = body.name.toLowerCase();
+  const price = Number(body.price);
 
   try {
     const product = await prisma.product.create({
@@ -41,6 +38,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
         },
       },
     });
+
     return new Response(JSON.stringify(product), {
       headers: {
         'content-type': 'application/json',
