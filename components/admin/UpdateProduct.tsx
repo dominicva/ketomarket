@@ -1,44 +1,66 @@
 'use client';
 
-import { FormEvent, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect, SetStateAction } from 'react';
 import Card from '@/components/Card';
 import Input from '@/components/Input';
 import { Button } from '@/components/buttons';
 import { capitalize } from '@/lib/strings';
+import type { ProductProps } from '@/types';
+import { ProductAPI } from '@/types/ProductAPI';
 
-const initial = {
+const initial: ProductAPI = {
+  id: '',
   name: '',
   category: '',
   description: '',
-  price: '',
+  price: '' as unknown as number,
   image: '',
 };
 
-export default function CreateProduct() {
+export default function UpdateProduct() {
   const [formState, setFormState] = useState({ ...initial });
+  const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    const getProducts = async () => {
+      const res = await fetch('/api/product');
+      const productsData = await res.json();
+      return productsData;
+    };
+
     const getCategories = async () => {
       const res = await fetch('/api/category');
       const { categories } = await res.json();
       return categories;
     };
+
+    getProducts().then(data => setProducts(data));
     getCategories().then(data => setCategories(data));
   }, []);
 
+  const handleSelectChange = (e: FormEvent<HTMLSelectElement>) => {
+    const product = products.find(
+      // @ts-ignore
+      (product: ProductAPI) => product.name === e.target.value
+    );
+    setFormState(product as unknown as SetStateAction<ProductAPI>);
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const res = await fetch('/api/product', {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formState),
     });
-    console.log('create new product res:', res);
+
     if (!res.ok) {
-      alert(await res.json());
+      console.error(await res.json());
       return;
     }
+
     setFormState({ ...initial });
   };
 
@@ -46,10 +68,28 @@ export default function CreateProduct() {
     <section>
       <div className="m-auto max-w-xl">
         <Card as="section">
-          <h2 className="mb-6 mt-4 text-lg font-semibold">
-            Create New Product
-          </h2>
+          <h2 className="mb-6 mt-4 text-lg font-semibold">Update Product</h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <label htmlFor="category">Select product</label>
+            <select
+              name="category"
+              id="category"
+              required={true}
+              value={formState.name}
+              onChange={handleSelectChange}
+              className="rounded border-2 p-2 focus-within:outline-secondary"
+            >
+              <option value="">Select a product</option>
+              {products.length > 0 ? (
+                products.map((product: ProductProps) => (
+                  <option key={product.id} value={product.name}>
+                    {capitalize(product.name)}
+                  </option>
+                ))
+              ) : (
+                <option value="">No categories found</option>
+              )}
+            </select>
             <Input
               required={true}
               labelText="Product name"
@@ -105,9 +145,9 @@ export default function CreateProduct() {
               labelText="Product price"
               id="price"
               type="number"
-              value={formState.price}
+              value={String(formState.price)}
               onChange={e =>
-                setFormState({ ...formState, price: e.target.value })
+                setFormState({ ...formState, price: Number(e.target.value) })
               }
             />
 
@@ -123,7 +163,7 @@ export default function CreateProduct() {
               autocomplete="photo"
             />
 
-            <Button size="large">Create Product</Button>
+            <Button size="large">Save</Button>
           </form>
         </Card>
       </div>

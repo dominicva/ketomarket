@@ -18,7 +18,7 @@ export const GET = async () => {
   }
 };
 
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest, _res: NextResponse) => {
   const body = await req.json();
   const { description, image, category } = body;
   const name = body.name.toLowerCase();
@@ -26,6 +26,42 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
   try {
     const product = await prisma.product.create({
+      data: {
+        name,
+        description,
+        price,
+        image,
+        category: {
+          connect: {
+            name: category,
+          },
+        },
+      },
+    });
+
+    return new Response(JSON.stringify(product), {
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+    });
+  }
+};
+
+export const PUT = async (req: NextRequest, _res: NextResponse) => {
+  const body = await req.json();
+  const { id, description, image, category } = body;
+  const name = body.name.toLowerCase();
+  const price = Number(body.price);
+
+  try {
+    const product = await prisma.product.update({
+      where: {
+        id,
+      },
       data: {
         name,
         description,

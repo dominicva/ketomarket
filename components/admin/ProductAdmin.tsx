@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/buttons';
 import CreateProduct from '@/components/admin/CreateProduct';
+import UpdateProduct from '@/components/admin/UpdateProduct';
 
 function Update() {
   return <h2>Update</h2>;
@@ -19,7 +20,7 @@ export default function ProductAdmin() {
     crudMethod === 'create' ? (
       <CreateProduct />
     ) : crudMethod === 'update' ? (
-      <Update />
+      <UpdateProduct />
     ) : (
       <Delete />
     );

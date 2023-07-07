@@ -25,6 +25,7 @@ export const getProducts = async (): Promise<ProductAPI[]> => {
     return {
       id: product.id,
       category: product.category.name,
+      description: product.description,
       price: product.price,
       name: product.name,
       image: product.image,
