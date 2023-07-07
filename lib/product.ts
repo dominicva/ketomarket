@@ -21,6 +21,7 @@ export const getProducts = async (): Promise<ProductAPI[]> => {
     },
   });
 
+  // @ts-ignore
   return productsFromDb.map(product => {
     return {
       id: product.id,
