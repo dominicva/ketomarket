@@ -46,6 +46,7 @@ model Product {
   category    Category    @relation(fields: [categoryId], references: [id])
   cartItems   CartItem[]
   orderItems  OrderItem[]
+  deletedAt   DateTime?
 }
 
 model Cart {

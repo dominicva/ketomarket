@@ -4,14 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/buttons';
 import CreateProduct from '@/components/admin/CreateProduct';
 import UpdateProduct from '@/components/admin/UpdateProduct';
-
-function Update() {
-  return <h2>Update</h2>;
-}
-
-function Delete() {
-  return <h2>Delete</h2>;
-}
+import DeleteProduct from './DeleteProduct';
 
 export default function ProductAdmin() {
   const [crudMethod, setCrudMethod] = useState('create');
@@ -22,14 +15,12 @@ export default function ProductAdmin() {
     ) : crudMethod === 'update' ? (
       <UpdateProduct />
     ) : (
-      <Delete />
+      <DeleteProduct />
     );
   return (
     <section className="p-4">
       <div className="m-auto max-w-xl">
-        <h1 className="mb-4 text-2xl font-semibold text-secondary">
-          Product Dashboard
-        </h1>
+        <h1 className="mb-4 text-2xl font-semibold text-secondary">Product</h1>
         <nav>
           <ul className="flex gap-4">
             <li>

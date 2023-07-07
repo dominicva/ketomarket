@@ -22,14 +22,16 @@ export const getProducts = async (): Promise<ProductAPI[]> => {
   });
 
   // @ts-ignore
-  return productsFromDb.map(product => {
-    return {
-      id: product.id,
-      category: product.category.name,
-      description: product.description,
-      price: product.price,
-      name: product.name,
-      image: product.image,
-    };
-  });
+  return productsFromDb
+    .filter(product => !product.deletedAt)
+    .map(product => {
+      return {
+        id: product.id,
+        category: product.category.name,
+        description: product.description,
+        price: product.price,
+        name: product.name,
+        image: product.image,
+      };
+    });
 };

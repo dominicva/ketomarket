@@ -86,3 +86,29 @@ export const PUT = async (req: NextRequest, _res: NextResponse) => {
     });
   }
 };
+
+export const DELETE = async (req: NextRequest, _res: NextResponse) => {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id') ?? '';
+
+  try {
+    const deletedProduct = await prisma.product.update({
+      where: {
+        id,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+
+    return new Response(JSON.stringify({ deletedProduct }), {
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+    });
+  }
+};

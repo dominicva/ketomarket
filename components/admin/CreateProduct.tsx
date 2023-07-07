@@ -29,12 +29,13 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const res = await fetch('/api/product', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formState),
     });
-    console.log('create new product res:', res);
+
     if (!res.ok) {
       alert(await res.json());
       return;
