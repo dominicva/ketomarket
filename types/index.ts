@@ -5,3 +5,4 @@ export type { ProductWithCategory } from './ProductWithCategory';
 export type { CategoryWithProducts } from './CategoryWithProducts';
 export type { ProductProps, ProductPropsAPI } from './ProductProps';
 export type { UserSession } from './UserSession';
+export type { ProductAPI } from './ProductAPI';
