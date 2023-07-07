@@ -13,8 +13,6 @@ export default async function ProfileLayout({
 }) {
   const session: ServerSession = await getServerSession(authOptions);
 
-  console.log('session', session);
-
   if (!session) {
     redirect('/signin');
   }
