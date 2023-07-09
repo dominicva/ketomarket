@@ -7,11 +7,11 @@ import { Button } from '@/components/buttons';
 import { capitalize } from '@/lib/strings';
 
 const initial = {
-  name: '',
-  description: '',
+  category: '',
+  updated: '',
 };
 
-export default function CreateCategory() {
+export default function UpdateCategory() {
   const [formState, setFormState] = useState({ ...initial });
   const [categories, setCategories] = useState([] as string[]);
   const [error, setError] = useState(false);
@@ -52,20 +52,41 @@ export default function CreateCategory() {
     <section>
       <div className="m-auto max-w-xl">
         <Card as="section">
-          <h2 className="mb-6 mt-4 text-lg font-semibold">
-            Create New Category
-          </h2>
+          <h2 className="mb-6 mt-4 text-lg font-semibold">Update Category</h2>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <label htmlFor="category">Select Category</label>
+            <select
+              name="category"
+              id="category"
+              required={true}
+              value={formState.category}
+              onChange={e =>
+                setFormState({ ...formState, category: e.target.value })
+              }
+              className="rounded border-2 p-2 focus-within:outline-secondary"
+            >
+              <option value="">Select a category</option>
+              {categories.length > 0 ? (
+                categories.map((category: any) => (
+                  <option key={category} value={category}>
+                    {capitalize(category)}
+                  </option>
+                ))
+              ) : (
+                <option value="">No categories found</option>
+              )}
+            </select>
+
             <Input
               required={true}
-              labelText="Category name"
-              id="name"
+              labelText="Updated category name"
+              id="updated"
               type="text"
-              value={formState.name}
+              value={formState.updated}
               onChange={handleInputChange}
             />
 
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <label htmlFor="">Category description</label>
               <textarea
                 name=""
@@ -79,7 +100,7 @@ export default function CreateCategory() {
                 rows={6}
                 className="resize-none rounded border-2 p-2 focus-within:outline-secondary"
               ></textarea>
-            </div>
+            </div> */}
 
             <Button
               intent={error ? 'disabled' : 'primary'}
@@ -93,7 +114,7 @@ export default function CreateCategory() {
               {error ? (
                 <span className="font-semibold text-accent">
                   {`"${capitalize(
-                    formState.name
+                    formState.category
                   )}" is already a category. Please choose another name.`}
                 </span>
               ) : null}

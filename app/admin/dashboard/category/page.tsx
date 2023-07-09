@@ -1,12 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import CreateCategory from '@/components/admin/CreateCategory';
 import { Button } from '@/components/buttons';
-
-function UpdateCategory() {
-  return <h1>update</h1>;
-}
+import CreateCategory from '@/components/admin/CreateCategory';
+import UpdateCategory from '@/components/admin/UpdateCategory';
 
 function DeleteCategory() {
   return <h1>delete</h1>;
