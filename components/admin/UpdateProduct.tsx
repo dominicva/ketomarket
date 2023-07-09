@@ -44,7 +44,12 @@ export default function UpdateProduct() {
       // @ts-ignore
       (product: ProductAPI) => product.name === e.target.value
     );
-    setFormState(product as unknown as SetStateAction<ProductAPI>);
+
+    if (!product) {
+      setFormState({ ...initial });
+    } else {
+      setFormState(product as unknown as SetStateAction<ProductAPI>);
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -75,7 +80,7 @@ export default function UpdateProduct() {
               name="category"
               id="category"
               required={true}
-              value={formState.name}
+              value={formState?.name ?? ''}
               onChange={handleSelectChange}
               className="rounded border-2 p-2 focus-within:outline-secondary"
             >
@@ -87,7 +92,7 @@ export default function UpdateProduct() {
                   </option>
                 ))
               ) : (
-                <option value="">No categories found</option>
+                <option value="">No products found</option>
               )}
             </select>
             <Input
@@ -95,7 +100,7 @@ export default function UpdateProduct() {
               labelText="Product name"
               id="name"
               type="text"
-              value={formState.name}
+              value={formState?.name}
               onChange={e =>
                 setFormState({ ...formState, name: e.target.value })
               }
@@ -106,7 +111,7 @@ export default function UpdateProduct() {
               name="category"
               id="category"
               required={true}
-              value={formState.category}
+              value={formState?.category}
               onChange={e =>
                 setFormState({ ...formState, category: e.target.value })
               }
@@ -130,7 +135,7 @@ export default function UpdateProduct() {
                 name=""
                 id=""
                 required={true}
-                value={formState.description}
+                value={formState?.description}
                 onChange={e =>
                   setFormState({ ...formState, description: e.target.value })
                 }
@@ -145,7 +150,7 @@ export default function UpdateProduct() {
               labelText="Product price"
               id="price"
               type="number"
-              value={String(formState.price)}
+              value={String(formState?.price)}
               onChange={e =>
                 setFormState({ ...formState, price: Number(e.target.value) })
               }
@@ -156,7 +161,7 @@ export default function UpdateProduct() {
               labelText="Image URL"
               id="image"
               type="text"
-              value={formState.image}
+              value={formState?.image}
               onChange={e =>
                 setFormState({ ...formState, image: e.target.value })
               }
