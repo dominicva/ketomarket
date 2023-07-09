@@ -16,7 +16,7 @@ export default async function DashboardLayout({
   return (
     <main>
       <div className="m-auto max-w-2xl">
-        <h2 className="px-4 text-xl font-semibold">Admin Dashboard</h2>
+        <h2 className="px-4 text-3xl font-semibold">Admin Dashboard</h2>
         <AdminNav />
         {children}
       </div>

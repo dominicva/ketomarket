@@ -32,7 +32,7 @@ export default async function Greetings({ id }: Pick<UserSession, 'id'>) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <GoToCart cartItemsCount={currentCartItemsCount} />
             {isAdmin ? (
-              <Link href="/admin/dashboard">
+              <Link href="/admin/dashboard/product">
                 <Button size="medium" className="sm:mt-6">
                   Admin dashboard
                 </Button>
