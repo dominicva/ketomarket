@@ -36,7 +36,7 @@ export default function UpdateCategory() {
     e.preventDefault();
 
     const res = await fetch('/api/category', {
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formState),
     });

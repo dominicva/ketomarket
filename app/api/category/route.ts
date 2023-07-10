@@ -67,3 +67,49 @@ export const POST = async (request: NextRequest) => {
     });
   }
 };
+
+export const PUT = async (request: NextRequest) => {
+  const { category, updated } = await request.json();
+
+  const headers = {
+    'content-type': 'application/json',
+  };
+
+  if (!category) {
+    return new Response(JSON.stringify({ error: 'No category provided' }), {
+      status: 400,
+      headers,
+    });
+  }
+
+  if (!updated) {
+    return new Response(
+      JSON.stringify({ error: 'No updated category name provided' }),
+      {
+        status: 400,
+        headers,
+      }
+    );
+  }
+
+  try {
+    const updatedCategory = await prisma.category.update({
+      where: {
+        name: category,
+      },
+      data: {
+        name: updated,
+      },
+    });
+
+    return new Response(JSON.stringify({ updatedCategory }), {
+      status: 200,
+      headers,
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+      headers,
+    });
+  }
+};
