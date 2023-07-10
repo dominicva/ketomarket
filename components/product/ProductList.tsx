@@ -1,5 +1,5 @@
 import { capitalize } from '@/lib/strings';
-import Product from './Product';
+import Product from './ProductCard';
 import type { ProductPropsAPI } from '@/types';
 
 export default function ProductList({

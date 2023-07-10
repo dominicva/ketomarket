@@ -1,5 +1,6 @@
 import { prisma } from './db';
 import { ProductAPI } from '@/types/ProductAPI';
+import { ProductWithCategory } from '@/types';
 
 export const getProductById = async (id: string) => {
   const productFromDb = await prisma.product.findUnique({
@@ -11,7 +12,7 @@ export const getProductById = async (id: string) => {
     },
   });
 
-  return productFromDb;
+  return productFromDb as ProductWithCategory;
 };
 
 export const getProducts = async (): Promise<ProductAPI[]> => {
