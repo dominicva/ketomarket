@@ -84,12 +84,6 @@ export const POST = async (req: NextRequest, _res: NextResponse) => {
 
   await sgMail.send(emailData);
 
-  // return new Response(
-  //   JSON.stringify({
-  //     successMessage: `An email with a password reset link has been sent. The link will expire in 10 hours.`,
-  //   })
-  // );
-
   return new Response(
     JSON.stringify({
       successMessage: `An email with a password reset link has been sent to ${body.email}. The link will expire in 10 hours.`,

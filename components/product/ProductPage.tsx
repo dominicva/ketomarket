@@ -54,7 +54,7 @@ export default function ProductPage({
           />
         ) : (
           <Link href="/signin" className="block">
-            <span className="text-lg font-semibold">
+            <span className="block text-center text-lg font-semibold">
               Log in to add this item to your cart
             </span>
             <Button

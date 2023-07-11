@@ -20,7 +20,6 @@ export default function ProductTeaser({ product }: { product: any }) {
               {capitalize(product.name)}
             </h3>
             <p className="text-sm">
-              Simply delicious{' · '}
               <span className="font-semibold text-tertiary">
                 ${product.price}
               </span>
