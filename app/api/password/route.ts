@@ -91,6 +91,8 @@ export const POST = async (req: NextRequest, _res: NextResponse) => {
     {
       status: 200,
       headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
         'Set-Cookie': `password-reset=${jwt}; Path=/; HttpOnly; Secure; SameSite=Strict`,
       },
     }
