@@ -14,6 +14,7 @@ export default function SignupForm() {
   const [formState, setFormState] = useState({ ...initial });
   const [credentialsLoading, setCredentialsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setCredentialsLoading(true);

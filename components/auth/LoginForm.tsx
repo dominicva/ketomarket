@@ -108,13 +108,23 @@ export default function LoginForm() {
         {googleLoading ? 'Loading...' : 'Log in with Google'}
       </button>
 
-      <p>
+      <p className="mb-4">
         Don&apos;t have an account?{' '}
         <Link
           href="/register"
           className="text-tertiary underline hover:text-accent hover:no-underline"
         >
           Sign up
+        </Link>
+      </p>
+
+      <p>
+        Forgot your password?{' '}
+        <Link
+          href="/reset-password"
+          className="text-tertiary underline hover:text-accent hover:no-underline"
+        >
+          Reset it
         </Link>
       </p>
     </div>
