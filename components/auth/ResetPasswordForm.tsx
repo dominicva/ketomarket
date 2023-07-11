@@ -36,6 +36,7 @@ export default function ResetPasswordForm({ email }: { email: string }) {
       setSuccessMessage(
         `Password updated for ${email}. Redirecting you to login page...`
       );
+      setErrorMessage('');
 
       setTimeout(() => {
         router.push('/signin');

@@ -30,6 +30,7 @@ export default function RequestPasswordReset() {
       if (res.ok && resData.successMessage) {
         setEmail('');
         setSuccessMessage(resData.successMessage);
+        setErrorMessage('');
       }
 
       if (resData.error) {
