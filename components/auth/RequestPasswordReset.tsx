@@ -1,37 +1,45 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import { TwoSeventyRing } from 'react-svg-spinners';
 import Card from '../Card';
 import Input from '../Input';
 import { Button } from '../buttons';
 
 export default function RequestPasswordReset() {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const form = e.currentTarget;
     const inputEmail = form.email.value;
 
-    const res = await fetch('/api/password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: inputEmail }),
-    });
+    try {
+      const res = await fetch('/api/password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: inputEmail }),
+      });
 
-    const resData = await res.json();
+      const resData = await res.json();
 
-    console.log('resData', resData);
+      if (res.ok && resData.successMessage) {
+        setEmail('');
+        setSuccessMessage(resData.successMessage);
+      }
 
-    if (res.ok) {
-      setEmail('');
-      setSuccessMessage('Check your email for a password reset link.');
-    }
+      if (resData.error) {
+        setErrorMessage(`${resData.error}. Please try again.`);
+      }
 
-    if (resData.error) {
-      setErrorMessage(resData.error);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
     }
   };
 
@@ -49,11 +57,26 @@ export default function RequestPasswordReset() {
             id="email"
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             autocomplete="username"
           />
         </fieldset>
-        <Button>Submit</Button>
+        <Button
+          size="large"
+          className="m-auto mt-4 flex w-11/12 items-center justify-center"
+        >
+          {loading ? <TwoSeventyRing color="white" /> : 'Send Reset Link'}
+        </Button>
+        {successMessage ? (
+          <p className="mt-6 text-center text-lg font-semibold  text-green-600">
+            {successMessage}
+          </p>
+        ) : null}
+        {errorMessage ? (
+          <p className="mt-6 text-center text-lg font-semibold text-accent">
+            {errorMessage}
+          </p>
+        ) : null}
       </form>
     </Card>
   );

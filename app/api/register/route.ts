@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       data: {
         name,
         email: email.toLowerCase(),
-        password: await hash(password, 12),
+        password: await hash(password, Number(process.env.SALT_ROUNDS)),
       },
     });
 

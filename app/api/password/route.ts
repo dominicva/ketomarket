@@ -11,8 +11,6 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   const { searchParams } = new URL(req.url);
   const tokenParam = searchParams.get('jwt');
   const token = req.cookies.get('password-reset');
-  console.log('tokenParam', tokenParam);
-  console.log('token', token);
 
   if (!tokenParam || !token) {
     return new Response(
@@ -69,9 +67,6 @@ export const POST = async (req: NextRequest, _res: NextResponse) => {
       }
     );
   }
-  console.log('user', user);
-  console.log('body', body);
-  // console.log('jwt', jwt);
 
   const emailData = {
     to: body.email,
@@ -88,17 +83,22 @@ export const POST = async (req: NextRequest, _res: NextResponse) => {
 
   await sgMail.send(emailData);
 
-  return new Response(null, {
-    status: 200,
-    headers: {
-      'Set-Cookie': `password-reset=${jwt}; Path=/; HttpOnly; Secure; SameSite=Strict`,
-    },
-  });
+  return new Response(
+    JSON.stringify({
+      successMessage: `An email with a password reset link has been sent to ${body.email}. The link will expire in 10 hours.`,
+    }),
+    {
+      status: 200,
+      headers: {
+        'Set-Cookie': `password-reset=${jwt}; Path=/; HttpOnly; Secure; SameSite=Strict`,
+      },
+    }
+  );
 };
 
 export const PUT = async (req: NextRequest, _res: NextResponse) => {
   const { email, password } = await req.json();
-  // console.log('body', body);
+
   const user = await prisma.user.findUnique({
     where: {
       email,
@@ -114,6 +114,7 @@ export const PUT = async (req: NextRequest, _res: NextResponse) => {
         status: 404,
         headers: {
           accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     );
@@ -125,7 +126,7 @@ export const PUT = async (req: NextRequest, _res: NextResponse) => {
         email,
       },
       data: {
-        password: await hash(password, 12),
+        password: await hash(password, Number(process.env.SALT_ROUNDS)),
       },
     });
 
@@ -133,6 +134,7 @@ export const PUT = async (req: NextRequest, _res: NextResponse) => {
       status: 200,
       headers: {
         accept: 'application/json',
+        'Content-Type': 'application/json',
       },
     });
   } catch (error) {
@@ -144,6 +146,7 @@ export const PUT = async (req: NextRequest, _res: NextResponse) => {
         status: 500,
         headers: {
           accept: 'application/json',
+          'Content-Type': 'application/json',
         },
       }
     );
