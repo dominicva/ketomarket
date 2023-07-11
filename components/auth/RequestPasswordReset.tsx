@@ -27,6 +27,7 @@ export default function RequestPasswordReset() {
 
       const resData = await res.json();
 
+      console.log('resData', resData);
       if (res.ok && resData.successMessage) {
         setEmail('');
         setSuccessMessage(resData.successMessage);
