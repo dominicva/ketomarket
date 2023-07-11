@@ -48,6 +48,7 @@ export const POST = async (req: NextRequest, _res: NextResponse) => {
   const jwt = sign(body, process.env.PASSWORD_RESET_SECRET!, {
     expiresIn: '10h',
   });
+
   const user = await prisma.user.findUnique({
     where: {
       email: body.email,
