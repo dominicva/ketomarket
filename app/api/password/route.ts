@@ -75,7 +75,7 @@ export const POST = async (req: NextRequest, _res: NextResponse) => {
     subject: `Password Reset link 🙏`,
     html: `
       <h1>Please use the following link to reset your password</h1>
-      <a href="${process.env.CLIENT_URL}/reset-password/${jwt}">Reset password</a>
+      <a href="${process.env.CLIENT_URL}/reset-password/${jwt}" target="_blank" rel="noopener" referrerpolicy="no-referrer">Reset password</a>
       <hr />
       <p>This email may contain sensitive information</p>
       <p>Your friends @ <a href="https://ketomarket.vercel.app">Ketomarket</a> 🚀</p>
